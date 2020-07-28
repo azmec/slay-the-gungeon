@@ -1,0 +1,49 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://assets/sprites/fx_art/slash_effect/slash_effect_anim_f0.png" type="Texture" id=1]
+[ext_resource path="res://assets/sprites/fx_art/slash_effect/slash_effect_anim_f1.png" type="Texture" id=2]
+[ext_resource path="res://assets/sprites/fx_art/slash_effect/slash_effect_anim_f2.png" type="Texture" id=3]
+[ext_resource path="res://src/compositional_objects/bullets/sword_projectile/sword_projectile.gd" type="Script" id=4]
+[ext_resource path="res://src/compositional_objects/hitbox/hitbox.tscn" type="PackedScene" id=5]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 3 ), ExtResource( 2 ), ExtResource( 1 ) ],
+"loop": false,
+"name": "slash",
+"speed": 15.0
+} ]
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 8.54389
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 2.15334, 4.05344 )
+
+[node name="SwordProjectile" type="Position2D"]
+script = ExtResource( 4 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "slash"
+frame = 2
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Hitbox" parent="." instance=ExtResource( 5 )]
+collision_layer = 8
+collision_mask = 64
+knockback_vector = Vector2( 200, 200 )
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+position = Vector2( -4.96393, 0 )
+shape = SubResource( 2 )
+
+[node name="WorldHitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldHitbox"]
+shape = SubResource( 3 )
+
+[editable path="Hitbox"]

@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/compositional_objects/hand_widget/hand_widget.gd" type="Script" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 160, 64 )
+
+[node name="HandWidget" type="Control"]
+margin_left = 16.0
+margin_top = 192.0
+margin_right = 296.0
+margin_bottom = 264.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+draw_point = NodePath("DrawPoint")
+discard_point = NodePath("DiscardPoint")
+
+[node name="DrawPoint" type="Position2D" parent="."]
+position = Vector2( 0, -40 )
+
+[node name="DiscardPoint" type="Position2D" parent="."]
+position = Vector2( 272, 48 )
+
+[node name="RaiseTween" type="Tween" parent="."]
+
+[node name="PlayArea" type="Area2D" parent="."]
+position = Vector2( 144, -72 )
+collision_layer = 512
+collision_mask = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayArea"]
+position = Vector2( 0, -24 )
+shape = SubResource( 1 )

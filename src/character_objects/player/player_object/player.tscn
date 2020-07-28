@@ -1,0 +1,250 @@
+[gd_scene load_steps=33 format=2]
+
+[ext_resource path="res://assets/sprites/character_art/player_knight/knight_idle_anim_f5.png" type="Texture" id=1]
+[ext_resource path="res://assets/sprites/character_art/player_knight/knight_run_anim_f5.png" type="Texture" id=2]
+[ext_resource path="res://assets/sprites/character_art/player_knight/knight_run_anim_f4.png" type="Texture" id=3]
+[ext_resource path="res://assets/sprites/character_art/player_knight/knight_run_anim_f2.png" type="Texture" id=4]
+[ext_resource path="res://assets/sprites/character_art/player_knight/knight_run_anim_f0.png" type="Texture" id=5]
+[ext_resource path="res://assets/sprites/character_art/player_knight/knight_run_anim_f1.png" type="Texture" id=6]
+[ext_resource path="res://assets/sprites/character_art/player_knight/knight_run_anim_f3.png" type="Texture" id=7]
+[ext_resource path="res://assets/sprites/character_art/player_knight/knight_idle_anim_f2.png" type="Texture" id=8]
+[ext_resource path="res://assets/sprites/character_art/player_knight/knight_idle_anim_f0.png" type="Texture" id=9]
+[ext_resource path="res://assets/sprites/character_art/player_knight/knight_idle_anim_f4.png" type="Texture" id=10]
+[ext_resource path="res://assets/sprites/character_art/player_knight/knight_idle_anim_f3.png" type="Texture" id=11]
+[ext_resource path="res://assets/sprites/character_art/player_knight/knight_idle_anim_f1.png" type="Texture" id=12]
+[ext_resource path="res://src/character_objects/player/player_object/player.gd" type="Script" id=13]
+[ext_resource path="res://assets/sprites/character_art/player_knight/weapon_sword_1.png" type="Texture" id=14]
+[ext_resource path="res://src/compositional_objects/health_stats/health_stats.tscn" type="PackedScene" id=15]
+[ext_resource path="res://assets/sprites/fx_art/explosion/explosion_anim_f0.png" type="Texture" id=16]
+[ext_resource path="res://src/shaders/white_shader/white_flash.shader" type="Shader" id=17]
+[ext_resource path="res://src/compositional_objects/hurtbox/hurtbox.tscn" type="PackedScene" id=18]
+[ext_resource path="res://src/compositional_objects/healthbar/healthbar.tscn" type="PackedScene" id=19]
+[ext_resource path="res://src/compositional_objects/draw_button/draw_button.tscn" type="PackedScene" id=20]
+[ext_resource path="res://assets/sprites/cards/hearthstone_cards/classic_pack.png" type="Texture" id=21]
+[ext_resource path="res://assets/fonts/at01/at01_16.tres" type="DynamicFontData" id=22]
+[ext_resource path="res://src/compositional_objects/hand_widget/hand_widget.tscn" type="PackedScene" id=23]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 17 )
+shader_param/active = false
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 9 ), ExtResource( 12 ), ExtResource( 8 ), ExtResource( 11 ), ExtResource( 10 ), ExtResource( 1 ) ],
+"loop": true,
+"name": "idle",
+"speed": 15.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 3 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "run",
+"speed": 10.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 5, 7 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 3.47328, 5.72765 )
+
+[sub_resource type="Animation" id=5]
+length = 0.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "idle" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
+
+[sub_resource type="Animation" id=6]
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "run" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
+
+[sub_resource type="Animation" id=7]
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sword/Sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.5 ),
+"transitions": PoolRealArray( 0.125, 0.1, 1 ),
+"update": 0,
+"values": [ 45.0, 100.0, 45.0 ]
+}
+
+[sub_resource type="DynamicFont" id=8]
+font_data = ExtResource( 22 )
+
+[sub_resource type="Animation" id=9]
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:material:shader_param/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true, false, true, false ]
+}
+
+[node name="Player" type="KinematicBody2D"]
+z_index = 1
+collision_mask = 4
+script = ExtResource( 13 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+material = SubResource( 1 )
+frames = SubResource( 2 )
+animation = "run"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 3 )
+
+[node name="Hurtbox" parent="." instance=ExtResource( 18 )]
+collision_layer = 16
+collision_mask = 32
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+shape = SubResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/idle = SubResource( 5 )
+anims/run = SubResource( 6 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+process_mode = 0
+smoothing_enabled = true
+smoothing_speed = 10.0
+
+[node name="Sword" type="Position2D" parent="."]
+visible = false
+position = Vector2( 8, 0 )
+
+[node name="Sprite" type="Sprite" parent="Sword"]
+position = Vector2( 4, 0.5 )
+rotation = 0.785398
+texture = ExtResource( 14 )
+
+[node name="SwordTween" type="Tween" parent="Sword"]
+
+[node name="HealthStats" parent="." instance=ExtResource( 15 )]
+max_health = 4
+
+[node name="SwordAnimationPlayer" type="AnimationPlayer" parent="."]
+anims/attack = SubResource( 7 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Healthbar" parent="CanvasLayer" instance=ExtResource( 19 )]
+
+[node name="DrawButton" parent="CanvasLayer" instance=ExtResource( 20 )]
+margin_left = 8.0
+margin_top = 32.0
+margin_right = 68.0
+margin_bottom = 52.0
+
+[node name="DiscardButton" parent="CanvasLayer" instance=ExtResource( 20 )]
+margin_left = 256.0
+margin_top = 32.0
+margin_right = 316.0
+margin_bottom = 52.0
+
+[node name="Label" parent="CanvasLayer/DiscardButton" index="0"]
+text = "Discard hand"
+
+[node name="Deck" type="Sprite" parent="CanvasLayer"]
+position = Vector2( 16, 72 )
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 21 )
+
+[node name="DeckCount" type="Label" parent="CanvasLayer"]
+margin_left = 32.0
+margin_top = 64.0
+margin_right = 72.0
+margin_bottom = 78.0
+custom_fonts/font = SubResource( 8 )
+text = "12"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HandWidget" parent="CanvasLayer" instance=ExtResource( 23 )]
+
+[node name="ManaDisplay" type="TextureRect" parent="CanvasLayer"]
+margin_left = 320.0
+margin_top = 8.0
+margin_right = 448.0
+margin_bottom = 48.0
+rect_scale = Vector2( -0.5, 0.5 )
+texture = ExtResource( 16 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BlinkAnimationPlayer" type="AnimationPlayer" parent="."]
+anims/blink = SubResource( 9 )
+
+[node name="CardContainer" type="Node2D" parent="."]
+
+[node name="DashTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="GhostTimer" type="Timer" parent="."]
+wait_time = 0.05
+autostart = true
+
+[editable path="Hurtbox"]
+
+[editable path="CanvasLayer/DiscardButton"]
