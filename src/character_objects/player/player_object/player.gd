@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends CharacterBody
 
 # Player object.
 
@@ -8,17 +8,13 @@ enum {
 	DASH
 }
 
-const MAX_SPEED: int = 150
 const DASH_SPEED: int = 400
 const DASH_TIME: float = 0.2
-const ACCELERATION: int = 900
-const FRICTION: int = 800
 const CAMERA_MOVE_SPEED: int = 2
 const SWORD_PROJECTILE: Resource = preload("res://src/compositional_objects/bullets/sword_projectile/sword_projectile.tscn") 
 const GHOST_EFFECT: Resource = preload("res://src/compositional_objects/ghost_effect/ghost_effect.tscn") 
 
 var state: int = 0
-var velocity: Vector2 = Vector2.ZERO
 var input_vector: Vector2 = Vector2.ZERO
 var attacking: bool = false
 var hand_raised: bool = false
@@ -29,13 +25,9 @@ var max_mana = 10
 var deck = CardDatabase.new("player_deck")
 var hand = CardDatabase.new("player_hand")
 
-onready var animationPlayer = $AnimationPlayer
 onready var camera = $Camera2D
 onready var sword = $Sword
-onready var sprite = $AnimatedSprite
-onready var healthStats = $HealthStats
 onready var swordAnimationPlayer = $SwordAnimationPlayer
-onready var hurtbox = $Hurtbox
 onready var blinkAnimationPlayer = $BlinkAnimationPlayer
 onready var healthbarUI = $CanvasLayer/Healthbar
 onready var canvasLayer = $CanvasLayer
@@ -49,6 +41,11 @@ onready var ghostTimer = $GhostTimer
 onready var manaDisplay = $CanvasLayer/ManaDisplay
 onready var discardButton = $CanvasLayer/DiscardButton
 
+func _init():
+	MAX_SPEED = 150
+	ACCELERATION = 900
+	FRICTION = 800 
+
 func _ready() -> void:
 	randomize()
 	hurtbox.connect("damage_taken", self, "_on_damage_taken")
@@ -61,7 +58,7 @@ func _ready() -> void:
 	handWidget.set_hand(hand, deck, self)
 	mana = max_mana
 	
-func _physics_process(delta: float) -> void:
+func _physics_process(delta: float) -> void: 
 	match state:
 		IDLE:
 			idle(delta)
@@ -72,18 +69,20 @@ func _physics_process(delta: float) -> void:
 	camera_look()
 	velocity = move_and_slide(velocity)
 	
-	#if Input.is_action_just_pressed("attack") and not attacking:
-		#swordAnimationPlayer.play("attack")
-		#var new_projectile = SWORD_PROJECTILE.instance()
-		#get_parent().add_child(new_projectile)
-		#new_projectile.spawn(self.global_position, Vector2(Input.get_joy_axis(0, JOY_AXIS_2), Input.get_joy_axis(0, JOY_AXIS_3)))
-		#new_projectile.spawn(self.global_position, get_local_mouse_position())
-		#attacking = true
+	if Input.is_action_just_pressed("attack") and not attacking and not hand_raised:
+		swordAnimationPlayer.play("attack")
+		var new_projectile = SWORD_PROJECTILE.instance()
+		get_parent().add_child(new_projectile)
+		new_projectile.spawn(self.global_position, Vector2(Input.get_joy_axis(0, JOY_AXIS_2), Input.get_joy_axis(0, JOY_AXIS_3)))
+		new_projectile.spawn(self.global_position, get_local_mouse_position())
+		attacking = true
 	if Input.is_action_just_pressed("raise_card_ui"):
 		toggle_hand_widget() 
 	deckCount.text = str(deck.count())
 	healthbarUI.healthSliver.rect_size.x = (healthStats.health / float(healthStats.max_health)) * 100 - 37
-	manaDisplay.rect_size.x = 32 * mana 
+	manaDisplay.rect_size.x = 9 * mana 
+	if mana >= 10:
+		mana = 10
 
 func toggle_hand_widget() -> void:
 	handWidget.move_hand()
@@ -177,6 +176,9 @@ func _on_damage_taken(damage: int, knockback: Vector2) -> void:
 	velocity = knockback
 	blinkAnimationPlayer.play("blink")
 	hurtbox.set_deferred("monitoring", false)
+ 
+func _on_no_health() -> void:
+	pass
 
 func _on_blink_finished(_anim_name: String) -> void:
 	hurtbox.set_deferred("monitoring", true)

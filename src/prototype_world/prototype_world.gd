@@ -1,6 +1,9 @@
 extends Node2D
 
+const GREMLIN_ENEMY = preload("res://src/character_objects/enemies/gremlin/gremlin.tscn") 
 const SLIME_ENEMY = preload("res://src/character_objects/enemies/slime/slime.tscn")
+const MANA_DROP = preload("res://src/compositional_objects/mana_drop/mana_drop.tscn") 
+
 var borders = Rect2(1, 1, 88, 160)
 
 onready var tileMap = $TileMap 
@@ -28,9 +31,13 @@ func spawn_enemies():
 	possible_spawn_locations.shuffle()
 	for location in possible_spawn_locations:
 		if randf() <= 0.01:
-			var slime = SLIME_ENEMY.instance()
-			enemies.add_child(slime)
-			slime.global_position = tileMap.map_to_world(location)
+			var enemy = SLIME_ENEMY.instance()
+			if randf() <= 0.5:
+				enemy = GREMLIN_ENEMY.instance()
+			enemies.add_child(enemy)
+			enemy.global_position = tileMap.map_to_world(location) 
+	for character in get_tree().get_nodes_in_group("characters"):
+		character.connect("character_died", self, "_on_character_died", [character])
 
 func clear_enemies():
 	for enemy in enemies.get_children():
@@ -45,3 +52,16 @@ func _input(event):
 		generate_level()
 		spawn_enemies()
 		
+func _on_character_died(character_position: Vector2, character: CharacterBody) -> void:
+	if character is EnemyBody:
+		var mana_drops = character.get_max_health() - randi() % 5 + 1 
+		if mana_drops <= 0:
+			var drop = MANA_DROP.instance()
+			self.add_child(drop)
+			drop.global_position = character_position
+		else:
+			for mana_drop in mana_drops:
+				var drop = MANA_DROP.instance()
+				self.add_child(drop)
+				drop.global_position = character_position
+

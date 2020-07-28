@@ -150,5 +150,8 @@ format = 1
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 208, 104 )
+MAX_SPEED = 150
+ACCELERATION = 900
+FRICTION = 800
 
 [node name="Enemies" type="Node2D" parent="."]

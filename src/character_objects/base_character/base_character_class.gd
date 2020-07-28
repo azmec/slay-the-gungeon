@@ -1,6 +1,11 @@
 class_name CharacterBody
 extends KinematicBody2D
 
+# Base character. All characters inherit from this in order 
+# to give common behaivor, reactions, and traits. 
+# Additionally, it declares some variables all characters 
+# would have, keeping the actual declarations out of the way. 
+
 signal character_died(position) 
 
 enum statuses {
@@ -31,6 +36,7 @@ var affected_by_status_inflictions: bool = true
 var can_take_damage: bool = true 
 var can_die: bool = true
 
+
 func _ready() -> void:
 	hurtbox.connect("damage_taken", self, "_on_damage_taken")
 	animationPlayer.connect("animation_finished", self, "_on_animation_finished")
@@ -38,6 +44,12 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void: 
 	_handle_status_inflictions(delta)
+
+func get_health() -> int:
+	return healthStats.health
+
+func get_max_health() -> int:
+	return healthStats.max_health 
 
 func _handle_status_inflictions(delta: float) -> void:
 	if not affected_by_status_inflictions: return

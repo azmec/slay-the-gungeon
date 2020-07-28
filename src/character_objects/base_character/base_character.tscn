@@ -1,12 +1,21 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/compositional_objects/hitbox/hitbox.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/compositional_objects/hurtbox/hurtbox.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/compositional_objects/health_stats/health_stats.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/shaders/white_shader/white_flash.shader" type="Shader" id=4]
 
-[node name="Character" type="KinematicBody2D"]
+[sub_resource type="ShaderMaterial" id=1]
+resource_local_to_scene = true
+shader = ExtResource( 4 )
+shader_param/active = false
 
-[node name="HealthStats" parent="." instance=ExtResource( 3 )]
+[node name="Character" type="KinematicBody2D" groups=[
+"characters",
+]]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+material = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
@@ -14,6 +23,10 @@
 
 [node name="Hurtbox" parent="." instance=ExtResource( 2 )]
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="HealthStats" parent="." instance=ExtResource( 3 )]
+
+[editable path="Hitbox"]
+
+[editable path="Hurtbox"]

@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://src/compositional_objects/hitbox/hitbox.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/sprites/etg_rips/enemy_arrow_shot.png" type="Texture" id=2]
+[ext_resource path="res://src/compositional_objects/bullets/enemy_arrow_shot/enemy_arrow_shot.gd" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 5.19315, 2.80338 )
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 5.45486
+
+[node name="EnemyArrowShot" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="Hitbox" parent="." instance=ExtResource( 1 )]
+collision_layer = 32
+collision_mask = 16
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+shape = SubResource( 1 )
+
+[node name="WorldHitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldHitbox"]
+shape = SubResource( 2 )
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[editable path="Hitbox"]

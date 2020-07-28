@@ -15,7 +15,7 @@
 [ext_resource path="res://src/character_objects/player/player_object/player.gd" type="Script" id=13]
 [ext_resource path="res://assets/sprites/character_art/player_knight/weapon_sword_1.png" type="Texture" id=14]
 [ext_resource path="res://src/compositional_objects/health_stats/health_stats.tscn" type="PackedScene" id=15]
-[ext_resource path="res://assets/sprites/fx_art/explosion/explosion_anim_f0.png" type="Texture" id=16]
+[ext_resource path="res://assets/sprites/etg_rips/random_blue_bullet.png" type="Texture" id=16]
 [ext_resource path="res://src/shaders/white_shader/white_flash.shader" type="Shader" id=17]
 [ext_resource path="res://src/compositional_objects/hurtbox/hurtbox.tscn" type="PackedScene" id=18]
 [ext_resource path="res://src/compositional_objects/healthbar/healthbar.tscn" type="PackedScene" id=19]
@@ -140,6 +140,9 @@ tracks/0/keys = {
 z_index = 1
 collision_mask = 4
 script = ExtResource( 13 )
+MAX_SPEED = 150
+ACCELERATION = 900
+FRICTION = 800
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 material = SubResource( 1 )
@@ -167,7 +170,6 @@ smoothing_enabled = true
 smoothing_speed = 10.0
 
 [node name="Sword" type="Position2D" parent="."]
-visible = false
 position = Vector2( 8, 0 )
 
 [node name="Sprite" type="Sprite" parent="Sword"]
@@ -188,12 +190,14 @@ anims/attack = SubResource( 7 )
 [node name="Healthbar" parent="CanvasLayer" instance=ExtResource( 19 )]
 
 [node name="DrawButton" parent="CanvasLayer" instance=ExtResource( 20 )]
+visible = false
 margin_left = 8.0
 margin_top = 32.0
 margin_right = 68.0
 margin_bottom = 52.0
 
 [node name="DiscardButton" parent="CanvasLayer" instance=ExtResource( 20 )]
+visible = false
 margin_left = 256.0
 margin_top = 32.0
 margin_right = 316.0
@@ -223,9 +227,9 @@ __meta__ = {
 [node name="ManaDisplay" type="TextureRect" parent="CanvasLayer"]
 margin_left = 320.0
 margin_top = 8.0
-margin_right = 448.0
-margin_bottom = 48.0
-rect_scale = Vector2( -0.5, 0.5 )
+margin_right = 329.0
+margin_bottom = 17.0
+rect_scale = Vector2( -2, 2 )
 texture = ExtResource( 16 )
 expand = true
 stretch_mode = 2
