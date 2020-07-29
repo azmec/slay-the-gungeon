@@ -28,6 +28,7 @@ func spawn(position: Vector2, direction: Vector2, damage: int, infliction: Strin
 	self.scale.x = 1 + (damage * .1)
 	self.scale.y = 1 + (damage * .1)
 	timer.start(DECAY_TIME)
+	$Fire.play()
 
 func _on_worldHitbox_body_entered(_body: PhysicsBody2D) -> void:
 	self.call_deferred("free")

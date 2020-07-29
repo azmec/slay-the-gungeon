@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://src/character_objects/base_enemy_character/base_enemy_character.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/sprites/character_art/enemies/gremlin/goblin_run_anim_f3.png" type="Texture" id=2]
@@ -16,6 +16,8 @@
 [ext_resource path="res://assets/sprites/items/bow.png" type="Texture" id=14]
 [ext_resource path="res://src/character_objects/enemies/gremlin/gremlin.gd" type="Script" id=15]
 [ext_resource path="res://src/shaders/white_shader/white_flash.shader" type="Shader" id=16]
+[ext_resource path="res://assets/sfx/sndbullet.wav" type="AudioStream" id=17]
+[ext_resource path="res://assets/sfx/punch.wav" type="AudioStream" id=18]
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
@@ -220,6 +222,16 @@ max_health = 5
 
 [node name="ShotTimer" type="Timer" parent="." index="10"]
 one_shot = true
+
+[node name="Sounds" type="Node" parent="." index="11"]
+
+[node name="Shoot" type="AudioStreamPlayer" parent="Sounds" index="0"]
+stream = ExtResource( 17 )
+bus = "SFX"
+
+[node name="Hurt" type="AudioStreamPlayer" parent="Sounds" index="1"]
+stream = ExtResource( 18 )
+bus = "SFX"
 
 [editable path="Hitbox"]
 

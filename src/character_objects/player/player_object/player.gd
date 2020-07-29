@@ -20,13 +20,12 @@ var attacking: bool = false
 var hand_raised: bool = false
 var maximum_deck_size = 12
 var maximum_hand_size = 5
-var mana = 0 
 var max_mana = 10
 var deck = CardDatabase.new("player_deck")
 var hand = CardDatabase.new("player_hand")
 
 onready var camera = $Camera2D
-onready var sword = $Sword
+onready var sword = $SwordPivot
 onready var swordAnimationPlayer = $SwordAnimationPlayer
 onready var blinkAnimationPlayer = $BlinkAnimationPlayer
 onready var healthbarUI = $CanvasLayer/Healthbar
@@ -39,7 +38,10 @@ onready var drawButton = $CanvasLayer/DrawButton
 onready var swordTween = $Sword/SwordTween 
 onready var dashTimer = $DashTimer
 onready var ghostTimer = $GhostTimer
-onready var discardButton = $CanvasLayer/DiscardButton
+onready var discardButton = $CanvasLayer/DiscardButton 
+onready var walkParticles = $CPUParticles2D
+
+onready var mana = max_mana setget _set_mana
 
 func _init():
 	MAX_SPEED = 150
@@ -66,6 +68,7 @@ func _physics_process(delta: float) -> void:
 		DASH:
 			dash(delta)
 	camera_look()
+	walkParticles.gravity = input_vector * -98
 	velocity = move_and_slide(velocity)
 	
 	if Input.is_action_just_pressed("attack") and not attacking and not hand_raised:
@@ -78,13 +81,11 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("raise_card_ui"):
 		toggle_hand_widget() 
 	deckCount.text = str(deck.count())
-	healthbarUI.healthSliver.rect_size.x = (healthStats.health / float(healthStats.max_health)) * 100 - 20
+	healthbarUI.healthSliver.rect_size.x = (healthStats.health / float(healthStats.max_health)) * 80
 	healthbarUI.numericDisplay.text = str(healthStats.health) + "/" + str(healthStats.max_health)
 	manaBarUI.numericDisplay.text = str(mana) + "/" + str(max_mana)
-	manaBarUI.healthSliver.rect_size.x = (mana / float(max_mana)) * 100 - 20
+	manaBarUI.healthSliver.rect_size.x = (mana / float(max_mana)) * 80
 
-	if mana >= 10:
-		mana = 10
 
 func toggle_hand_widget() -> void:
 	handWidget.move_hand()
@@ -122,6 +123,7 @@ func reset() -> void:
 
 func idle(delta: float) -> void:
 	get_input()
+	#walkParticles.emitting = false
 	animationPlayer.play("idle")
 	velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 
@@ -130,17 +132,20 @@ func idle(delta: float) -> void:
 
 func run(delta: float) -> void:
 	get_input()
+	#walkParticles.emitting = true
 	animationPlayer.play("run")
 	velocity = velocity.move_toward(input_vector * MAX_SPEED, ACCELERATION * delta)
 	if input_vector == Vector2.ZERO:
 		state = IDLE  
 	if Input.is_action_just_pressed("dash"):
 		state = DASH
+		$Sounds/Dash.play()
 		camera.trauma += 0.2
 		dashTimer.start(DASH_TIME)
 
 func dash(delta: float) -> void:
 	#get_input()
+	#walkParticles.emitting = false
 	velocity = velocity.move_toward(input_vector * DASH_SPEED, ACCELERATION * delta) 
 
 func get_input():
@@ -162,6 +167,14 @@ func camera_look() -> void:
 
 	sprite.flip_h = axis.x < -2.5
 
+func _set_mana(value: int) -> void:
+	if value > max_mana:
+		mana = max_mana 
+		return
+	manaBarUI.trauma += value * 0.5 
+	$Sounds/ManaPickup.play()
+	mana = value
+	
 func _on_dashTimer_timeout() -> void:
 	state = IDLE 
 
@@ -181,10 +194,8 @@ func _on_damage_taken(damage: int, knockback: Vector2, infliction: String) -> vo
 	blinkAnimationPlayer.play("blink")
 	hurtbox.set_deferred("monitoring", false)
 	camera.trauma += (damage * 4) * 0.1 
+	healthbarUI.trauma += (damage) * 0.5
  
-func _on_no_health() -> void:
-	pass
-
 func _on_blink_finished(_anim_name: String) -> void:
 	hurtbox.set_deferred("monitoring", true)
 

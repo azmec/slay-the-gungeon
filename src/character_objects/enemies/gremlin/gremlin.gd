@@ -73,6 +73,7 @@ func shoot(direction: Vector2):
 		var new_shot = ARROW_SHOT.instance()
 		get_parent().add_child(new_shot) 
 		new_shot.spawn(self.global_position, direction) 
+		$Sounds/Shoot.play()
 		shotTimer.start(rand_range(0.5, 2))
 
 func _update_wander() -> void:
@@ -85,6 +86,7 @@ func _pick_random_state(state_list: Array) -> int:
 
 func _on_damage_taken(damage: int, knockback: Vector2, infliction: String) -> void:
 	state = STAGGER 
+	$Sounds/Hurt.play()
 	._on_damage_taken(damage, knockback, infliction)
 
 func _on_animation_finished(anim_name: String) -> void:

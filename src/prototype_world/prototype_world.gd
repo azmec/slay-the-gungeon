@@ -48,19 +48,14 @@ func clear_enemies():
 	
 func _input(event):
 	if event.is_action_pressed("ui_accept"):
-		clear_enemies()
-		player.reset()
-		tileMap.clear()
-		randomize()
-		generate_level()
-		spawn_enemies()
+		get_tree().reload_current_scene()
 		
 func _on_character_died(character_position: Vector2, character: CharacterBody) -> void:
 	if character is EnemyBody:
 		player.camera.trauma += character.healthStats.max_health * 0.1 
 		if player.mana == player.max_mana:
 			return
-		var mana_drops = randi() % 8 + 1 
+		var mana_drops = randi() % 4 + 1 
 		if mana_drops <= 0:
 			var drop = MANA_DROP.instance()
 			call_deferred("add_child", drop)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://assets/sprites/character_art/player_knight/knight_idle_anim_f5.png" type="Texture" id=1]
 [ext_resource path="res://assets/sprites/character_art/player_knight/knight_run_anim_f5.png" type="Texture" id=2]
@@ -25,6 +25,11 @@
 [ext_resource path="res://src/compositional_objects/hand_widget/hand_widget.tscn" type="PackedScene" id=23]
 [ext_resource path="res://src/compositional_objects/camera/camera.tscn" type="PackedScene" id=24]
 [ext_resource path="res://assets/sprites/ui_elements/health_ui/blue_sliver.png" type="Texture" id=25]
+[ext_resource path="res://assets/sfx/sndheal.wav" type="AudioStream" id=26]
+[ext_resource path="res://assets/sfx/sndboost.wav" type="AudioStream" id=27]
+
+[sub_resource type="Gradient" id=12]
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 17 )
@@ -104,35 +109,74 @@ tracks/1/keys = {
 "update": 1,
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("CPUParticles2D:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true, false ]
+}
+
+[sub_resource type="RectangleShape2D" id=11]
 
 [sub_resource type="CircleShape2D" id=10]
-radius = 16.0
+radius = 12.4475
 
-[sub_resource type="Animation" id=7]
-length = 0.5
+[sub_resource type="Animation" id=8]
+length = 0.35
+step = 0.05
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sword/Sprite:rotation_degrees")
+tracks/0/path = NodePath("SwordPivot/Sword:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.5 ),
-"transitions": PoolRealArray( 0.125, 0.1, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.3, 0.35 ),
+"transitions": PoolRealArray( 1, 0.120742, 1, 1 ),
 "update": 0,
-"values": [ 45.0, 100.0, 45.0 ]
+"values": [ Vector2( 8, 0 ), Vector2( 2, -8 ), Vector2( 0, 8 ), Vector2( 8, 0 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sword/Hitbox/CollisionShape2D:disabled")
+tracks/1/path = NodePath("SwordPivot/Sword:rotation_degrees")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.3, 0.35 ),
+"transitions": PoolRealArray( 1, 0.12, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -90.0, 90.0, 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("SwordPivot/Sword/Hitbox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.35 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ false, true ]
+"values": [ false, false, true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("SwordPivot/Sword/Hurtbox/CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.35 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, false, true ]
 }
 
 [sub_resource type="Animation" id=9]
@@ -158,10 +202,28 @@ MAX_SPEED = 150
 ACCELERATION = 900
 FRICTION = 800
 
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2( 0, 5 )
+amount = 20
+lifetime = 0.8
+speed_scale = 2.0
+direction = Vector2( 0, 0 )
+gravity = Vector2( -98, 0 )
+angular_velocity = 71.49
+angular_velocity_random = 1.0
+linear_accel = 100.0
+linear_accel_random = 0.39
+tangential_accel = 10.0
+tangential_accel_random = 1.0
+scale_amount = 3.0
+scale_amount_random = 1.0
+color_ramp = SubResource( 12 )
+
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 material = SubResource( 1 )
 frames = SubResource( 2 )
-animation = "idle"
+animation = "run"
+frame = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 3 )
@@ -179,29 +241,40 @@ anims/run = SubResource( 6 )
 
 [node name="Camera2D" parent="." instance=ExtResource( 24 )]
 
-[node name="Sword" type="Position2D" parent="."]
+[node name="SwordPivot" type="Position2D" parent="."]
+
+[node name="Sword" type="Position2D" parent="SwordPivot"]
 position = Vector2( 8, 0 )
 
-[node name="Hitbox" parent="Sword" instance=ExtResource( 16 )]
+[node name="Hitbox" parent="SwordPivot/Sword" instance=ExtResource( 16 )]
+position = Vector2( 6.04005, -0.608687 )
 collision_layer = 8
 collision_mask = 64
+knockback_vector = Vector2( 200, 200 )
 
-[node name="CollisionShape2D" parent="Sword/Hitbox" index="0"]
-shape = SubResource( 10 )
+[node name="CollisionShape2D" parent="SwordPivot/Sword/Hitbox" index="0"]
+shape = SubResource( 11 )
 disabled = true
 
-[node name="Sprite" type="Sprite" parent="Sword"]
-position = Vector2( 4, 0.5 )
+[node name="Sprite" type="Sprite" parent="SwordPivot/Sword"]
+position = Vector2( 1, 0.5 )
 rotation = 0.785398
 texture = ExtResource( 14 )
 
-[node name="SwordTween" type="Tween" parent="Sword"]
+[node name="Hurtbox" parent="SwordPivot/Sword" instance=ExtResource( 18 )]
+position = Vector2( 6.83603, -0.421399 )
+collision_layer = 16
+collision_mask = 32
+
+[node name="CollisionShape2D" parent="SwordPivot/Sword/Hurtbox" index="0"]
+shape = SubResource( 10 )
+disabled = true
 
 [node name="HealthStats" parent="." instance=ExtResource( 15 )]
-max_health = 4
+max_health = 10
 
 [node name="SwordAnimationPlayer" type="AnimationPlayer" parent="."]
-anims/attack = SubResource( 7 )
+anims/attack = SubResource( 8 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -209,17 +282,30 @@ anims/attack = SubResource( 7 )
 margin_top = 0.0
 margin_bottom = 40.0
 rect_scale = Vector2( 0.7, 0.7 )
+maximum_x_offset = 50
+maximum_y_offset = 50
+maximum_rotation = 25
 
 [node name="Manabar" parent="CanvasLayer" instance=ExtResource( 19 )]
 margin_top = 16.0
 margin_bottom = 56.0
 rect_scale = Vector2( 0.7, 0.7 )
+maximum_x_offset = 20
+maximum_y_offset = 20
+maximum_rotation = 10
 
 [node name="HP" parent="CanvasLayer/Manabar" index="0"]
 text = "MP:"
 
 [node name="HealthSliver" parent="CanvasLayer/Manabar" index="2"]
 texture = ExtResource( 25 )
+
+[node name="ManaBarContainer" type="Control" parent="CanvasLayer/Manabar"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="DrawButton" parent="CanvasLayer" instance=ExtResource( 20 )]
 visible = false
@@ -256,6 +342,16 @@ __meta__ = {
 
 [node name="HandWidget" parent="CanvasLayer" instance=ExtResource( 23 )]
 
+[node name="Label" type="Label" parent="CanvasLayer"]
+margin_left = 112.0
+margin_right = 225.0
+margin_bottom = 14.0
+custom_fonts/font = ExtResource( 22 )
+text = "Press ENTER to reload."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="BlinkAnimationPlayer" type="AnimationPlayer" parent="."]
 anims/blink = SubResource( 9 )
 
@@ -268,9 +364,21 @@ one_shot = true
 wait_time = 0.05
 autostart = true
 
+[node name="Sounds" type="Node" parent="."]
+
+[node name="ManaPickup" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 26 )
+bus = "SFX"
+
+[node name="Dash" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 27 )
+bus = "SFX"
+
 [editable path="Hurtbox"]
 
-[editable path="Sword/Hitbox"]
+[editable path="SwordPivot/Sword/Hitbox"]
+
+[editable path="SwordPivot/Sword/Hurtbox"]
 
 [editable path="CanvasLayer/Manabar"]
 

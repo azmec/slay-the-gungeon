@@ -67,6 +67,7 @@ func _pick_random_state(state_list: Array) -> int:
 
 func _on_damage_taken(damage: int, knockback: Vector2, infliction: String) -> void:
 	state = STAGGER
+	$Sounds/Hurt.play()
 	._on_damage_taken(damage, knockback, infliction) 
 
 func _on_animation_finished(anim_name: String) -> void:

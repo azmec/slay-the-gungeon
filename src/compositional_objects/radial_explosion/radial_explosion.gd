@@ -19,6 +19,7 @@ func spawn(position: Vector2, hitbox_radius: int, amount: int, infliction: Strin
 	tween.interpolate_property(hitbox.collisionShape.shape, "radius", hitbox.collisionShape.shape.radius, 10 * radius, 0.2, Tween.EASE_IN, Tween.EASE_OUT)
 	tween.interpolate_property(sprite, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), 0.2, Tween.EASE_IN, Tween.EASE_OUT)
 	tween.start()
+	$Explode.play()
 
 func _on_tween_completed() -> void:
 	self.queue_free()

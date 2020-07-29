@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/sprites/ui_elements/health_ui/empty_bar.png" type="Texture" id=1]
 [ext_resource path="res://assets/sprites/ui_elements/health_ui/health_sliver.png" type="Texture" id=2]
 [ext_resource path="res://src/compositional_objects/healthbar/healthbar.gd" type="Script" id=3]
 [ext_resource path="res://assets/fonts/nokia_cellphone/nokia_cellphone_8.tres" type="DynamicFont" id=4]
+
+[sub_resource type="OpenSimplexNoise" id=1]
 
 [node name="Healthbar" type="Control"]
 margin_top = 8.0
@@ -13,6 +15,7 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+noise = SubResource( 1 )
 
 [node name="HP" type="Label" parent="."]
 margin_left = 8.0

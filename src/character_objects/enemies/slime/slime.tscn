@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://src/character_objects/base_enemy_character/base_enemy_character.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/sprites/character_art/enemies/slime/slime_idle_anim_f4.png" type="Texture" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://src/shaders/white_shader/white_flash.shader" type="Shader" id=13]
 [ext_resource path="res://assets/sprites/character_art/enemies/slime/slime_idle_anim_f1.png" type="Texture" id=14]
 [ext_resource path="res://assets/sprites/character_art/enemies/slime/slime_run_anim_f3.png" type="Texture" id=15]
+[ext_resource path="res://assets/sfx/punch.wav" type="AudioStream" id=16]
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
@@ -49,7 +50,7 @@ radius = 10.6558
 [sub_resource type="CircleShape2D" id=7]
 radius = 202.814
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=8]
 resource_name = "hurt"
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:animation")
@@ -88,7 +89,7 @@ tracks/2/keys = {
 "values": [ true, false, true, false ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=9]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -170,10 +171,6 @@ tracks/2/keys = {
 [node name="EnemyCharacter" instance=ExtResource( 1 )]
 script = ExtResource( 9 )
 MAX_SPEED = 125
-ACCELERATION = null
-FRICTION = null
-BURN_RESISTANCE = null
-POISON_RESISTANCE = null
 
 [node name="AnimatedSprite" parent="." index="0"]
 material = SubResource( 1 )
@@ -196,12 +193,17 @@ shape = SubResource( 6 )
 shape = SubResource( 7 )
 
 [node name="AnimationPlayer" parent="." index="7"]
-anims/hurt = SubResource( 11 )
-anims/idle = SubResource( 12 )
+anims/hurt = SubResource( 8 )
+anims/idle = SubResource( 9 )
 anims/run = SubResource( 10 )
 
 [node name="HealthStats" parent="." index="8"]
 max_health = 3
+
+[node name="Sounds" type="Node" parent="." index="9"]
+
+[node name="Hurt" type="AudioStreamPlayer" parent="Sounds" index="0"]
+stream = ExtResource( 16 )
 
 [editable path="Hitbox"]
 

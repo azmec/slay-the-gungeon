@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/compositional_objects/hitbox/hitbox.tscn" type="PackedScene" id=1]
-[ext_resource path="res://assets/sprites/fx_art/explosion/explosion_anim_f0.png" type="Texture" id=2]
+[ext_resource path="res://assets/sprites/etg_rips/yellow_bullet.png" type="Texture" id=2]
 [ext_resource path="res://src/compositional_objects/radial_explosion/radial_explosion.gd" type="Script" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
@@ -10,6 +10,7 @@
 script = ExtResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 1.5, 1.5 )
 texture = ExtResource( 2 )
 
 [node name="Tween" type="Tween" parent="."]
@@ -21,5 +22,8 @@ knockback_vector = Vector2( 300, 300 )
 
 [node name="CollisionShape2D" parent="Hitbox" index="0"]
 shape = SubResource( 1 )
+
+[node name="Explode" type="AudioStreamPlayer" parent="."]
+bus = "SFX"
 
 [editable path="Hitbox"]
