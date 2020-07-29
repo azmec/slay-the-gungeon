@@ -31,14 +31,14 @@ func walk(steps: int) -> Array:
 			change_direction()
 		if step():
 			step_history.append(position)
-			step_history.append(position + Vector2.RIGHT)
-			step_history.append(position + Vector2.DOWN)
-			step_history.append(position + Vector2.LEFT)
-			step_history.append(position + Vector2.UP)
-			step_history.append(position + Vector2(1, -1))
-			step_history.append(position + Vector2(-1, -1))
-			step_history.append(position + Vector2(1, 1))
-			step_history.append(position + Vector2(-1, 1))
+			#step_history.append(position + Vector2.RIGHT)
+			#step_history.append(position + Vector2.DOWN)
+			#step_history.append(position + Vector2.LEFT)
+			#step_history.append(position + Vector2.UP)
+			#step_history.append(position + Vector2(1, -1))
+			#step_history.append(position + Vector2(-1, -1))
+			#step_history.append(position + Vector2(1, 1))
+			#step_history.append(position + Vector2(-1, 1))
 
 		else:
 			change_direction()

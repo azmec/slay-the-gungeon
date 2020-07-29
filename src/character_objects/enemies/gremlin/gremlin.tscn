@@ -48,7 +48,7 @@ radius = 9.04793
 radius = 20.9275
 
 [sub_resource type="CircleShape2D" id=7]
-radius = 122.295
+radius = 253.169
 
 [sub_resource type="Animation" id=8]
 resource_name = "hurt"
@@ -195,9 +195,6 @@ shape = SubResource( 5 )
 
 [node name="CollisionShape2D" parent="SoftCollision" index="0"]
 shape = SubResource( 6 )
-
-[node name="PlayerDetector" parent="." index="5"]
-visible = false
 
 [node name="CollisionShape2D" parent="PlayerDetector" index="0"]
 shape = SubResource( 7 )

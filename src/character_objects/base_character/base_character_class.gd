@@ -58,7 +58,7 @@ func _handle_status_inflictions(delta: float) -> void:
 		statuses.NONE:
 			return 
 		statuses.FROZEN:
-			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
+			pass
 		statuses.BURNING:
 			# Burning logic. DOT determined by the object that initially burned the
 			# character and the character's burn resistance. Furthermore, the 
@@ -69,13 +69,22 @@ func _handle_status_inflictions(delta: float) -> void:
 			# poison resistance. 
 			pass
 	 
-func _on_damage_taken(damage: int, knockback: Vector2) -> void: 
+func _on_damage_taken(damage: int, knockback: Vector2, infliction: String) -> void: 
 	if not can_take_damage: return
 	healthStats.health = healthStats.health - damage
 	velocity = knockback
 	var hit_fx = HIT_EFFECT.instance()
 	get_parent().add_child(hit_fx)
 	hit_fx.global_position = self.global_position
+	OS.delay_msec(15)
+	if infliction == "none":
+		return
+	elif infliction == "freeze":
+		self.infliction = statuses.FROZEN
+	elif infliction == "burn":
+		self.infliction = statuses.BURNING
+	elif infliction == "poison":
+		self.infliction = statuses.POISONED
 	 
 func _on_animation_finished(anim_name: String) -> void: 
 	pass 

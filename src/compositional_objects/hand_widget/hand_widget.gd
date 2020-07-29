@@ -201,6 +201,7 @@ func _on_playable_card_mouse_released(button, card: PlayableCard) -> void:
 		if _play_area_colliding() and card.cost <= _owner.mana: 
 			card.play_card()
 			_owner.mana -= card.cost
+			_owner.call_deferred("_on_draw_button_pressed")
 			card.pop_animation_state()
 			_remove_playable_card(card.get_card_data())
 			_hand.remove_card(card.get_card_data().card_name)

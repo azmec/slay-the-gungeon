@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://assets/sprites/character_art/player_knight/knight_idle_anim_f5.png" type="Texture" id=1]
 [ext_resource path="res://assets/sprites/character_art/player_knight/knight_run_anim_f5.png" type="Texture" id=2]
@@ -15,14 +15,16 @@
 [ext_resource path="res://src/character_objects/player/player_object/player.gd" type="Script" id=13]
 [ext_resource path="res://assets/sprites/character_art/player_knight/weapon_sword_1.png" type="Texture" id=14]
 [ext_resource path="res://src/compositional_objects/health_stats/health_stats.tscn" type="PackedScene" id=15]
-[ext_resource path="res://assets/sprites/etg_rips/random_blue_bullet.png" type="Texture" id=16]
+[ext_resource path="res://src/compositional_objects/hitbox/hitbox.tscn" type="PackedScene" id=16]
 [ext_resource path="res://src/shaders/white_shader/white_flash.shader" type="Shader" id=17]
 [ext_resource path="res://src/compositional_objects/hurtbox/hurtbox.tscn" type="PackedScene" id=18]
 [ext_resource path="res://src/compositional_objects/healthbar/healthbar.tscn" type="PackedScene" id=19]
 [ext_resource path="res://src/compositional_objects/draw_button/draw_button.tscn" type="PackedScene" id=20]
 [ext_resource path="res://assets/sprites/cards/hearthstone_cards/classic_pack.png" type="Texture" id=21]
-[ext_resource path="res://assets/fonts/at01/at01_16.tres" type="DynamicFontData" id=22]
+[ext_resource path="res://assets/fonts/nokia_cellphone/nokia_cellphone_8.tres" type="DynamicFont" id=22]
 [ext_resource path="res://src/compositional_objects/hand_widget/hand_widget.tscn" type="PackedScene" id=23]
+[ext_resource path="res://src/compositional_objects/camera/camera.tscn" type="PackedScene" id=24]
+[ext_resource path="res://assets/sprites/ui_elements/health_ui/blue_sliver.png" type="Texture" id=25]
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 17 )
@@ -103,6 +105,9 @@ tracks/1/keys = {
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
 
+[sub_resource type="CircleShape2D" id=10]
+radius = 16.0
+
 [sub_resource type="Animation" id=7]
 length = 0.5
 tracks/0/type = "value"
@@ -117,9 +122,18 @@ tracks/0/keys = {
 "update": 0,
 "values": [ 45.0, 100.0, 45.0 ]
 }
-
-[sub_resource type="DynamicFont" id=8]
-font_data = ExtResource( 22 )
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sword/Hitbox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
 
 [sub_resource type="Animation" id=9]
 length = 0.5
@@ -147,7 +161,7 @@ FRICTION = 800
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 material = SubResource( 1 )
 frames = SubResource( 2 )
-animation = "run"
+animation = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 3 )
@@ -163,14 +177,18 @@ shape = SubResource( 4 )
 anims/idle = SubResource( 5 )
 anims/run = SubResource( 6 )
 
-[node name="Camera2D" type="Camera2D" parent="."]
-current = true
-process_mode = 0
-smoothing_enabled = true
-smoothing_speed = 10.0
+[node name="Camera2D" parent="." instance=ExtResource( 24 )]
 
 [node name="Sword" type="Position2D" parent="."]
 position = Vector2( 8, 0 )
+
+[node name="Hitbox" parent="Sword" instance=ExtResource( 16 )]
+collision_layer = 8
+collision_mask = 64
+
+[node name="CollisionShape2D" parent="Sword/Hitbox" index="0"]
+shape = SubResource( 10 )
+disabled = true
 
 [node name="Sprite" type="Sprite" parent="Sword"]
 position = Vector2( 4, 0.5 )
@@ -188,6 +206,20 @@ anims/attack = SubResource( 7 )
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Healthbar" parent="CanvasLayer" instance=ExtResource( 19 )]
+margin_top = 0.0
+margin_bottom = 40.0
+rect_scale = Vector2( 0.7, 0.7 )
+
+[node name="Manabar" parent="CanvasLayer" instance=ExtResource( 19 )]
+margin_top = 16.0
+margin_bottom = 56.0
+rect_scale = Vector2( 0.7, 0.7 )
+
+[node name="HP" parent="CanvasLayer/Manabar" index="0"]
+text = "MP:"
+
+[node name="HealthSliver" parent="CanvasLayer/Manabar" index="2"]
+texture = ExtResource( 25 )
 
 [node name="DrawButton" parent="CanvasLayer" instance=ExtResource( 20 )]
 visible = false
@@ -216,26 +248,13 @@ margin_left = 32.0
 margin_top = 64.0
 margin_right = 72.0
 margin_bottom = 78.0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = ExtResource( 22 )
 text = "12"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HandWidget" parent="CanvasLayer" instance=ExtResource( 23 )]
-
-[node name="ManaDisplay" type="TextureRect" parent="CanvasLayer"]
-margin_left = 320.0
-margin_top = 8.0
-margin_right = 329.0
-margin_bottom = 17.0
-rect_scale = Vector2( -2, 2 )
-texture = ExtResource( 16 )
-expand = true
-stretch_mode = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="BlinkAnimationPlayer" type="AnimationPlayer" parent="."]
 anims/blink = SubResource( 9 )
@@ -250,5 +269,9 @@ wait_time = 0.05
 autostart = true
 
 [editable path="Hurtbox"]
+
+[editable path="Sword/Hitbox"]
+
+[editable path="CanvasLayer/Manabar"]
 
 [editable path="CanvasLayer/DiscardButton"]

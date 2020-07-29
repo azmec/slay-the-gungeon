@@ -1,6 +1,6 @@
 extends Node2D
 
-const MOVE_SPEED: int = 200
+const MOVE_SPEED: int = 100
 const DECAY_TIME: float = 10.0
 
 var move_direction: Vector2 = Vector2.ZERO

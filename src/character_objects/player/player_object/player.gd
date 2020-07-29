@@ -30,6 +30,7 @@ onready var sword = $Sword
 onready var swordAnimationPlayer = $SwordAnimationPlayer
 onready var blinkAnimationPlayer = $BlinkAnimationPlayer
 onready var healthbarUI = $CanvasLayer/Healthbar
+onready var manaBarUI = $CanvasLayer/Manabar
 onready var canvasLayer = $CanvasLayer
 onready var cardContainer = $CardContainer
 onready var deckCount = $CanvasLayer/DeckCount
@@ -38,7 +39,6 @@ onready var drawButton = $CanvasLayer/DrawButton
 onready var swordTween = $Sword/SwordTween 
 onready var dashTimer = $DashTimer
 onready var ghostTimer = $GhostTimer
-onready var manaDisplay = $CanvasLayer/ManaDisplay
 onready var discardButton = $CanvasLayer/DiscardButton
 
 func _init():
@@ -48,7 +48,6 @@ func _init():
 
 func _ready() -> void:
 	randomize()
-	hurtbox.connect("damage_taken", self, "_on_damage_taken")
 	blinkAnimationPlayer.connect("animation_finished", self, "_on_blink_finished")
 	swordAnimationPlayer.connect("animation_finished", self, "_on_sword_animation_finished")
 	drawButton.connect("pressed", self, "_on_draw_button_pressed") 
@@ -71,16 +70,19 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("attack") and not attacking and not hand_raised:
 		swordAnimationPlayer.play("attack")
-		var new_projectile = SWORD_PROJECTILE.instance()
-		get_parent().add_child(new_projectile)
-		new_projectile.spawn(self.global_position, Vector2(Input.get_joy_axis(0, JOY_AXIS_2), Input.get_joy_axis(0, JOY_AXIS_3)))
-		new_projectile.spawn(self.global_position, get_local_mouse_position())
+		#var new_projectile = SWORD_PROJECTILE.instance()
+		#get_parent().add_child(new_projectile)
+		#new_projectile.spawn(self.global_position, Vector2(Input.get_joy_axis(0, JOY_AXIS_2), Input.get_joy_axis(0, JOY_AXIS_3)))
+		#new_projectile.spawn(self.global_position, get_local_mouse_position())
 		attacking = true
 	if Input.is_action_just_pressed("raise_card_ui"):
 		toggle_hand_widget() 
 	deckCount.text = str(deck.count())
-	healthbarUI.healthSliver.rect_size.x = (healthStats.health / float(healthStats.max_health)) * 100 - 37
-	manaDisplay.rect_size.x = 9 * mana 
+	healthbarUI.healthSliver.rect_size.x = (healthStats.health / float(healthStats.max_health)) * 100 - 20
+	healthbarUI.numericDisplay.text = str(healthStats.health) + "/" + str(healthStats.max_health)
+	manaBarUI.numericDisplay.text = str(mana) + "/" + str(max_mana)
+	manaBarUI.healthSliver.rect_size.x = (mana / float(max_mana)) * 100 - 20
+
 	if mana >= 10:
 		mana = 10
 
@@ -134,6 +136,7 @@ func run(delta: float) -> void:
 		state = IDLE  
 	if Input.is_action_just_pressed("dash"):
 		state = DASH
+		camera.trauma += 0.2
 		dashTimer.start(DASH_TIME)
 
 func dash(delta: float) -> void:
@@ -171,11 +174,13 @@ func _on_ghostTimer_timeout() -> void:
 	ghost.flip_h = sprite.flip_h
 	ghost.position = self.position 
 
-func _on_damage_taken(damage: int, knockback: Vector2) -> void:
+func _on_damage_taken(damage: int, knockback: Vector2, infliction: String) -> void:
+	OS.delay_msec(15)
 	healthStats.health = healthStats.health - damage
 	velocity = knockback
 	blinkAnimationPlayer.play("blink")
 	hurtbox.set_deferred("monitoring", false)
+	camera.trauma += (damage * 4) * 0.1 
  
 func _on_no_health() -> void:
 	pass

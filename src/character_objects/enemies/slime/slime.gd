@@ -12,6 +12,8 @@ enum {
 
 var state: int = 0
 
+func _init():
+	MAX_SPEED = 70
 func _ready() -> void:
 	state = _pick_random_state([WANDER, IDLE])
 
@@ -63,9 +65,9 @@ func _pick_random_state(state_list: Array) -> int:
 	state_list.shuffle() 
 	return state_list.pop_front()  
 
-func _on_damage_taken(damage: int, knockback: Vector2) -> void:
+func _on_damage_taken(damage: int, knockback: Vector2, infliction: String) -> void:
 	state = STAGGER
-	._on_damage_taken(damage, knockback) 
+	._on_damage_taken(damage, knockback, infliction) 
 
 func _on_animation_finished(anim_name: String) -> void:
 	if anim_name == "hurt":

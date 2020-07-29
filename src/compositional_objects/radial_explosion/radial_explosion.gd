@@ -12,6 +12,7 @@ func _ready() -> void:
 
 func spawn(position: Vector2, hitbox_radius: int, amount: int, infliction: String) -> void:
 	hitbox.damage = amount
+	hitbox.status_infliction = infliction
 	self.global_position = position 
 	radius = hitbox_radius 
 	tween.interpolate_property(sprite, "scale", sprite.scale, Vector2(radius, radius), 0.2, Tween.EASE_IN, Tween.EASE_OUT) 

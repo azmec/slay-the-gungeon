@@ -47,9 +47,9 @@ radius = 11.217
 radius = 10.6558
 
 [sub_resource type="CircleShape2D" id=7]
-radius = 87.6322
+radius = 202.814
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=11]
 resource_name = "hurt"
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:animation")
@@ -88,8 +88,7 @@ tracks/2/keys = {
 "values": [ true, false, true, false ]
 }
 
-[sub_resource type="Animation" id=8]
-resource_name = "idle"
+[sub_resource type="Animation" id=12]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -129,8 +128,7 @@ tracks/2/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=9]
-resource_name = "run"
+[sub_resource type="Animation" id=10]
 length = 0.6
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:animation")
@@ -172,6 +170,10 @@ tracks/2/keys = {
 [node name="EnemyCharacter" instance=ExtResource( 1 )]
 script = ExtResource( 9 )
 MAX_SPEED = 125
+ACCELERATION = null
+FRICTION = null
+BURN_RESISTANCE = null
+POISON_RESISTANCE = null
 
 [node name="AnimatedSprite" parent="." index="0"]
 material = SubResource( 1 )
@@ -194,9 +196,9 @@ shape = SubResource( 6 )
 shape = SubResource( 7 )
 
 [node name="AnimationPlayer" parent="." index="7"]
-anims/hurt = SubResource( 10 )
-anims/idle = SubResource( 8 )
-anims/run = SubResource( 9 )
+anims/hurt = SubResource( 11 )
+anims/idle = SubResource( 12 )
+anims/run = SubResource( 10 )
 
 [node name="HealthStats" parent="." index="8"]
 max_health = 3

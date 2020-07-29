@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/compositional_objects/camera/camera.gd" type="Script" id=1]
+
+[sub_resource type="OpenSimplexNoise" id=1]
+
+[node name="Camera2D" type="Camera2D"]
+rotating = true
+current = true
+process_mode = 0
+smoothing_enabled = true
+smoothing_speed = 10.0
+script = ExtResource( 1 )
+noise = SubResource( 1 )
+
+[node name="ShakeTimer " type="Timer" parent="."]

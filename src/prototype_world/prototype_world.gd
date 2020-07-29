@@ -4,11 +4,12 @@ const GREMLIN_ENEMY = preload("res://src/character_objects/enemies/gremlin/greml
 const SLIME_ENEMY = preload("res://src/character_objects/enemies/slime/slime.tscn")
 const MANA_DROP = preload("res://src/compositional_objects/mana_drop/mana_drop.tscn") 
 
-var borders = Rect2(1, 1, 88, 160)
-
+var borders = Rect2(1, 1, 160, 80)
+var level_points: Array
 onready var tileMap = $TileMap 
 onready var player = $Player
 onready var enemies = $Enemies
+
 
 func _ready() -> void:
 	randomize()
@@ -18,24 +19,26 @@ func _ready() -> void:
 func generate_level():
 	var walker = Walker.new(Vector2(19, 11), borders)
 	var map = walker.walk(1500)
+	level_points = map
 	walker.queue_free()
 	for location in map:
-		tileMap.set_cellv(location, 0)
+		tileMap.set_cellv(location, -1)
 	tileMap.update_bitmask_region(borders.position, borders.end)
 	player.global_position = tileMap.map_to_world(Vector2(19, 11))
 	player.create_deck()
 	player.draw_hand()
 
 func spawn_enemies():
-	var possible_spawn_locations = tileMap.get_used_cells()
-	possible_spawn_locations.shuffle()
-	for location in possible_spawn_locations:
+	for point in level_points:
 		if randf() <= 0.01:
 			var enemy = SLIME_ENEMY.instance()
 			if randf() <= 0.5:
 				enemy = GREMLIN_ENEMY.instance()
 			enemies.add_child(enemy)
-			enemy.global_position = tileMap.map_to_world(location) 
+			enemy.global_position = tileMap.map_to_world(point) 
+			if enemy.global_position.distance_to(player.global_position) <= 200:
+				enemy.queue_free()	 
+
 	for character in get_tree().get_nodes_in_group("characters"):
 		character.connect("character_died", self, "_on_character_died", [character])
 
@@ -54,14 +57,17 @@ func _input(event):
 		
 func _on_character_died(character_position: Vector2, character: CharacterBody) -> void:
 	if character is EnemyBody:
-		var mana_drops = character.get_max_health() - randi() % 5 + 1 
+		player.camera.trauma += character.healthStats.max_health * 0.1 
+		if player.mana == player.max_mana:
+			return
+		var mana_drops = randi() % 8 + 1 
 		if mana_drops <= 0:
 			var drop = MANA_DROP.instance()
-			self.add_child(drop)
+			call_deferred("add_child", drop)
 			drop.global_position = character_position
 		else:
 			for mana_drop in mana_drops:
 				var drop = MANA_DROP.instance()
-				self.add_child(drop)
+				call_deferred("add_child", drop)
 				drop.global_position = character_position
 

@@ -2,7 +2,7 @@ extends Position2D
 
 # Base Spell Projectile. 
 
-const MOVE_SPEED: int = 200
+const MOVE_SPEED: int = 400
 const DECAY_TIME: float = 10.0 
 
 var move_direction: Vector2 = Vector2.ZERO
@@ -24,6 +24,9 @@ func spawn(position: Vector2, direction: Vector2, damage: int, infliction: Strin
 	self.rotation = direction.angle()
 	move_direction = direction
 	hitbox.damage = damage
+	hitbox.status_infliction = infliction
+	self.scale.x = 1 + (damage * .1)
+	self.scale.y = 1 + (damage * .1)
 	timer.start(DECAY_TIME)
 
 func _on_worldHitbox_body_entered(_body: PhysicsBody2D) -> void:
