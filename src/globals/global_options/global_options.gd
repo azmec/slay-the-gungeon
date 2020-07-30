@@ -21,4 +21,6 @@ var is_bgm_muted: bool = false
 
 var resolution_width: int = 1280
 var resolution_height: int = 720 
-var is_fullscreen: bool = false
+var is_fullscreen: bool = false 
+
+

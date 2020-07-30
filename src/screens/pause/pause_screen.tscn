@@ -1,0 +1,68 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/fonts/nokia_cellphone/nokia_cellphone_8.tres" type="DynamicFont" id=1]
+[ext_resource path="res://src/screens/pause/pause_screen.gd" type="Script" id=2]
+
+[node name="PauseMenu" type="Control"]
+pause_mode = 2
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.168627 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 96.0
+margin_top = 72.0
+margin_right = 224.0
+margin_bottom = 144.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MainMenu" type="Button" parent="VBoxContainer"]
+margin_right = 128.0
+margin_bottom = 16.0
+custom_fonts/font = ExtResource( 1 )
+text = "put me in main coach"
+
+[node name="Restart" type="Button" parent="VBoxContainer"]
+margin_top = 20.0
+margin_right = 128.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 1 )
+text = "reload it coach"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Quit" type="Button" parent="VBoxContainer"]
+margin_top = 40.0
+margin_right = 128.0
+margin_bottom = 56.0
+custom_fonts/font = ExtResource( 1 )
+text = "take me out coach"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_left = 136.0
+margin_top = 48.0
+margin_right = 185.0
+margin_bottom = 62.0
+custom_fonts/font = ExtResource( 1 )
+text = "[ PAUSED ]"
+__meta__ = {
+"_edit_use_anchors_": false
+}

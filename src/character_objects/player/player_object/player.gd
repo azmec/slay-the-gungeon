@@ -1,3 +1,4 @@
+class_name Player
 extends CharacterBody
 
 # Player object.
@@ -195,7 +196,10 @@ func _on_damage_taken(damage: int, knockback: Vector2, infliction: String) -> vo
 	hurtbox.set_deferred("monitoring", false)
 	camera.trauma += (damage * 4) * 0.1 
 	healthbarUI.trauma += (damage) * 0.5
- 
+
+func _no_health() -> void:
+	._on_no_health() 
+
 func _on_blink_finished(_anim_name: String) -> void:
 	hurtbox.set_deferred("monitoring", true)
 

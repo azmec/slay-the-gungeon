@@ -51,6 +51,10 @@ func _input(event):
 		get_tree().reload_current_scene()
 		
 func _on_character_died(character_position: Vector2, character: CharacterBody) -> void:
+	if character is Player:
+		print("player died")
+		get_tree().reload_current_scene() 
+
 	if character is EnemyBody:
 		player.camera.trauma += character.healthStats.max_health * 0.1 
 		if player.mana == player.max_mana:

@@ -194,7 +194,9 @@ tracks/0/keys = {
 "values": [ true, false, true, false, true, false ]
 }
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=[
+"characters",
+]]
 z_index = 1
 collision_mask = 4
 script = ExtResource( 13 )
@@ -240,6 +242,7 @@ anims/idle = SubResource( 6 )
 anims/run = SubResource( 7 )
 
 [node name="Camera2D" parent="." instance=ExtResource( 24 )]
+decay = 0.8
 
 [node name="SwordPivot" type="Position2D" parent="."]
 
