@@ -204,6 +204,7 @@ max_health = 3
 
 [node name="Hurt" type="AudioStreamPlayer" parent="Sounds" index="0"]
 stream = ExtResource( 16 )
+bus = "SFX"
 
 [editable path="Hitbox"]
 

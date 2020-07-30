@@ -1,9 +1,8 @@
-[gd_scene load_steps=54 format=2]
+[gd_scene load_steps=53 format=2]
 
 [ext_resource path="res://src/character_objects/player/player_object/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/sprites/tile_art/dungeon_tileset/RandomLevelGenTileset.png" type="Texture" id=2]
 [ext_resource path="res://src/prototype_world/prototype_world.gd" type="Script" id=3]
-[ext_resource path="res://assets/bgm/musBoss1.ogg" type="AudioStream" id=4]
 [ext_resource path="res://src/screens/pause/pause_screen.tscn" type="PackedScene" id=5]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
@@ -472,13 +471,8 @@ position = Vector2( 208, 104 )
 
 [node name="Enemies" type="Node2D" parent="."]
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 4 )
-volume_db = -5.0
-autoplay = true
-bus = "BGM"
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 100
 
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource( 5 )]
+visible = false

@@ -15,6 +15,7 @@ func _ready() -> void:
 	randomize()
 	generate_level()
 	spawn_enemies()
+	BGMController.play_new_track("res://assets/bgm/musBoss1.ogg")
 
 func generate_level():
 	var walker = Walker.new(Vector2(19, 11), borders)
