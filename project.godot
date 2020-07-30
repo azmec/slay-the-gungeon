@@ -63,12 +63,13 @@ _global_script_class_icons={
 [application]
 
 config/name="Topdown Crawler"
-run/main_scene="res://src/prototype_world/prototype_world.tscn"
+run/main_scene="res://src/screens/title/title_screen.tscn"
 config/icon="res://assets/sprites/character_art/player_knight/knight_idle_anim_f0.png"
 
 [autoload]
 
 CardLibrary="*res://src/card_architecture/card_library.gd"
+Options="*res://src/globals/global_options/global_options.tscn"
 
 [display]
 
