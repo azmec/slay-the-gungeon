@@ -155,8 +155,12 @@ func get_input():
 	input_vector = input_vector.normalized()
 
 func camera_look() -> void:
-	var axis = get_local_mouse_position()
-	#var axis = Vector2(Input.get_joy_axis(0, JOY_AXIS_2), Input.get_joy_axis(0, JOY_AXIS_3)) * 125
+	var axis: Vector2
+	if Options.using_gamepad:
+		axis = Vector2(Input.get_joy_axis(0, JOY_AXIS_2), Input.get_joy_axis(0, JOY_AXIS_3)) * 125
+	else:
+		axis = get_local_mouse_position() 
+
 	camera.position.x = (0 + axis.x) / 2
 	camera.position.y = (0 + axis.y) / 2
 

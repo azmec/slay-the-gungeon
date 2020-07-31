@@ -37,4 +37,5 @@ func _on_controlOptions_pressed() -> void:
 	controlSector.visible = true
 
 func _on_backButton_pressed() -> void:
+	Settings.save_settings()
 	emit_signal("backButton_pressed")

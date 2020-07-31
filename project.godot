@@ -77,6 +77,7 @@ config/icon="res://assets/sprites/character_art/player_knight/knight_idle_anim_f
 CardLibrary="*res://src/card_architecture/card_library.gd"
 Options="*res://src/globals/global_options/global_options.tscn"
 BGMController="*res://src/globals/bgm_controller/bgm_controller.tscn"
+Settings="*res://src/globals/settings/settings.tscn"
 
 [debug]
 
