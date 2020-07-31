@@ -21,6 +21,15 @@ var sfx_volume: float = 1 setget _set_sfx_volume
 # CONTROLS 
 # ------------------------------------------------------------------ 
 
+enum ACTIONS {
+	move_up,
+	move_down,
+	move_left,
+	move_right,
+	raise_card_ui,
+	dash,
+	pause,
+}
 
 onready var masterBus: int = AudioServer.get_bus_index("Master")
 onready var bgmBus: int = AudioServer.get_bus_index("BGM") 
@@ -29,6 +38,7 @@ onready var sfxBus: int = AudioServer.get_bus_index("SFX")
 
 func _ready() -> void:
 	load_settings_from_config() 
+	load_controls_from_config()
 
 func load_settings_from_config() -> void:
 	self.resolution = Vector2(Settings.get_setting("graphics", "vertical_resolution"),Settings.get_setting("graphics", "horizontal_resolution"))
@@ -38,7 +48,14 @@ func load_settings_from_config() -> void:
 	self.bgm_volume = Settings.get_setting("audio", "bgm_volume") 
 	self.sfx_volume = Settings.get_setting("audio", "sfx_volume") 
 
-
+func load_controls_from_config() -> void:
+	for action in Settings.get_category("controls"):
+		InputMap.action_erase_events(action) 
+		var scancode = Settings.get_setting("controls", action)
+		var event = InputEventKey.new()
+		event.scancode = scancode
+		InputMap.action_add_event(action, event)
+		
 func _set_screen_resolution(new_resolution: Vector2) -> void:
 	resolution = new_resolution
 	OS.set_window_size(new_resolution)

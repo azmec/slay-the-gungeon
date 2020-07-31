@@ -18,9 +18,19 @@ var _settings = {
 		"bgm_volume": 1, 
 		"sfx_volume": 1,
 	},
+	"controls": {
+		"move_up": 87,
+		"move_down": 83, 
+		"move_left": 65, 
+		"move_right": 68,
+		"raise_card_ui": 70,
+		"dash": 32,
+		"pause": 16777217
+	}
 } 
 
 func _ready() -> void:
+	# to make settings permanent, remove save_settings()
 	save_settings()
 	load_settings() 
 
@@ -45,6 +55,9 @@ func load_settings():
 			_settings[section][key] = val 
 
 	return error 
+
+func get_category(category):
+	return _settings[category]
 
 func get_setting(catergory, key):
 	return _settings[catergory][key] 

@@ -31,132 +31,104 @@ __meta__ = {
 }
 
 [node name="Actions" type="VBoxContainer" parent="KeyboardControls/ScrollContainer"]
-margin_right = 74.0
-margin_bottom = 176.0
+margin_right = 72.0
+margin_bottom = 136.0
 alignment = 1
 
 [node name="move_up" parent="KeyboardControls/ScrollContainer/Actions" instance=ExtResource( 3 )]
-margin_right = 74.0
+margin_right = 72.0
 
 [node name="Label" parent="KeyboardControls/ScrollContainer/Actions/move_up" index="0"]
-margin_left = 21.0
-margin_right = 36.0
+margin_left = 20.0
+margin_right = 35.0
 
 [node name="Button" parent="KeyboardControls/ScrollContainer/Actions/move_up" index="1"]
-margin_left = 40.0
-margin_right = 52.0
+margin_left = 39.0
+margin_right = 51.0
 
 [node name="move_left" parent="KeyboardControls/ScrollContainer/Actions" instance=ExtResource( 3 )]
 margin_top = 20.0
-margin_right = 74.0
+margin_right = 72.0
 margin_bottom = 36.0
 
 [node name="Label" parent="KeyboardControls/ScrollContainer/Actions/move_left" index="0"]
-margin_left = 18.0
-margin_right = 40.0
+margin_left = 17.0
+margin_right = 39.0
 text = "Left:"
 
 [node name="Button" parent="KeyboardControls/ScrollContainer/Actions/move_left" index="1"]
-margin_left = 44.0
-margin_right = 56.0
+margin_left = 43.0
+margin_right = 55.0
 
 [node name="move_down" parent="KeyboardControls/ScrollContainer/Actions" instance=ExtResource( 3 )]
 margin_top = 40.0
-margin_right = 74.0
+margin_right = 72.0
 margin_bottom = 56.0
 
 [node name="Label" parent="KeyboardControls/ScrollContainer/Actions/move_down" index="0"]
-margin_left = 14.0
-margin_right = 43.0
+margin_left = 13.0
+margin_right = 42.0
 text = "Down:"
 
 [node name="Button" parent="KeyboardControls/ScrollContainer/Actions/move_down" index="1"]
-margin_left = 47.0
-margin_right = 59.0
-
-[node name="move_right" parent="KeyboardControls/ScrollContainer/Actions" instance=ExtResource( 3 )]
-margin_top = 60.0
-margin_right = 74.0
-margin_bottom = 76.0
-
-[node name="Label" parent="KeyboardControls/ScrollContainer/Actions/move_right" index="0"]
-margin_left = 15.0
-margin_right = 43.0
-text = "Right:"
-
-[node name="Button" parent="KeyboardControls/ScrollContainer/Actions/move_right" index="1"]
-margin_left = 47.0
-margin_right = 59.0
-
-[node name="attack" parent="KeyboardControls/ScrollContainer/Actions" instance=ExtResource( 3 )]
-margin_top = 80.0
-margin_right = 74.0
-margin_bottom = 96.0
-
-[node name="Label" parent="KeyboardControls/ScrollContainer/Actions/attack" index="0"]
-margin_left = 12.0
-margin_right = 46.0
-text = "Attack:"
-
-[node name="Button" parent="KeyboardControls/ScrollContainer/Actions/attack" index="1"]
-margin_left = 50.0
-margin_right = 62.0
-
-[node name="raise_card_ui" parent="KeyboardControls/ScrollContainer/Actions" instance=ExtResource( 3 )]
-margin_top = 100.0
-margin_right = 74.0
-margin_bottom = 116.0
-
-[node name="Label" parent="KeyboardControls/ScrollContainer/Actions/raise_card_ui" index="0"]
-margin_left = 1.0
-margin_right = 57.0
-text = "Raise Hand:"
-
-[node name="Button" parent="KeyboardControls/ScrollContainer/Actions/raise_card_ui" index="1"]
-margin_left = 61.0
-margin_right = 73.0
-
-[node name="select" parent="KeyboardControls/ScrollContainer/Actions" instance=ExtResource( 3 )]
-margin_top = 120.0
-margin_right = 74.0
-margin_bottom = 136.0
-
-[node name="Label" parent="KeyboardControls/ScrollContainer/Actions/select" index="0"]
-margin_left = 0.0
-margin_right = 58.0
-text = "Card Select:"
-
-[node name="Button" parent="KeyboardControls/ScrollContainer/Actions/select" index="1"]
-margin_left = 62.0
-margin_right = 74.0
-
-[node name="dash" parent="KeyboardControls/ScrollContainer/Actions" instance=ExtResource( 3 )]
-margin_top = 140.0
-margin_right = 74.0
-margin_bottom = 156.0
-
-[node name="Label" parent="KeyboardControls/ScrollContainer/Actions/dash" index="0"]
-margin_left = 16.0
-margin_right = 42.0
-text = "Dash:"
-
-[node name="Button" parent="KeyboardControls/ScrollContainer/Actions/dash" index="1"]
 margin_left = 46.0
 margin_right = 58.0
 
+[node name="move_right" parent="KeyboardControls/ScrollContainer/Actions" instance=ExtResource( 3 )]
+margin_top = 60.0
+margin_right = 72.0
+margin_bottom = 76.0
+
+[node name="Label" parent="KeyboardControls/ScrollContainer/Actions/move_right" index="0"]
+margin_left = 14.0
+margin_right = 42.0
+text = "Right:"
+
+[node name="Button" parent="KeyboardControls/ScrollContainer/Actions/move_right" index="1"]
+margin_left = 46.0
+margin_right = 58.0
+
+[node name="raise_card_ui" parent="KeyboardControls/ScrollContainer/Actions" instance=ExtResource( 3 )]
+margin_top = 80.0
+margin_right = 72.0
+margin_bottom = 96.0
+
+[node name="Label" parent="KeyboardControls/ScrollContainer/Actions/raise_card_ui" index="0"]
+margin_left = 0.0
+margin_right = 56.0
+text = "Raise Hand:"
+
+[node name="Button" parent="KeyboardControls/ScrollContainer/Actions/raise_card_ui" index="1"]
+margin_left = 60.0
+margin_right = 72.0
+
+[node name="dash" parent="KeyboardControls/ScrollContainer/Actions" instance=ExtResource( 3 )]
+margin_top = 100.0
+margin_right = 72.0
+margin_bottom = 116.0
+
+[node name="Label" parent="KeyboardControls/ScrollContainer/Actions/dash" index="0"]
+margin_left = 15.0
+margin_right = 41.0
+text = "Dash:"
+
+[node name="Button" parent="KeyboardControls/ScrollContainer/Actions/dash" index="1"]
+margin_left = 45.0
+margin_right = 57.0
+
 [node name="pause" parent="KeyboardControls/ScrollContainer/Actions" instance=ExtResource( 3 )]
-margin_top = 160.0
-margin_right = 74.0
-margin_bottom = 176.0
+margin_top = 120.0
+margin_right = 72.0
+margin_bottom = 136.0
 
 [node name="Label" parent="KeyboardControls/ScrollContainer/Actions/pause" index="0"]
-margin_left = 13.0
-margin_right = 45.0
+margin_left = 12.0
+margin_right = 44.0
 text = "Pause:"
 
 [node name="Button" parent="KeyboardControls/ScrollContainer/Actions/pause" index="1"]
-margin_left = 49.0
-margin_right = 61.0
+margin_left = 48.0
+margin_right = 60.0
 
 [editable path="KeyboardControls/ScrollContainer/Actions/move_up"]
 
@@ -166,11 +138,7 @@ margin_right = 61.0
 
 [editable path="KeyboardControls/ScrollContainer/Actions/move_right"]
 
-[editable path="KeyboardControls/ScrollContainer/Actions/attack"]
-
 [editable path="KeyboardControls/ScrollContainer/Actions/raise_card_ui"]
-
-[editable path="KeyboardControls/ScrollContainer/Actions/select"]
 
 [editable path="KeyboardControls/ScrollContainer/Actions/dash"]
 

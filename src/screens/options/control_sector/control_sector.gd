@@ -8,17 +8,6 @@ extends Control
 # MUST be EXACTLY named according to the action they represent. The same goes for anything
 # in the ACTIONS enum. 
 
-enum ACTIONS {
-	move_up,
-	move_down,
-	move_left,
-	move_right,
-	attack,
-	raise_card_ui,
-	select,
-	dash,
-	pause,
-}
 
 onready var keyActions = $KeyboardControls/ScrollContainer/Actions
 
@@ -37,7 +26,7 @@ func _input(event: InputEvent) -> void:
 		can_change_key = false
 
 func _set_key_text() -> void:
-	for action in ACTIONS:
+	for action in Options.ACTIONS:
 		var action_entry = get_node("KeyboardControls/ScrollContainer/Actions/" + str(action))
 		action_entry.button.set_pressed(false)
 		if !InputMap.get_action_list(action).empty():
@@ -52,6 +41,7 @@ func _set_key_text() -> void:
 func _change_key(new_key) -> void: 
 	var input_array = InputMap.get_action_list(current_key_action)
 	input_array[0] = new_key  
+	Settings.set_setting("controls", current_key_action, new_key.scancode)
 	InputMap.action_erase_events(current_key_action)
 	for input in input_array:
 		InputMap.action_add_event(current_key_action, input)
@@ -62,7 +52,7 @@ func _on_key_action_entry_button_pressed(action_entry) -> void:
 	can_change_key = true
 	current_key_action = action_entry.get_name() 
 
-	for action in ACTIONS:
+	for action in Options.ACTIONS:
 		if action != action_entry.get_name():
 			action_entry.button.set_pressed(false)
 			
