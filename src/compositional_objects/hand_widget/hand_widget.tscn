@@ -3,7 +3,7 @@
 [ext_resource path="res://src/compositional_objects/hand_widget/hand_widget.gd" type="Script" id=1]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 160, 64 )
+extents = Vector2( 160, 96 )
 
 [node name="HandWidget" type="Control"]
 margin_left = 16.0

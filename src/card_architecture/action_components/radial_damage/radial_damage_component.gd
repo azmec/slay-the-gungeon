@@ -13,7 +13,6 @@ func load_arguments(damage_component: Dictionary, owner) -> void:
 	amount = damage_component["amount"]
 	radius = damage_component["radius"]
 	status_infliction = damage_component["status_infliction"] 
-	print(status_infliction)
 	card_player = owner 
 
 func play() -> void:

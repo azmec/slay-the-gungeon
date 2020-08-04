@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://assets/fonts/nokia_cellphone/nokia_cellphone_8.tres" type="DynamicFont" id=1]
 [ext_resource path="res://src/screens/title/title_screen.gd" type="Script" id=2]
 [ext_resource path="res://src/screens/options/options_screen.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/themes/default_theme/default_theme.tres" type="Theme" id=4]
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -15,6 +15,7 @@ __meta__ = {
 [node name="TitleScreen" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -24,8 +25,7 @@ margin_left = 112.0
 margin_top = 48.0
 margin_right = 201.0
 margin_bottom = 68.0
-custom_fonts/font = ExtResource( 1 )
-text = "put me in coach"
+text = "MENU_START"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -35,8 +35,7 @@ margin_left = 106.0
 margin_top = 80.0
 margin_right = 208.0
 margin_bottom = 100.0
-custom_fonts/font = ExtResource( 1 )
-text = "let me think coach"
+text = "MENU_OPTIONS"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -46,8 +45,7 @@ margin_left = 106.0
 margin_top = 112.0
 margin_right = 208.0
 margin_bottom = 132.0
-custom_fonts/font = ExtResource( 1 )
-text = "take me out coach"
+text = "MENU_QUIT"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -57,7 +55,6 @@ margin_left = 126.0
 margin_top = 24.0
 margin_right = 188.0
 margin_bottom = 38.0
-custom_fonts/font = ExtResource( 1 )
 text = "gamer game"
 __meta__ = {
 "_edit_use_anchors_": false

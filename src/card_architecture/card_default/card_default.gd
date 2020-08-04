@@ -15,7 +15,7 @@ class AnimationState extends Reference:
 	var rot = 0
 	var scale = Vector2(1, 1)
 
-export var default_size: Vector2 = Vector2(0.2, 0.2)
+export var default_size: Vector2 = Vector2(1.0, 1.0)
 
 # Time it takes for animation in seconds
 export var animation_speed: float = 0.2
@@ -38,6 +38,9 @@ var image: Resource
 var components: Array = []
 
 onready var sprite = $Sprite
+onready var description_label = $CardRect/Description
+onready var name_label = $CardRect/Name 
+onready var cost_label = $CardRect/Cost
 onready var mouseArea = $MouseArea
 onready var componentContainer = $ComponentContainer
 
@@ -54,6 +57,10 @@ func _ready() -> void:
 	_animation.connect("tween_completed", self, "_on_animation_completed")
 
 	sprite.texture = image
+	description_label.bbcode_text = "[center]" + desc + "[/center]"
+	name_label.text = text_name 
+	cost_label.text = str(cost)
+
 	_animation.start()
 
 	_read_card_data()

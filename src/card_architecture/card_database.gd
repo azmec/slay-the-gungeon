@@ -13,7 +13,7 @@ var database_name: String = ""
 var _cards: Dictionary = {}
 
 func _init(name: String) -> void:
-	self.name = name
+	self.database_name = name
 
 func count() -> int:
 	return _cards.size()
@@ -42,7 +42,6 @@ func add_multiple_cards(card_array: Array) -> void:
 			if card_exists(card.card_name):
 				card.card_name = str(card.card_name) + str(_cards.size())
 			_cards[card.card_name] = card 
-
 	emit_signal("multiple_cards_added", card_array)
 	emit_signal("size_changed", count())
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://assets/fonts/nokia_cellphone/nokia_cellphone_8.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/themes/default_theme/default_theme.tres" type="Theme" id=1]
 [ext_resource path="res://src/screens/options/options_screen.gd" type="Script" id=2]
 [ext_resource path="res://src/screens/options/video_sector/video_sector.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/screens/options/audio_sector/audio_sector.tscn" type="PackedScene" id=4]
@@ -9,6 +9,7 @@
 [node name="OptionsScreen" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = ExtResource( 1 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -19,8 +20,7 @@ margin_left = 16.0
 margin_top = 8.0
 margin_right = 57.0
 margin_bottom = 28.0
-custom_fonts/font = ExtResource( 1 )
-text = "VIDEO"
+text = "OPTIONS_VIDEO"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -30,8 +30,7 @@ margin_left = 72.0
 margin_top = 8.0
 margin_right = 112.0
 margin_bottom = 28.0
-custom_fonts/font = ExtResource( 1 )
-text = "AUDIO"
+text = "OPTIONS_AUDIO"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -41,8 +40,7 @@ margin_left = 128.0
 margin_top = 8.0
 margin_right = 190.0
 margin_bottom = 28.0
-custom_fonts/font = ExtResource( 1 )
-text = "CONTROLS"
+text = "OPTIONS_CONTROLS"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -52,8 +50,7 @@ margin_left = 200.0
 margin_top = 8.0
 margin_right = 303.0
 margin_bottom = 28.0
-custom_fonts/font = ExtResource( 1 )
-text = "put me back coach"
+text = "OPTIONS_BACK"
 __meta__ = {
 "_edit_use_anchors_": false
 }

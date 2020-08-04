@@ -1,0 +1,25 @@
+id,en,es
+NONE,,
+MENU_START,put me in coach,Comenzar
+MENU_OPTIONS,let me think coach,Opciones
+MENU_QUIT,take me out coach,Dejar de Jugar
+OPTIONS_VIDEO,VIDEO,Vídeo
+OPTIONS_AUDIO,AUDIO,Audio
+OPTIONS_CONTROLS,CONTROLS,Controlar
+OPTIONS_BACK,put me back coach,Atrás
+OPTIONS_VIDEO_FULLSCREEN,Fullscreen,Pantalla Completa
+OPTIONS_VIDEO_RESOLUTION,Resolution,Resolución
+OPTIONS_AUDIO_MASTER_VOLUME,Master Volume,Volumen General
+OPTIONS_AUDIO_BGM_VOLUME,Background Music Volume,Volumen Musica
+OPTIONS_AUDIO_SFX_VOLUME,Sound Effects Volume,Volumen SFX
+OPTIONS_CONTROLS_UP,Up,Arriba
+OPTIONS_CONTROLS_LEFT,Left,Izquierda
+OPTIONS_CONTROLS_RIGHT,Right,Derecho
+OPTIONS_CONTROLS_DOWN,Down,Abajo
+OPTIONS_CONTROLS_RAISE_HAND,Raise hand,Raza Mano
+OPTIONS_CONTROLS_DASH,Dash,Precipitarse
+OPTIONS_CONTROLS_PAUSE,Pause,Pausa
+PAUSE_RESUME,put me back in coach,Continuar
+PAUSE_MAIN_MENU,put me in main coach,Menú Principal
+PAUSE_RESTART,run it back coach,Reanudar
+GAME_DISCARD_HAND,Discard Hand,Descarte Mano

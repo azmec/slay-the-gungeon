@@ -21,7 +21,7 @@ var attacking: bool = false
 var hand_raised: bool = false
 var maximum_deck_size = 12
 var maximum_hand_size = 5
-var max_mana = 10
+var max_mana = 3
 var deck = CardDatabase.new("player_deck")
 var hand = CardDatabase.new("player_hand")
 
@@ -32,11 +32,9 @@ onready var blinkAnimationPlayer = $BlinkAnimationPlayer
 onready var healthbarUI = $CanvasLayer/Healthbar
 onready var manaBarUI = $CanvasLayer/Manabar
 onready var canvasLayer = $CanvasLayer
-onready var cardContainer = $CardContainer
 onready var deckCount = $CanvasLayer/DeckCount
 onready var handWidget = $CanvasLayer/HandWidget
 onready var drawButton = $CanvasLayer/DrawButton
-onready var swordTween = $Sword/SwordTween 
 onready var dashTimer = $DashTimer
 onready var ghostTimer = $GhostTimer
 onready var discardButton = $CanvasLayer/DiscardButton 
@@ -57,8 +55,11 @@ func _ready() -> void:
 	discardButton.connect("pressed", self, "_on_discard_button_pressed")
 	dashTimer.connect("timeout", self, "_on_dashTimer_timeout")
 	ghostTimer.connect("timeout", self, "_on_ghostTimer_timeout")
-	handWidget.set_hand(hand, deck, self)
 	mana = max_mana
+	deck = CardLibrary.draft_player_deck()
+	handWidget.set_hand(hand, deck, self)
+	draw_hand()
+	
 	
 func _physics_process(delta: float) -> void: 
 	match state:
@@ -81,6 +82,10 @@ func _physics_process(delta: float) -> void:
 		attacking = true
 	if Input.is_action_just_pressed("raise_card_ui"):
 		toggle_hand_widget() 
+
+	if mana == 0 or hand.count() == 0:
+		discard_hand()
+		draw_hand()
 	deckCount.text = str(deck.count())
 	healthbarUI.healthSliver.rect_size.x = (healthStats.health / float(healthStats.max_health)) * 80
 	healthbarUI.numericDisplay.text = str(healthStats.health) + "/" + str(healthStats.max_health)
@@ -104,23 +109,26 @@ func create_deck() -> void:
 		#print(new_card.card_name)
 
 func draw_hand() -> void:
+	var draw_array = []
 	for card in maximum_hand_size:
 		if deck.count() != 0:
 			var new_draw = deck.draw_card()
-			hand.add_card(new_draw)
+			draw_array.push_front(new_draw) 
 	
-func draw_random_card_from_hand() -> void:
-	var random_card = hand.draw_card()
-	var random_playable_card = load("res://src/card_architecture/card_default/card_default.tscn").instance()
-	random_playable_card.initialize_card(random_card)
-	cardContainer.add_child(random_playable_card)
-	random_playable_card._play_card()
+	hand.add_multiple_cards(draw_array)
+
+func discard_hand() -> void:
+	var draw_array = []
+	for card in hand.count():
+		var new_draw = hand.draw_card()
+		draw_array.push_front(new_draw)
+
+	deck.add_multiple_cards(draw_array) 
+	mana = max_mana
 
 func reset() -> void:
 	deck.clear()
 	hand.clear()
-	for children in cardContainer.get_children():
-		children.call_deferred("free")
 
 func idle(delta: float) -> void:
 	get_input()
@@ -212,8 +220,4 @@ func _on_draw_button_pressed() -> void:
 	hand.add_card(new_draw)
 
 func _on_discard_button_pressed() -> void:
-	if hand.count() == 0: return 
-	for card in hand.count():
-		var new_draw = hand.draw_card()
-		deck.add_card(new_draw) 
-	draw_hand()
+	discard_hand()

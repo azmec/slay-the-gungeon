@@ -5,9 +5,6 @@ extends OptionButton
 
 # You can change this between different instances to reflect what options you would like.
 export var new_options: Array = [ 
-	"option_1",
-	"option_2", 
-	"option_3"
 ] 
 
 func _ready():
@@ -16,4 +13,4 @@ func _ready():
 
 func _add_options(new_set: Array) -> void: 
 	for option in new_set:
-		self.add_item(option)
+		self.add_item(str(option))

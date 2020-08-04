@@ -25,7 +25,7 @@ margin_top = 8.0
 margin_right = 136.0
 margin_bottom = 31.0
 custom_fonts/font = ExtResource( 2 )
-text = "Master Volume
+text = "OPTIONS_AUDIO_MASTER_VOLUME
 "
 __meta__ = {
 "_edit_use_anchors_": false
@@ -56,7 +56,7 @@ margin_top = 40.0
 margin_right = 136.0
 margin_bottom = 54.0
 custom_fonts/font = ExtResource( 2 )
-text = "Background Music Volume"
+text = "OPTIONS_AUDIO_BGM_VOLUME"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -86,7 +86,7 @@ margin_top = 72.0
 margin_right = 137.0
 margin_bottom = 86.0
 custom_fonts/font = ExtResource( 2 )
-text = "Sound Effects Volume"
+text = "OPTIONS_AUDIO_SFX_VOLUME"
 __meta__ = {
 "_edit_use_anchors_": false
 }

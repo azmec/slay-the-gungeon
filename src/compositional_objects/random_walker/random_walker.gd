@@ -5,8 +5,8 @@ class_name Walker
 
 const DIRECTIONS: Array = [Vector2(1, 0), Vector2(0, -1), Vector2(-1, 0), Vector2(0, 1)]
 const LONGEST_CORRIDOR: int = 6
-const MINIMUM_ROOM_WIDTH = 2
-const MINIMUM_ROOM_HEIGHT = 2
+const MINIMUM_ROOM_WIDTH = 4
+const MINIMUM_ROOM_HEIGHT = 4
 
 
 var position: Vector2 = Vector2.ZERO

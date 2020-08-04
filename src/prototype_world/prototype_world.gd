@@ -19,15 +19,13 @@ func _ready() -> void:
 
 func generate_level():
 	var walker = Walker.new(Vector2(19, 11), borders)
-	var map = walker.walk(1500)
+	var map = walker.walk(700)
 	level_points = map
 	walker.queue_free()
 	for location in map:
 		tileMap.set_cellv(location, -1)
 	tileMap.update_bitmask_region(borders.position, borders.end)
 	player.global_position = tileMap.map_to_world(Vector2(19, 11))
-	player.create_deck()
-	player.draw_hand()
 
 func spawn_enemies():
 	for point in level_points:

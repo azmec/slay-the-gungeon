@@ -194,6 +194,11 @@ pause={
 2d_physics/layer_9="CardPlayCollision"
 2d_physics/layer_10="CardPlayArea"
 
+[locale]
+
+translations=PoolStringArray( "res://assets/translations/text_keys.en.translation", "res://assets/translations/text_keys.es.translation" )
+
 [rendering]
 
+environment/default_clear_color=Color( 0.4, 0.517647, 0.372549, 1 )
 environment/default_environment="res://default_env.tres"

@@ -102,12 +102,10 @@ func _remove_playable_card(card: CardData) -> void:
 		if playable_card.card_name == card.card_name:
 			_active_cards.remove_child(playable_card)
 			_discarded_cards.add_child(playable_card)
-			# If the transform was applied and successful, we will wait
-			# for the animation to finish.
-			_apply_discard_transform(playable_card)
+			if _apply_discard_transform(playable_card):
+				yield(get_tree().create_timer(0.07), "timeout")
 			_discarded_cards.remove_child(playable_card)
 			playable_card.queue_free() 
-			_deck.add_card(card)
 
 func _apply_hand_transform() -> void:
 	yield(get_tree(), "idle_frame")
@@ -173,9 +171,11 @@ func _on_hand_card_added(added_card: CardData) -> void:
 	_apply_hand_transform()
 
 func _on_hand_multiple_cards_added(cards: Array) -> void:
+	print("adding multiple cards")
 	for card in cards:
 		var new_card = _add_playable_card(card)
-		_apply_draw_transform(card)
+		_apply_draw_transform(new_card)
+	#yield(get_tree().create_timer(0.1), "timeout")
 	_apply_hand_transform()
 
 func _on_hand_card_removed(card: CardData) -> void:
@@ -201,8 +201,10 @@ func _on_playable_card_mouse_released(button, card: PlayableCard) -> void:
 		if _play_area_colliding() and card.cost <= _owner.mana: 
 			card.play_card()
 			_owner.mana -= card.cost
-			_owner.call_deferred("_on_draw_button_pressed")
 			card.pop_animation_state()
+			_deck.add_card(card.get_card_data())
+			print(_deck.cards())
+			print(card.text_name)
 			_remove_playable_card(card.get_card_data())
 			_hand.remove_card(card.get_card_data().card_name)
 		else:

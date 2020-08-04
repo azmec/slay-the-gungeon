@@ -41,7 +41,7 @@ func _ready() -> void:
 	load_controls_from_config()
 
 func load_settings_from_config() -> void:
-	self.resolution = Vector2(Settings.get_setting("graphics", "vertical_resolution"),Settings.get_setting("graphics", "horizontal_resolution"))
+	self.resolution = Vector2(Settings.get_setting("graphics", "horizontal_resolution"),Settings.get_setting("graphics", "vertical_resolution"))
 	self.is_fullscreen = Settings.get_setting("graphics", "is_fullscreen")
 	
 	self.master_volume = Settings.get_setting("audio", "master_volume") 
@@ -59,8 +59,10 @@ func load_controls_from_config() -> void:
 func _set_screen_resolution(new_resolution: Vector2) -> void:
 	resolution = new_resolution
 	OS.set_window_size(new_resolution)
-	Settings.set_setting("graphics", "horizontal_resolution", 1280)
-	Settings.set_setting("graphics", "vertical_resolution", 720) 
+	Settings.set_setting("graphics", "horizontal_resolution", resolution.x)
+	Settings.set_setting("graphics", "vertical_resolution", resolution.y) 
+
+	OS.set_window_position((OS.get_screen_size() * 0.5) - (OS.get_window_size() * 0.5))
 
 func _set_fullscreen(value: bool) -> void:
 	is_fullscreen = value
