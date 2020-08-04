@@ -15,7 +15,7 @@ func _ready() -> void:
 	randomize()
 	generate_level()
 	spawn_enemies()
-	BGMController.play_new_track("res://assets/bgm/musBoss1.ogg")
+	#BGMController.play_new_track("res://assets/bgm/musBoss1.ogg")
 
 func generate_level():
 	var walker = Walker.new(Vector2(19, 11), borders)
@@ -24,8 +24,10 @@ func generate_level():
 	walker.queue_free()
 	for location in map:
 		tileMap.set_cellv(location, -1)
+		$GrassTileMap.set_cellv(location, randi() % 7)
 	tileMap.update_bitmask_region(borders.position, borders.end)
 	player.global_position = tileMap.map_to_world(Vector2(19, 11))
+		
 
 func spawn_enemies():
 	for point in level_points:

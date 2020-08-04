@@ -1,21 +1,22 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://src/character_objects/base_enemy_character/base_enemy_character.tscn" type="PackedScene" id=1]
-[ext_resource path="res://assets/sprites/character_art/enemies/slime/slime_idle_anim_f4.png" type="Texture" id=2]
-[ext_resource path="res://assets/sprites/character_art/enemies/slime/slime_idle_anim_f2.png" type="Texture" id=3]
-[ext_resource path="res://assets/sprites/character_art/enemies/slime/slime_idle_anim_f0.png" type="Texture" id=4]
-[ext_resource path="res://assets/sprites/character_art/enemies/slime/slime_idle_anim_f3.png" type="Texture" id=5]
-[ext_resource path="res://assets/sprites/character_art/enemies/slime/slime_run_anim_f5.png" type="Texture" id=6]
-[ext_resource path="res://assets/sprites/character_art/enemies/slime/slime_run_anim_f1.png" type="Texture" id=7]
-[ext_resource path="res://assets/sprites/character_art/enemies/slime/slime_run_anim_f0.png" type="Texture" id=8]
+[ext_resource path="res://assets/sprites/character_art/enemies/small_slime/slime_idle4.png" type="Texture" id=2]
+[ext_resource path="res://assets/sprites/character_art/enemies/small_slime/slime_idle2.png" type="Texture" id=3]
+[ext_resource path="res://assets/sprites/character_art/enemies/small_slime/slime_idle3.png" type="Texture" id=4]
+[ext_resource path="res://assets/sprites/character_art/enemies/small_slime/slime_idle1.png" type="Texture" id=5]
+[ext_resource path="res://assets/sprites/character_art/enemies/small_slime/slime_land2.png" type="Texture" id=6]
+[ext_resource path="res://assets/sprites/character_art/enemies/small_slime/slime_jump4.png" type="Texture" id=7]
+[ext_resource path="res://assets/sprites/character_art/enemies/small_slime/slime_land4.png" type="Texture" id=8]
 [ext_resource path="res://src/character_objects/enemies/slime/slime.gd" type="Script" id=9]
-[ext_resource path="res://assets/sprites/character_art/enemies/slime/slime_run_anim_f2.png" type="Texture" id=10]
-[ext_resource path="res://assets/sprites/character_art/enemies/slime/slime_run_anim_f4.png" type="Texture" id=11]
-[ext_resource path="res://assets/sprites/character_art/enemies/slime/slime_idle_anim_f5.png" type="Texture" id=12]
+[ext_resource path="res://assets/sprites/character_art/enemies/small_slime/slime_jump3.png" type="Texture" id=10]
+[ext_resource path="res://assets/sprites/character_art/enemies/small_slime/slime_land1.png" type="Texture" id=11]
+[ext_resource path="res://assets/sprites/character_art/enemies/small_slime/slime_land3.png" type="Texture" id=12]
 [ext_resource path="res://src/shaders/white_shader/white_flash.shader" type="Shader" id=13]
-[ext_resource path="res://assets/sprites/character_art/enemies/slime/slime_idle_anim_f1.png" type="Texture" id=14]
-[ext_resource path="res://assets/sprites/character_art/enemies/slime/slime_run_anim_f3.png" type="Texture" id=15]
+[ext_resource path="res://assets/sprites/character_art/enemies/small_slime/slime_jump1.png" type="Texture" id=14]
+[ext_resource path="res://assets/sprites/character_art/enemies/small_slime/slime_jump2.png" type="Texture" id=15]
 [ext_resource path="res://assets/sfx/punch.wav" type="AudioStream" id=16]
+[ext_resource path="res://assets/sprites/character_art/player/shadow.png" type="Texture" id=17]
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
@@ -24,19 +25,24 @@ shader_param/active = false
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
-"frames": [ ExtResource( 4 ), ExtResource( 14 ), ExtResource( 3 ), ExtResource( 5 ), ExtResource( 2 ), ExtResource( 12 ) ],
+"frames": [ ExtResource( 5 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 2 ) ],
 "loop": true,
 "name": "idle",
 "speed": 10.0
 }, {
-"frames": [ ExtResource( 8 ), ExtResource( 7 ), ExtResource( 10 ), ExtResource( 15 ), ExtResource( 11 ), ExtResource( 6 ) ],
-"loop": true,
-"name": "run",
+"frames": [ ExtResource( 14 ), ExtResource( 15 ), ExtResource( 10 ), ExtResource( 7 ) ],
+"loop": false,
+"name": "jump",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 11 ), ExtResource( 6 ), ExtResource( 12 ), ExtResource( 8 ) ],
+"loop": false,
+"name": "land",
 "speed": 10.0
 } ]
 
-[sub_resource type="CircleShape2D" id=3]
-radius = 8.0
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 7, 5 )
 
 [sub_resource type="CircleShape2D" id=4]
 radius = 6.02747
@@ -51,46 +57,8 @@ radius = 10.6558
 radius = 202.814
 
 [sub_resource type="Animation" id=8]
-resource_name = "hurt"
-tracks/0/type = "value"
-tracks/0/path = NodePath("AnimatedSprite:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ "idle" ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("AnimatedSprite:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 4 ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("AnimatedSprite:material:shader_param/active")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ true, false, true, false ]
-}
-
-[sub_resource type="Animation" id=9]
-length = 0.6
+resource_name = "idle"
+length = 0.4
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:animation")
@@ -111,26 +79,14 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 0, 1, 2, 3, 4, 5 ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("AnimatedSprite:material:shader_param/active")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
+"values": [ 0, 1, 2, 3 ]
 }
 
-[sub_resource type="Animation" id=10]
-length = 0.6
+[sub_resource type="Animation" id=9]
+resource_name = "jump"
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:animation")
 tracks/0/interp = 1
@@ -141,7 +97,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ "run" ]
+"values": [ "jump" ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("AnimatedSprite:frame")
@@ -150,57 +106,139 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 0, 1, 2, 3, 4, 5 ]
+"values": [ 0, 1, 2, 3 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("AnimatedSprite:material:shader_param/active")
+tracks/2/path = NodePath("AnimatedSprite:scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3 ),
+"transitions": PoolRealArray( 2.5, 0.5, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.5, 0.5 ), Vector2( 0.5, 1.5 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("AnimatedSprite:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3 ),
+"transitions": PoolRealArray( 2.5, 0.5, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -3 ), Vector2( 0, 1 ), Vector2( 0, -3 ) ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "land"
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ false ]
+"values": [ "land" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("AnimatedSprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 0.5, 2.5, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -3 ), Vector2( 0, 1 ), Vector2( 0, -3 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("AnimatedSprite:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 0.5, 2.5, 1 ),
+"update": 0,
+"values": [ Vector2( 0.5, 1.5 ), Vector2( 1.5, 0.5 ), Vector2( 1, 1 ) ]
 }
 
 [node name="EnemyCharacter" instance=ExtResource( 1 )]
 script = ExtResource( 9 )
 MAX_SPEED = 125
 
-[node name="AnimatedSprite" parent="." index="0"]
-material = SubResource( 1 )
-frames = SubResource( 2 )
-animation = "run"
+[node name="Shadow" type="Sprite" parent="." index="0"]
+self_modulate = Color( 1, 1, 1, 0.603922 )
+position = Vector2( 0, 4 )
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 17 )
 
-[node name="CollisionShape2D" parent="." index="1"]
+[node name="AnimatedSprite" parent="." index="1"]
+material = SubResource( 1 )
+position = Vector2( 0, -3 )
+frames = SubResource( 2 )
+animation = "idle"
+
+[node name="CollisionShape2D" parent="." index="2"]
 shape = SubResource( 3 )
+
+[node name="Hitbox" parent="." index="3"]
+visible = false
 
 [node name="CollisionShape2D" parent="Hitbox" index="0"]
 shape = SubResource( 4 )
 
+[node name="Hurtbox" parent="." index="4"]
+visible = false
+
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
 shape = SubResource( 5 )
+
+[node name="SoftCollision" parent="." index="5"]
+visible = false
 
 [node name="CollisionShape2D" parent="SoftCollision" index="0"]
 shape = SubResource( 6 )
 
+[node name="PlayerDetector" parent="." index="6"]
+visible = false
+
 [node name="CollisionShape2D" parent="PlayerDetector" index="0"]
 shape = SubResource( 7 )
 
-[node name="AnimationPlayer" parent="." index="7"]
-anims/hurt = SubResource( 8 )
-anims/idle = SubResource( 9 )
-anims/run = SubResource( 10 )
+[node name="AnimationPlayer" parent="." index="8"]
+anims/idle = SubResource( 8 )
+anims/jump = SubResource( 9 )
+anims/land = SubResource( 10 )
 
-[node name="HealthStats" parent="." index="8"]
+[node name="HealthStats" parent="." index="9"]
 max_health = 3
 
-[node name="Sounds" type="Node" parent="." index="9"]
+[node name="Sounds" type="Node" parent="." index="10"]
 
 [node name="Hurt" type="AudioStreamPlayer" parent="Sounds" index="0"]
 stream = ExtResource( 16 )

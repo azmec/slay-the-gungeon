@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://assets/sprites/character_art/player/run_anim/player_run2.png" type="Texture" id=1]
 [ext_resource path="res://assets/sprites/character_art/player/idle_anim/player_idle1.png" type="Texture" id=2]
@@ -11,14 +11,16 @@
 [ext_resource path="res://assets/sprites/character_art/player/run_anim/player_run1.png" type="Texture" id=9]
 [ext_resource path="res://assets/sprites/character_art/player/idle_anim/player_idle4.png" type="Texture" id=10]
 [ext_resource path="res://assets/sprites/character_art/player/player_sword.png" type="Texture" id=11]
+[ext_resource path="res://assets/sprites/character_art/player/shadow.png" type="Texture" id=12]
 [ext_resource path="res://src/character_objects/player/player_object/player.gd" type="Script" id=13]
+[ext_resource path="res://assets/themes/default_theme/default_theme.tres" type="Theme" id=14]
 [ext_resource path="res://src/compositional_objects/health_stats/health_stats.tscn" type="PackedScene" id=15]
 [ext_resource path="res://src/compositional_objects/hitbox/hitbox.tscn" type="PackedScene" id=16]
 [ext_resource path="res://src/shaders/white_shader/white_flash.shader" type="Shader" id=17]
 [ext_resource path="res://src/compositional_objects/hurtbox/hurtbox.tscn" type="PackedScene" id=18]
 [ext_resource path="res://src/compositional_objects/healthbar/healthbar.tscn" type="PackedScene" id=19]
 [ext_resource path="res://src/compositional_objects/draw_button/draw_button.tscn" type="PackedScene" id=20]
-[ext_resource path="res://assets/sprites/cards/hearthstone_cards/classic_pack.png" type="Texture" id=21]
+[ext_resource path="res://assets/sprites/ui_elements/deck_sprite.png" type="Texture" id=21]
 [ext_resource path="res://assets/fonts/nokia_cellphone/nokia_cellphone_8.tres" type="DynamicFont" id=22]
 [ext_resource path="res://src/compositional_objects/hand_widget/hand_widget.tscn" type="PackedScene" id=23]
 [ext_resource path="res://src/compositional_objects/camera/camera.tscn" type="PackedScene" id=24]
@@ -193,6 +195,11 @@ MAX_SPEED = 150
 ACCELERATION = 900
 FRICTION = 800
 
+[node name="Shadow" type="Sprite" parent="."]
+self_modulate = Color( 1, 1, 1, 0.372549 )
+position = Vector2( 0, 8 )
+texture = ExtResource( 12 )
+
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 position = Vector2( 0, 5 )
 amount = 20
@@ -215,7 +222,7 @@ color_ramp = SubResource( 1 )
 material = SubResource( 2 )
 frames = SubResource( 3 )
 animation = "run"
-frame = 3
+frame = 2
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -330,28 +337,21 @@ __meta__ = {
 }
 
 [node name="DrawButton" parent="CanvasLayer" instance=ExtResource( 20 )]
+visible = false
 margin_left = 8.0
 margin_top = 32.0
 margin_right = 68.0
 margin_bottom = 52.0
 
-[node name="DiscardButton" parent="CanvasLayer" instance=ExtResource( 20 )]
-margin_left = 256.0
-margin_top = 32.0
-margin_right = 316.0
-margin_bottom = 52.0
-text = "GAME_DISCARD_HAND"
-
 [node name="Deck" type="Sprite" parent="CanvasLayer"]
-position = Vector2( 16, 72 )
-scale = Vector2( 0.1, 0.1 )
+position = Vector2( 10, 40 )
 texture = ExtResource( 21 )
 
 [node name="DeckCount" type="Label" parent="CanvasLayer"]
-margin_left = 32.0
-margin_top = 64.0
-margin_right = 72.0
-margin_bottom = 78.0
+margin_left = 18.0
+margin_top = 36.0
+margin_right = 58.0
+margin_bottom = 50.0
 custom_fonts/font = ExtResource( 22 )
 text = "12"
 __meta__ = {
@@ -360,7 +360,17 @@ __meta__ = {
 
 [node name="HandWidget" parent="CanvasLayer" instance=ExtResource( 23 )]
 
+[node name="DiscardButton" parent="CanvasLayer/HandWidget" instance=ExtResource( 20 )]
+margin_left = 168.0
+margin_top = -8.0
+margin_right = 280.0
+margin_bottom = 12.0
+theme = ExtResource( 14 )
+text = "GAME_DISCARD_HAND"
+align = 1
+
 [node name="Label" type="Label" parent="CanvasLayer"]
+visible = false
 margin_left = 112.0
 margin_right = 225.0
 margin_bottom = 14.0
@@ -379,5 +389,3 @@ __meta__ = {
 [editable path="SwordPivot/Sword/Hurtbox"]
 
 [editable path="CanvasLayer/Manabar"]
-
-[editable path="CanvasLayer/DiscardButton"]

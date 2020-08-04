@@ -37,7 +37,7 @@ onready var handWidget = $CanvasLayer/HandWidget
 onready var drawButton = $CanvasLayer/DrawButton
 onready var dashTimer = $DashTimer
 onready var ghostTimer = $GhostTimer
-onready var discardButton = $CanvasLayer/DiscardButton 
+onready var discardButton = $CanvasLayer/HandWidget/DiscardButton 
 onready var walkParticles = $CPUParticles2D
 
 onready var mana = max_mana setget _set_mana

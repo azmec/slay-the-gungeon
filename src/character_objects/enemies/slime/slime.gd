@@ -1,7 +1,9 @@
 extends EnemyBody
 
-# Standard slime enemy. Will chase towards player if in 
-# detection zone. Else, it will wander. 
+# Standard slime enemy. To move, the slime jumps and lands, producing some bullets upon
+# impact. As such, the way it chooses to move is it picks a position in a radius, and moves there.
+# As it moves, it will enter the "jump" animation. Once it's more or less at the target point,
+# it will "land". 
 
 enum {
 	IDLE,
@@ -31,28 +33,13 @@ func _physics_process(delta: float) -> void:
 
 func idle(delta: float) -> void:
 	animationPlayer.play("idle")
-	velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
-	if playerDetector.can_see_player():
-		state = CHASE
+	pass
 
 func wander(delta: float) -> void:
-	animationPlayer.play("run") 
-	if playerDetector.can_see_player():
-		state = CHASE 
-	var wander_direction = self.global_position.direction_to(wanderController.target_position)
-	velocity = velocity.move_toward(wander_direction * MAX_SPEED, ACCELERATION * delta) 
-	if self.global_position.distance_to(wanderController.target_position) <= 4:
-		_update_wander() 
+	pass
 
 func chase(delta:float) -> void:
-	if playerDetector.can_see_player():
-		animationPlayer.play("run")
-		var player = playerDetector.player
-		var direction_to_player = self.global_position.direction_to(player.global_position)
-		velocity = velocity.move_toward(direction_to_player * MAX_SPEED, ACCELERATION * delta)
-	else:
-		state = IDLE
-	
+	pass
 func stagger(delta:float) -> void:
 	animationPlayer.play("hurt")
 	velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)

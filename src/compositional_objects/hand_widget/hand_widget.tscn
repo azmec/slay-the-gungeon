@@ -18,7 +18,7 @@ draw_point = NodePath("DrawPoint")
 discard_point = NodePath("DiscardPoint")
 
 [node name="DrawPoint" type="Position2D" parent="."]
-position = Vector2( 0, -40 )
+position = Vector2( -8, -72 )
 
 [node name="DiscardPoint" type="Position2D" parent="."]
 position = Vector2( 272, 48 )
