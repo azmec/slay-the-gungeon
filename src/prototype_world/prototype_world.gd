@@ -31,10 +31,10 @@ func generate_level():
 
 func spawn_enemies():
 	for point in level_points:
-		if randf() <= 0.01:
+		if randf() <= 0.003:
 			var enemy = SLIME_ENEMY.instance()
 			if randf() <= 0.5:
-				enemy = GREMLIN_ENEMY.instance()
+				enemy = SLIME_ENEMY.instance()
 			enemies.add_child(enemy)
 			enemy.global_position = tileMap.map_to_world(point) 
 			if enemy.global_position.distance_to(player.global_position) <= 200:

@@ -65,7 +65,7 @@ func unset_selected_card(card: PlayableCard) -> void:
 	if _focused_card != card: return 
 	_focused_card.pop_animation_state()
 	_focused_card._animation.start()
-	#_apply_hand_transform()
+	_apply_hand_transform()
 	#_remove_playable_card(card.get_card_data())
 	#_hand.remove_card(card.get_card_data().card_name)
 
@@ -171,7 +171,6 @@ func _on_hand_card_added(added_card: CardData) -> void:
 	_apply_hand_transform()
 
 func _on_hand_multiple_cards_added(cards: Array) -> void:
-	print("adding multiple cards")
 	for card in cards:
 		var new_card = _add_playable_card(card)
 		_apply_draw_transform(new_card)

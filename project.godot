@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node2D",
+"class": "Bullet",
+"language": "GDScript",
+"path": "res://src/compositional_objects/bullets/bullet_class/base_bullet_class.gd"
+}, {
 "base": "Reference",
 "class": "CardData",
 "language": "GDScript",
@@ -55,6 +60,7 @@ _global_script_classes=[ {
 "path": "res://src/compositional_objects/random_walker/random_walker.gd"
 } ]
 _global_script_class_icons={
+"Bullet": "",
 "CardData": "",
 "CardDatabase": "",
 "CharacterBody": "",

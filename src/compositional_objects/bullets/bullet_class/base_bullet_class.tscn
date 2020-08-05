@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/compositional_objects/hitbox/hitbox.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/compositional_objects/bullets/bullet_class/base_bullet_class.gd" type="Script" id=2]
+
+[node name="BaseBullet" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+
+[node name="Hitbox" parent="." instance=ExtResource( 1 )]
+collision_layer = 32
+collision_mask = 16
+
+[node name="WorldHitbox" type="Area2D" parent="."]
+collision_layer = 2147483648
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldHitbox"]
+
+[node name="DecayTimer" type="Timer" parent="."]
+
+[editable path="Hitbox"]

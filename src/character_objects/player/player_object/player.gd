@@ -17,7 +17,6 @@ const GHOST_EFFECT: Resource = preload("res://src/compositional_objects/ghost_ef
 
 var state: int = 0
 var input_vector: Vector2 = Vector2.ZERO
-var attacking: bool = false
 var hand_raised: bool = false
 var maximum_deck_size = 12
 var maximum_hand_size = 5
@@ -26,8 +25,6 @@ var deck = CardDatabase.new("player_deck")
 var hand = CardDatabase.new("player_hand")
 
 onready var camera = $Camera2D
-onready var sword = $SwordPivot
-onready var swordAnimationPlayer = $SwordAnimationPlayer
 onready var blinkAnimationPlayer = $BlinkAnimationPlayer
 onready var healthbarUI = $CanvasLayer/Healthbar
 onready var manaBarUI = $CanvasLayer/Manabar
@@ -50,7 +47,6 @@ func _init():
 func _ready() -> void:
 	randomize()
 	blinkAnimationPlayer.connect("animation_finished", self, "_on_blink_finished")
-	swordAnimationPlayer.connect("animation_finished", self, "_on_sword_animation_finished")
 	drawButton.connect("pressed", self, "_on_draw_button_pressed") 
 	discardButton.connect("pressed", self, "_on_discard_button_pressed")
 	dashTimer.connect("timeout", self, "_on_dashTimer_timeout")
@@ -73,13 +69,6 @@ func _physics_process(delta: float) -> void:
 	walkParticles.gravity = input_vector * -98
 	velocity = move_and_slide(velocity)
 	
-	if Input.is_action_just_pressed("attack") and not attacking and not hand_raised:
-		swordAnimationPlayer.play("attack")
-		#var new_projectile = SWORD_PROJECTILE.instance()
-		#get_parent().add_child(new_projectile)
-		#new_projectile.spawn(self.global_position, Vector2(Input.get_joy_axis(0, JOY_AXIS_2), Input.get_joy_axis(0, JOY_AXIS_3)))
-		#new_projectile.spawn(self.global_position, get_local_mouse_position())
-		attacking = true
 	if Input.is_action_just_pressed("raise_card_ui"):
 		toggle_hand_widget() 
 
@@ -168,12 +157,6 @@ func camera_look() -> void:
 	camera.position.x = (0 + axis.x) / 2
 	camera.position.y = (0 + axis.y) / 2
 
-	sword.rotation = axis.angle()
-	if sword.rotation < 0:
-		sword.z_index = -1
-	else:
-		sword.z_index = 0
-
 	sprite.flip_h = axis.x < -2.5
 
 func _set_mana(value: int) -> void:
@@ -210,9 +193,6 @@ func _no_health() -> void:
 
 func _on_blink_finished(_anim_name: String) -> void:
 	hurtbox.set_deferred("monitoring", true)
-
-func _on_sword_animation_finished(_anim_name: String) -> void:
-	attacking = false
 
 func _on_draw_button_pressed() -> void:
 	if deck.count() == 0: return

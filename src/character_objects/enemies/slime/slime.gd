@@ -7,24 +7,29 @@ extends EnemyBody
 
 enum {
 	IDLE,
-	WANDER,
+	JUMP,
+	LAND,
 	CHASE,
 	STAGGER
 }
 
+const BULLET = preload("res://src/compositional_objects/bullets/slime_bullet/slime_bullet.tscn")
 var state: int = 0
 
 func _init():
-	MAX_SPEED = 70
+	MAX_SPEED = 400
+	ACCELERATION = 400
 func _ready() -> void:
-	state = _pick_random_state([WANDER, IDLE])
+	state = _pick_random_state([JUMP, IDLE])
 
 func _physics_process(delta: float) -> void:
 	match state:
 		IDLE:
 			idle(delta)
-		WANDER:
-			wander(delta) 
+		JUMP:
+			jump(delta) 
+		LAND:
+			land(delta)
 		CHASE: 
 			chase(delta)
 		STAGGER:
@@ -33,19 +38,36 @@ func _physics_process(delta: float) -> void:
 
 func idle(delta: float) -> void:
 	animationPlayer.play("idle")
-	pass
+	velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
+	_update_wander()
+	if playerDetector.can_see_player():
+		state = CHASE
 
-func wander(delta: float) -> void:
-	pass
+func jump(delta: float) -> void:
+	var target_point = to_local(wanderController.target_position)
+	var direction_vector = self.global_position.direction_to(target_point)
+	velocity = velocity.move_toward(direction_vector * MAX_SPEED, ACCELERATION * delta)
+	animationPlayer.play("jump")
+
+func land(delta: float) -> void:
+	animationPlayer.play("land")
+	velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 
 func chase(delta:float) -> void:
-	pass
+	if playerDetector.can_see_player():
+		var player = playerDetector.player
+		var direction_vector = self.global_position.direction_to(player.global_position)
+		velocity = velocity.move_toward(direction_vector * MAX_SPEED, ACCELERATION * delta)
+		animationPlayer.play("jump") 
+	else:
+		state = IDLE 
+
 func stagger(delta:float) -> void:
 	animationPlayer.play("hurt")
 	velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 
 func _update_wander() -> void:
-	state = _pick_random_state([IDLE, WANDER]) 
+	state = _pick_random_state([IDLE, JUMP]) 
 	wanderController.start_wander_timer(rand_range(1, 3))  
 
 func _pick_random_state(state_list: Array) -> int:
@@ -58,5 +80,14 @@ func _on_damage_taken(damage: int, knockback: Vector2, infliction: String) -> vo
 	._on_damage_taken(damage, knockback, infliction) 
 
 func _on_animation_finished(anim_name: String) -> void:
-	if anim_name == "hurt":
+	if anim_name == "jump":
+		if state == CHASE:
+			var new_bullet = BULLET.instance()
+			get_parent().add_child(new_bullet) 
+			new_bullet.spawn(self.global_position, self.velocity)
+		$Sounds/Impact.play()
+		state = LAND 
+	elif anim_name == "land":
+		state = IDLE
+	elif anim_name == "hurt":
 		state = IDLE
