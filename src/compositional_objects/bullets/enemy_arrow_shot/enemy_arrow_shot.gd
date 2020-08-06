@@ -20,7 +20,6 @@ func _physics_process(delta: float) -> void:
 
 func spawn(position: Vector2, direction: Vector2) -> void: 
     self.global_position = position
-    direction += Vector2((rand_range(-1, 1)), (rand_range(-1, 1))) * direction
     self.rotation = direction.angle() 
     move_direction = direction
     timer.start(DECAY_TIME) 

@@ -1,23 +1,24 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://src/character_objects/base_enemy_character/base_enemy_character.tscn" type="PackedScene" id=1]
-[ext_resource path="res://assets/sprites/character_art/enemies/gremlin/goblin_run_anim_f3.png" type="Texture" id=2]
-[ext_resource path="res://assets/sprites/character_art/enemies/gremlin/goblin_run_anim_f5.png" type="Texture" id=3]
-[ext_resource path="res://assets/sprites/character_art/enemies/gremlin/goblin_idle_anim_f0.png" type="Texture" id=4]
-[ext_resource path="res://assets/sprites/character_art/enemies/gremlin/goblin_idle_anim_f1.png" type="Texture" id=5]
-[ext_resource path="res://assets/sprites/character_art/enemies/gremlin/goblin_run_anim_f2.png" type="Texture" id=6]
-[ext_resource path="res://assets/sprites/character_art/enemies/gremlin/goblin_idle_anim_f2.png" type="Texture" id=7]
-[ext_resource path="res://assets/sprites/character_art/enemies/gremlin/goblin_idle_anim_f3.png" type="Texture" id=8]
-[ext_resource path="res://assets/sprites/character_art/enemies/gremlin/goblin_idle_anim_f4.png" type="Texture" id=9]
-[ext_resource path="res://assets/sprites/character_art/enemies/gremlin/goblin_run_anim_f0.png" type="Texture" id=10]
-[ext_resource path="res://assets/sprites/character_art/enemies/gremlin/goblin_run_anim_f4.png" type="Texture" id=11]
-[ext_resource path="res://assets/sprites/character_art/enemies/gremlin/goblin_idle_anim_f5.png" type="Texture" id=12]
-[ext_resource path="res://assets/sprites/character_art/enemies/gremlin/goblin_run_anim_f1.png" type="Texture" id=13]
+[ext_resource path="res://assets/sprites/character_art/enemies/goblin_archer/archer_goblin_idle5.png" type="Texture" id=2]
+[ext_resource path="res://assets/sprites/character_art/enemies/goblin_archer/archer_goblin_idle2.png" type="Texture" id=3]
+[ext_resource path="res://assets/sprites/character_art/enemies/goblin_archer/archer_goblin_run1.png" type="Texture" id=4]
+[ext_resource path="res://assets/sprites/character_art/enemies/goblin_archer/archer_goblin_run3.png" type="Texture" id=5]
+[ext_resource path="res://assets/sprites/character_art/enemies/goblin_archer/archer_goblin_run6.png" type="Texture" id=6]
+[ext_resource path="res://assets/sprites/character_art/enemies/goblin_archer/archer_goblin_run4.png" type="Texture" id=7]
+[ext_resource path="res://assets/sprites/character_art/enemies/goblin_archer/archer_goblin_idle1.png" type="Texture" id=8]
+[ext_resource path="res://assets/sprites/character_art/enemies/goblin_archer/archer_goblin_run5.png" type="Texture" id=9]
+[ext_resource path="res://assets/sprites/character_art/enemies/goblin_archer/archer_goblin_idle3.png" type="Texture" id=10]
+[ext_resource path="res://assets/sprites/character_art/enemies/goblin_archer/archer_goblin_idle4.png" type="Texture" id=11]
+[ext_resource path="res://assets/sprites/character_art/enemies/goblin_archer/archer_goblin_idle6.png" type="Texture" id=12]
+[ext_resource path="res://assets/sprites/character_art/enemies/goblin_archer/archer_goblin_run2.png" type="Texture" id=13]
 [ext_resource path="res://assets/sprites/items/bow.png" type="Texture" id=14]
 [ext_resource path="res://src/character_objects/enemies/gremlin/gremlin.gd" type="Script" id=15]
 [ext_resource path="res://src/shaders/white_shader/white_flash.shader" type="Shader" id=16]
 [ext_resource path="res://assets/sfx/sndbullet.wav" type="AudioStream" id=17]
 [ext_resource path="res://assets/sfx/punch.wav" type="AudioStream" id=18]
+[ext_resource path="res://assets/sprites/character_art/player/shadow.png" type="Texture" id=19]
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
@@ -26,19 +27,19 @@ shader_param/active = false
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
-"frames": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 12 ) ],
+"frames": [ ExtResource( 8 ), ExtResource( 3 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 2 ), ExtResource( 12 ) ],
 "loop": true,
 "name": "idle",
 "speed": 10.0
 }, {
-"frames": [ ExtResource( 10 ), ExtResource( 13 ), ExtResource( 6 ), ExtResource( 2 ), ExtResource( 11 ), ExtResource( 3 ) ],
+"frames": [ ExtResource( 4 ), ExtResource( 13 ), ExtResource( 5 ), ExtResource( 7 ), ExtResource( 9 ), ExtResource( 6 ) ],
 "loop": true,
 "name": "run",
 "speed": 10.0
 } ]
 
-[sub_resource type="CircleShape2D" id=3]
-radius = 8.0
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 8, 8 )
 
 [sub_resource type="CircleShape2D" id=4]
 radius = 4.7098
@@ -175,55 +176,65 @@ tracks/2/keys = {
 [node name="Gremlin" instance=ExtResource( 1 )]
 script = ExtResource( 15 )
 
-[node name="AnimatedSprite" parent="." index="0"]
+[node name="Shadow" type="Sprite" parent="." index="0"]
+self_modulate = Color( 1, 1, 1, 0.501961 )
+position = Vector2( 0, 5 )
+texture = ExtResource( 19 )
+
+[node name="AnimatedSprite" parent="." index="1"]
 material = SubResource( 1 )
+position = Vector2( 0, -3 )
 frames = SubResource( 2 )
 animation = "run"
 
-[node name="CollisionShape2D" parent="." index="1"]
+[node name="CollisionShape2D" parent="." index="2"]
 shape = SubResource( 3 )
 
-[node name="Hitbox" parent="." index="2"]
+[node name="Hitbox" parent="." index="3"]
 visible = false
 
 [node name="CollisionShape2D" parent="Hitbox" index="0"]
 shape = SubResource( 4 )
 
-[node name="Hurtbox" parent="." index="3"]
+[node name="Hurtbox" parent="." index="4"]
 visible = false
 
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
 shape = SubResource( 5 )
 
+[node name="SoftCollision" parent="." index="5"]
+visible = false
+
 [node name="CollisionShape2D" parent="SoftCollision" index="0"]
 shape = SubResource( 6 )
+
+[node name="PlayerDetector" parent="." index="6"]
+visible = false
 
 [node name="CollisionShape2D" parent="PlayerDetector" index="0"]
 shape = SubResource( 7 )
 
-[node name="AnimationPlayer" parent="." index="7"]
+[node name="AnimationPlayer" parent="." index="8"]
 anims/hurt = SubResource( 8 )
 anims/idle = SubResource( 9 )
 anims/run = SubResource( 10 )
 
-[node name="Bow" type="Position2D" parent="." index="8"]
+[node name="Bow" type="Position2D" parent="." index="9"]
 position = Vector2( 4, 1 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="Sprite" type="Sprite" parent="Bow" index="0"]
-rotation = 2.35619
-scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 14 )
 
-[node name="HealthStats" parent="." index="9"]
+[node name="HealthStats" parent="." index="10"]
 max_health = 5
 
-[node name="ShotTimer" type="Timer" parent="." index="10"]
+[node name="ShotTimer" type="Timer" parent="." index="11"]
 one_shot = true
 
-[node name="Sounds" type="Node" parent="." index="11"]
+[node name="Sounds" type="Node" parent="." index="12"]
 
 [node name="Shoot" type="AudioStreamPlayer" parent="Sounds" index="0"]
 stream = ExtResource( 17 )

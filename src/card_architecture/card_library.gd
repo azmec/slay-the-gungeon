@@ -19,11 +19,11 @@ const DATA = {
 			"name": "Rejection",
 			"type": "Attack",
 			"cost": 2,
-			"desc": "Push away all enemies in a radius.",
+			"desc": "Deal 1 damage and push away all enemies in a radius.",
 			"sprite_path": "res://assets/sprites/cards/hearthstone_cards/mage/frost_nova.png"
 		},
 		"components": [
-			{"action": "radial_damage", "args": {"amount": 0, "radius": 6, "status_infliction": "freeze"}}
+			{"action": "radial_damage", "args": {"amount": 1, "radius": 6, "status_infliction": "freeze"}}
 		]
 	},
 	"Alpha_002": {
@@ -35,7 +35,7 @@ const DATA = {
 			"sprite_path": "res://assets/sprites/cards/hearthstone_cards/mage/arcane_breath.png"
 		},
 		"components": [
-			{"action": "damage", "args": {"targets": 1, "amount": 2, "status_infliction": "none"}}
+			{"action": "damage", "args": {"targets": 1, "amount": 3, "status_infliction": "none"}}
 		]
 	},
 	"Alpha_003": {
@@ -43,11 +43,11 @@ const DATA = {
 			"name": "Consecrate",
 			"type": "Attack",
 			"cost": 3,
-			"desc": "Deal 3 damage in a radius." ,
+			"desc": "Deal 4 damage in a radius." ,
 			"sprite_path": "res://assets/sprites/cards/hearthstone_cards/mage/arcane_explosion.png"
 		},
 		"components": [
-			{"action": "radial_damage", "args": {"amount": 3, "radius": 6, "status_infliction": "none"}}
+			{"action": "radial_damage", "args": {"amount": 4, "radius": 6, "status_infliction": "none"}}
 		]
 	}
 }

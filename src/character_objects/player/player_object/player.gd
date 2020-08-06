@@ -23,13 +23,17 @@ var maximum_hand_size = 5
 var max_mana = 3
 var deck = CardDatabase.new("player_deck")
 var hand = CardDatabase.new("player_hand")
+var discard_pile = CardDatabase.new("player_discard_pile")
+var interactablePickup = null
 
 onready var camera = $Camera2D
 onready var blinkAnimationPlayer = $BlinkAnimationPlayer
+onready var pickupDetector = $PickupDetector
 onready var healthbarUI = $CanvasLayer/Healthbar
 onready var manaBarUI = $CanvasLayer/Manabar
 onready var canvasLayer = $CanvasLayer
 onready var deckCount = $CanvasLayer/DeckCount
+onready var discardPileCount = $CanvasLayer/DiscardPile/Label
 onready var handWidget = $CanvasLayer/HandWidget
 onready var drawButton = $CanvasLayer/DrawButton
 onready var dashTimer = $DashTimer
@@ -51,9 +55,12 @@ func _ready() -> void:
 	discardButton.connect("pressed", self, "_on_discard_button_pressed")
 	dashTimer.connect("timeout", self, "_on_dashTimer_timeout")
 	ghostTimer.connect("timeout", self, "_on_ghostTimer_timeout")
+	pickupDetector.connect("body_entered", self, "_on_pickupDetector_body_entered")
+	pickupDetector.connect("body_exited", self, "_on_pickupDetector_body_exited")
+
 	mana = max_mana
 	deck = CardLibrary.draft_player_deck()
-	handWidget.set_hand(hand, deck, self)
+	handWidget.set_hand(hand, deck, discard_pile, self)
 	draw_hand()
 	
 	
@@ -72,10 +79,18 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("raise_card_ui"):
 		toggle_hand_widget() 
 
-	if mana == 0 or hand.count() == 0:
+	if hand.count() == 0:
 		discard_hand()
 		draw_hand()
+
+	if interactablePickup != null:
+		if Input.is_action_just_pressed("interact"):
+			if interactablePickup is CardDrop:
+				deck.add_card(interactablePickup.cardData) 
+				interactablePickup.queue_free()
+				interactablePickup = null
 	deckCount.text = str(deck.count())
+	discardPileCount.text = str(discard_pile.count())
 	healthbarUI.healthSliver.rect_size.x = (healthStats.health / float(healthStats.max_health)) * 80
 	healthbarUI.numericDisplay.text = str(healthStats.health) + "/" + str(healthStats.max_health)
 	manaBarUI.numericDisplay.text = str(mana) + "/" + str(max_mana)
@@ -99,10 +114,16 @@ func create_deck() -> void:
 
 func draw_hand() -> void:
 	var draw_array = []
-	for card in maximum_hand_size:
+	while draw_array.size() != maximum_hand_size:
 		if deck.count() != 0:
 			var new_draw = deck.draw_card()
-			draw_array.push_front(new_draw) 
+			draw_array.push_front(new_draw)
+		else:
+			for card in discard_pile.count():
+				if discard_pile.count() == 0: return
+				var new_draw = discard_pile.draw_card()
+				deck.add_card(new_draw)
+
 	
 	hand.add_multiple_cards(draw_array)
 
@@ -112,7 +133,7 @@ func discard_hand() -> void:
 		var new_draw = hand.draw_card()
 		draw_array.push_front(new_draw)
 
-	deck.add_multiple_cards(draw_array) 
+	discard_pile.add_multiple_cards(draw_array) 
 	mana = max_mana
 
 func reset() -> void:
@@ -186,7 +207,16 @@ func _on_damage_taken(damage: int, knockback: Vector2, infliction: String) -> vo
 	blinkAnimationPlayer.play("blink")
 	hurtbox.set_deferred("monitoring", false)
 	camera.trauma += (damage * 4) * 0.1 
-	healthbarUI.trauma += (damage) * 0.5
+	healthbarUI.trauma += (damage) * 0.5 
+
+func _on_pickupDetector_body_entered(body) -> void:
+	interactablePickup = body 
+	if body is HealthPickup:
+		healthStats.health += body.heal
+		body.queue_free()
+
+func _on_pickupDetector_body_exited(_body) -> void:
+	interactablePickup = null
 
 func _no_health() -> void:
 	._on_no_health() 

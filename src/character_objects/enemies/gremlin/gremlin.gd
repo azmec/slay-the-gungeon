@@ -16,6 +16,7 @@ const ARROW_SHOT = preload("res://src/compositional_objects/bullets/enemy_arrow_
 var state: int = 0  
 
 onready var shotTimer = $ShotTimer 
+onready var bow = $Bow
 
 func _init():
 	MAX_SPEED = 50
@@ -32,7 +33,8 @@ func _physics_process(delta: float) -> void:
 		CHASE: 
 			chase(delta) 
 		STAGGER: 
-			stagger(delta) 
+			stagger(delta)  
+	sprite.flip_h = sign(velocity.x) < 0
 	velocity = move_and_slide(velocity) 
 
 	
@@ -58,6 +60,7 @@ func chase(delta: float) -> void:
 		animationPlayer.play("run")  
 		var player = playerDetector.player
 		var direction_to_player = self.global_position.direction_to(player.global_position)
+		bow.rotation = direction_to_player.angle()
 		velocity = velocity.move_toward(direction_to_player * MAX_SPEED, ACCELERATION * delta) 
 		shoot(direction_to_player)
 	else:

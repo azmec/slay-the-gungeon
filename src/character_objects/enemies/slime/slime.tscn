@@ -31,14 +31,14 @@ animations = [ {
 "name": "idle",
 "speed": 10.0
 }, {
-"frames": [ ExtResource( 14 ), ExtResource( 15 ), ExtResource( 10 ), ExtResource( 7 ) ],
-"loop": false,
-"name": "jump",
-"speed": 10.0
-}, {
 "frames": [ ExtResource( 11 ), ExtResource( 6 ), ExtResource( 12 ), ExtResource( 8 ) ],
 "loop": false,
 "name": "land",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 14 ), ExtResource( 15 ), ExtResource( 10 ), ExtResource( 7 ) ],
+"loop": false,
+"name": "jump",
 "speed": 10.0
 } ]
 
@@ -57,7 +57,7 @@ radius = 10.6558
 [sub_resource type="CircleShape2D" id=7]
 radius = 202.814
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=8]
 resource_name = "hurt"
 length = 0.3
 tracks/0/type = "value"
@@ -73,8 +73,7 @@ tracks/0/keys = {
 "values": [ true, false, true, false ]
 }
 
-[sub_resource type="Animation" id=8]
-resource_name = "idle"
+[sub_resource type="Animation" id=9]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -102,8 +101,7 @@ tracks/1/keys = {
 "values": [ 0, 1, 2, 3 ]
 }
 
-[sub_resource type="Animation" id=9]
-resource_name = "jump"
+[sub_resource type="Animation" id=10]
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:animation")
@@ -166,8 +164,7 @@ tracks/4/keys = {
 "values": [ Vector2( 1.5, 1.5 ), Vector2( 2, 0.5 ), Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=10]
-resource_name = "land"
+[sub_resource type="Animation" id=11]
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:animation")
@@ -275,10 +272,10 @@ visible = false
 shape = SubResource( 7 )
 
 [node name="AnimationPlayer" parent="." index="8"]
-anims/hurt = SubResource( 11 )
-anims/idle = SubResource( 8 )
-anims/jump = SubResource( 9 )
-anims/land = SubResource( 10 )
+anims/hurt = SubResource( 8 )
+anims/idle = SubResource( 9 )
+anims/jump = SubResource( 10 )
+anims/land = SubResource( 11 )
 
 [node name="HealthStats" parent="." index="9"]
 max_health = 3

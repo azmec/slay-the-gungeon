@@ -24,10 +24,20 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/card_architecture/card_database.gd"
 }, {
+"base": "KinematicProp",
+"class": "CardDrop",
+"language": "GDScript",
+"path": "res://src/items/card_drop/card_drop.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "CharacterBody",
 "language": "GDScript",
 "path": "res://src/character_objects/base_character/base_character_class.gd"
+}, {
+"base": "KinematicProp",
+"class": "Chest",
+"language": "GDScript",
+"path": "res://src/items/golden_chest/golden_chest.gd"
 }, {
 "base": "CharacterBody",
 "class": "EnemyBody",
@@ -43,6 +53,16 @@ _global_script_classes=[ {
 "class": "HandWidget",
 "language": "GDScript",
 "path": "res://src/compositional_objects/hand_widget/hand_widget.gd"
+}, {
+"base": "KinematicProp",
+"class": "HealthPickup",
+"language": "GDScript",
+"path": "res://src/items/stat_drops/health_pickups/small_health_pickup/small_health_pickup.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "KinematicProp",
+"language": "GDScript",
+"path": "res://src/items/prop_class/prop_class.gd"
 }, {
 "base": "Node2D",
 "class": "PlayableCard",
@@ -63,10 +83,14 @@ _global_script_class_icons={
 "Bullet": "",
 "CardData": "",
 "CardDatabase": "",
+"CardDrop": "",
 "CharacterBody": "",
+"Chest": "",
 "EnemyBody": "",
 "GitAPI": "",
 "HandWidget": "",
+"HealthPickup": "",
+"KinematicProp": "",
 "PlayableCard": "",
 "Player": "",
 "Walker": ""
@@ -186,6 +210,11 @@ pause={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777217,"unicode":0,"echo":false,"script":null)
  ]
 }
+interact={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":69,"unicode":0,"echo":false,"script":null)
+ ]
+}
 
 [layer_names]
 
@@ -199,6 +228,8 @@ pause={
 2d_physics/layer_8="SoftCollisions"
 2d_physics/layer_9="CardPlayCollision"
 2d_physics/layer_10="CardPlayArea"
+2d_physics/layer_11="PickupDetector"
+2d_physics/layer_12="Pickup"
 
 [locale]
 

@@ -33,127 +33,144 @@ __meta__ = {
 }
 
 [node name="Actions" type="VBoxContainer" parent="KeyboardControls/ScrollContainer"]
-margin_right = 340.0
-margin_bottom = 234.0
+margin_right = 182.0
+margin_bottom = 180.0
 alignment = 1
 
 [node name="move_up" parent="KeyboardControls/ScrollContainer/Actions" instance=ExtResource( 3 )]
-margin_right = 340.0
-margin_bottom = 30.0
+margin_right = 182.0
+margin_bottom = 19.0
 
 [node name="Label" parent="KeyboardControls/ScrollContainer/Actions/move_up" index="0"]
-margin_left = 46.0
+margin_left = 23.0
 margin_top = 0.0
-margin_right = 278.0
-margin_bottom = 30.0
+margin_right = 143.0
+margin_bottom = 19.0
 text = "OPTIONS_CONTROLS_UP"
 
 [node name="Button" parent="KeyboardControls/ScrollContainer/Actions/move_up" index="1"]
-margin_left = 282.0
-margin_right = 294.0
-margin_bottom = 30.0
+margin_left = 147.0
+margin_right = 159.0
+margin_bottom = 19.0
 
 [node name="move_left" parent="KeyboardControls/ScrollContainer/Actions" instance=ExtResource( 3 )]
-margin_top = 34.0
-margin_right = 340.0
-margin_bottom = 64.0
+margin_top = 23.0
+margin_right = 182.0
+margin_bottom = 42.0
 
 [node name="Label" parent="KeyboardControls/ScrollContainer/Actions/move_left" index="0"]
-margin_left = 34.0
+margin_left = 17.0
 margin_top = 0.0
-margin_right = 290.0
-margin_bottom = 30.0
+margin_right = 149.0
+margin_bottom = 19.0
 text = "OPTIONS_CONTROLS_LEFT"
 
 [node name="Button" parent="KeyboardControls/ScrollContainer/Actions/move_left" index="1"]
-margin_left = 294.0
-margin_right = 306.0
-margin_bottom = 30.0
+margin_left = 153.0
+margin_right = 165.0
+margin_bottom = 19.0
 
 [node name="move_down" parent="KeyboardControls/ScrollContainer/Actions" instance=ExtResource( 3 )]
-margin_top = 68.0
-margin_right = 340.0
-margin_bottom = 98.0
+margin_top = 46.0
+margin_right = 182.0
+margin_bottom = 65.0
 
 [node name="Label" parent="KeyboardControls/ScrollContainer/Actions/move_down" index="0"]
-margin_left = 34.0
+margin_left = 17.0
 margin_top = 0.0
-margin_right = 290.0
-margin_bottom = 30.0
+margin_right = 149.0
+margin_bottom = 19.0
 text = "OPTIONS_CONTROLS_DOWN"
 
 [node name="Button" parent="KeyboardControls/ScrollContainer/Actions/move_down" index="1"]
-margin_left = 294.0
-margin_right = 306.0
-margin_bottom = 30.0
+margin_left = 153.0
+margin_right = 165.0
+margin_bottom = 19.0
 
 [node name="move_right" parent="KeyboardControls/ScrollContainer/Actions" instance=ExtResource( 3 )]
-margin_top = 102.0
-margin_right = 340.0
-margin_bottom = 132.0
+margin_top = 69.0
+margin_right = 182.0
+margin_bottom = 88.0
 
 [node name="Label" parent="KeyboardControls/ScrollContainer/Actions/move_right" index="0"]
-margin_left = 30.0
+margin_left = 15.0
 margin_top = 0.0
-margin_right = 294.0
-margin_bottom = 30.0
+margin_right = 151.0
+margin_bottom = 19.0
 text = "OPTIONS_CONTROLS_RIGHT"
 
 [node name="Button" parent="KeyboardControls/ScrollContainer/Actions/move_right" index="1"]
-margin_left = 298.0
-margin_right = 310.0
-margin_bottom = 30.0
+margin_left = 155.0
+margin_right = 167.0
+margin_bottom = 19.0
 
 [node name="raise_card_ui" parent="KeyboardControls/ScrollContainer/Actions" instance=ExtResource( 3 )]
-margin_top = 136.0
-margin_right = 340.0
-margin_bottom = 166.0
+margin_top = 92.0
+margin_right = 182.0
+margin_bottom = 111.0
 
 [node name="Label" parent="KeyboardControls/ScrollContainer/Actions/raise_card_ui" index="0"]
 margin_left = 0.0
 margin_top = 0.0
-margin_right = 324.0
-margin_bottom = 30.0
+margin_right = 166.0
+margin_bottom = 19.0
 text = "OPTIONS_CONTROLS_RAISE_HAND"
 
 [node name="Button" parent="KeyboardControls/ScrollContainer/Actions/raise_card_ui" index="1"]
-margin_left = 328.0
-margin_right = 340.0
-margin_bottom = 30.0
+margin_left = 170.0
+margin_right = 182.0
+margin_bottom = 19.0
 
 [node name="dash" parent="KeyboardControls/ScrollContainer/Actions" instance=ExtResource( 3 )]
-margin_top = 170.0
-margin_right = 340.0
-margin_bottom = 200.0
+margin_top = 115.0
+margin_right = 182.0
+margin_bottom = 134.0
 
 [node name="Label" parent="KeyboardControls/ScrollContainer/Actions/dash" index="0"]
-margin_left = 34.0
+margin_left = 17.0
 margin_top = 0.0
-margin_right = 290.0
-margin_bottom = 30.0
+margin_right = 149.0
+margin_bottom = 19.0
 text = "OPTIONS_CONTROLS_DASH"
 
 [node name="Button" parent="KeyboardControls/ScrollContainer/Actions/dash" index="1"]
-margin_left = 294.0
-margin_right = 306.0
-margin_bottom = 30.0
+margin_left = 153.0
+margin_right = 165.0
+margin_bottom = 19.0
+
+[node name="interact" parent="KeyboardControls/ScrollContainer/Actions" instance=ExtResource( 3 )]
+margin_top = 138.0
+margin_right = 182.0
+margin_bottom = 157.0
+
+[node name="Label" parent="KeyboardControls/ScrollContainer/Actions/interact" index="0"]
+margin_left = 6.0
+margin_top = 0.0
+margin_right = 160.0
+margin_bottom = 19.0
+text = "OPTIONS_CONTROLS_INTERACT"
+
+[node name="Button" parent="KeyboardControls/ScrollContainer/Actions/interact" index="1"]
+margin_left = 164.0
+margin_right = 176.0
+margin_bottom = 19.0
 
 [node name="pause" parent="KeyboardControls/ScrollContainer/Actions" instance=ExtResource( 3 )]
-margin_top = 204.0
-margin_right = 340.0
-margin_bottom = 234.0
+margin_top = 161.0
+margin_right = 182.0
+margin_bottom = 180.0
 
 [node name="Label" parent="KeyboardControls/ScrollContainer/Actions/pause" index="0"]
-margin_left = 28.0
+margin_left = 14.0
 margin_top = 0.0
-margin_right = 296.0
-margin_bottom = 30.0
+margin_right = 152.0
+margin_bottom = 19.0
 text = "OPTIONS_CONTROLS_PAUSE"
 
 [node name="Button" parent="KeyboardControls/ScrollContainer/Actions/pause" index="1"]
-margin_left = 300.0
-margin_right = 312.0
-margin_bottom = 30.0
+margin_left = 156.0
+margin_right = 168.0
+margin_bottom = 19.0
 
 [editable path="KeyboardControls/ScrollContainer/Actions/move_up"]
 
@@ -166,5 +183,7 @@ margin_bottom = 30.0
 [editable path="KeyboardControls/ScrollContainer/Actions/raise_card_ui"]
 
 [editable path="KeyboardControls/ScrollContainer/Actions/dash"]
+
+[editable path="KeyboardControls/ScrollContainer/Actions/interact"]
 
 [editable path="KeyboardControls/ScrollContainer/Actions/pause"]

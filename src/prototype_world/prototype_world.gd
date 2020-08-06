@@ -3,6 +3,8 @@ extends Node2D
 const GREMLIN_ENEMY = preload("res://src/character_objects/enemies/gremlin/gremlin.tscn") 
 const SLIME_ENEMY = preload("res://src/character_objects/enemies/slime/slime.tscn")
 const MANA_DROP = preload("res://src/compositional_objects/mana_drop/mana_drop.tscn") 
+const GOLDEN_CHEST = preload("res://src/items/golden_chest/golden_chest.tscn")
+const NORMAL_CHEST = preload("res://src/items/normal_chest/normal_chest.tscn")
 
 var borders = Rect2(1, 1, 160, 80)
 var level_points: Array
@@ -14,7 +16,8 @@ onready var enemies = $Enemies
 func _ready() -> void:
 	randomize()
 	generate_level()
-	spawn_enemies()
+	#spawn_enemies()
+	spawn_chests(3)
 	#BGMController.play_new_track("res://assets/bgm/musBoss1.ogg")
 
 func generate_level():
@@ -31,10 +34,10 @@ func generate_level():
 
 func spawn_enemies():
 	for point in level_points:
-		if randf() <= 0.003:
+		if randf() <= 0.006:
 			var enemy = SLIME_ENEMY.instance()
 			if randf() <= 0.5:
-				enemy = SLIME_ENEMY.instance()
+				enemy = GREMLIN_ENEMY.instance()
 			enemies.add_child(enemy)
 			enemy.global_position = tileMap.map_to_world(point) 
 			if enemy.global_position.distance_to(player.global_position) <= 200:
@@ -42,6 +45,25 @@ func spawn_enemies():
 
 	for character in get_tree().get_nodes_in_group("characters"):
 		character.connect("character_died", self, "_on_character_died", [character])
+
+func spawn_chests(amount: int) -> void:
+	var chest_locations = []
+	for point in level_points:
+		if chest_locations.size() == amount:
+			continue
+		if point.distance_to(Vector2(19, 11)) < 10:
+			continue
+		if randf() < 0.002:
+			chest_locations.append(point)
+		
+
+	for point in chest_locations:
+		var new_chest = NORMAL_CHEST.instance()
+		if randf() < 0.2:
+			new_chest = GOLDEN_CHEST.instance() 
+
+		add_child(new_chest)
+		new_chest.global_position = tileMap.map_to_world(point)
 
 func clear_enemies():
 	for enemy in enemies.get_children():
@@ -55,19 +77,4 @@ func _on_character_died(character_position: Vector2, character: CharacterBody) -
 	if character is Player:
 		print("player died")
 		get_tree().reload_current_scene() 
-
-	if character is EnemyBody:
-		player.camera.trauma += character.healthStats.max_health * 0.1 
-		if player.mana == player.max_mana:
-			return
-		var mana_drops = randi() % 4 + 1 
-		if mana_drops <= 0:
-			var drop = MANA_DROP.instance()
-			call_deferred("add_child", drop)
-			drop.global_position = character_position
-		else:
-			for mana_drop in mana_drops:
-				var drop = MANA_DROP.instance()
-				call_deferred("add_child", drop)
-				drop.global_position = character_position
 

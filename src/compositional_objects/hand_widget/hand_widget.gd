@@ -15,6 +15,7 @@ var raised = false
 
 var _hand = null
 var _deck = null
+var _discard_pile = null
 var _owner = null
 var _focused_card = null
 var _active_cards = Node2D.new()
@@ -35,13 +36,14 @@ func _process(delta) -> void:
 	if _focused_card != null and _button_pressed:
 		_focused_card.position = lerp(_focused_card.position, get_local_mouse_position(), 25 * delta)
 
-func set_hand(hand_database: CardDatabase, deck_database: CardDatabase, owner) -> void:
+func set_hand(hand_database: CardDatabase, deck_database: CardDatabase, discard_pile: CardDatabase, owner) -> void:
 	_hand = hand_database
 	_hand.connect("card_added", self, "_on_hand_card_added")
 	_hand.connect("multiple_cards_added", self, "_on_hand_multiple_cards_added")
 	_hand.connect("card_removed", self, "_on_hand_card_removed")  
 
 	_deck = deck_database
+	_discard_pile = discard_pile
 	_owner = owner
 
 func set_focused_card(card: PlayableCard) -> void:
@@ -201,7 +203,7 @@ func _on_playable_card_mouse_released(button, card: PlayableCard) -> void:
 			card.play_card()
 			_owner.mana -= card.cost
 			card.pop_animation_state()
-			_deck.add_card(card.get_card_data())
+			_discard_pile.add_card(card.get_card_data())
 			print(_deck.cards())
 			print(card.text_name)
 			_remove_playable_card(card.get_card_data())

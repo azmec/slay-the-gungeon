@@ -28,6 +28,7 @@ enum ACTIONS {
 	move_right,
 	raise_card_ui,
 	dash,
+	interact,
 	pause,
 }
 
