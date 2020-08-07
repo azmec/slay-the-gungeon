@@ -6,7 +6,8 @@ extends CharacterBody
 enum {
 	IDLE, 
 	RUN,
-	DASH
+	DASH,
+	DEAD
 }
 
 const DASH_SPEED: int = 400
@@ -21,6 +22,7 @@ var hand_raised: bool = false
 var maximum_deck_size = 12
 var maximum_hand_size = 5
 var max_mana = 3
+var level = 1 setget _set_player_level
 var deck = CardDatabase.new("player_deck")
 var hand = CardDatabase.new("player_hand")
 var discard_pile = CardDatabase.new("player_discard_pile")
@@ -72,6 +74,9 @@ func _physics_process(delta: float) -> void:
 			run(delta)
 		DASH:
 			dash(delta)
+		DEAD:
+			dead(delta) 
+	
 	camera_look()
 	walkParticles.gravity = input_vector * -98
 	velocity = move_and_slide(velocity)
@@ -97,7 +102,11 @@ func _physics_process(delta: float) -> void:
 	manaBarUI.healthSliver.rect_size.x = (mana / float(max_mana)) * 80
 
 
+func increase_player_level() -> void:
+	self.level += 1 
+
 func toggle_hand_widget() -> void:
+	if state == DEAD: return
 	handWidget.move_hand()
 	self.hand_raised = handWidget.raised
 	if hand_raised: 
@@ -167,18 +176,29 @@ func dash(delta: float) -> void:
 	#walkParticles.emitting = false
 	velocity = velocity.move_toward(input_vector * DASH_SPEED, ACCELERATION * delta) 
 
+func dead(delta: float) -> void:
+	animationPlayer.play("dead")
+	velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta) 
+
 func get_input():
 	input_vector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	input_vector.y = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
 	input_vector = input_vector.normalized()
 
 func camera_look() -> void:
+	if state == DEAD: return 
+
 	var axis = get_local_mouse_position() 
 
 	camera.position.x = (0 + axis.x) / 2
 	camera.position.y = (0 + axis.y) / 2
 
 	sprite.flip_h = axis.x < -2.5
+
+func _set_player_level(value) -> void:
+	level = value
+	max_mana += 1 
+	healthStats.max_health += 1 
 
 func _set_mana(value: int) -> void:
 	if value > max_mana:
@@ -201,9 +221,12 @@ func _on_ghostTimer_timeout() -> void:
 	ghost.position = self.position 
 
 func _on_damage_taken(damage: int, knockback: Vector2, infliction: String) -> void:
+	if state == DEAD:
+		hurtbox.set_deferred("monitoring", true)
+		velocity = knockback
+		return
 	OS.delay_msec(15)
 	healthStats.health = healthStats.health - damage
-	velocity = knockback
 	blinkAnimationPlayer.play("blink")
 	hurtbox.set_deferred("monitoring", false)
 	camera.trauma += (damage * 4) * 0.1 
@@ -218,8 +241,11 @@ func _on_pickupDetector_body_entered(body) -> void:
 func _on_pickupDetector_body_exited(_body) -> void:
 	interactablePickup = null
 
-func _no_health() -> void:
-	._on_no_health() 
+func _on_no_health() -> void:
+	state = DEAD 
+	walkParticles.emitting = false
+	self.z_index = 0
+	emit_signal("character_died", self.global_position)
 
 func _on_blink_finished(_anim_name: String) -> void:
 	hurtbox.set_deferred("monitoring", true)

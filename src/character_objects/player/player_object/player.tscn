@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=42 format=2]
 
 [ext_resource path="res://assets/sprites/character_art/player/run_anim/player_run2.png" type="Texture" id=1]
 [ext_resource path="res://assets/sprites/character_art/player/idle_anim/player_idle1.png" type="Texture" id=2]
@@ -28,6 +28,7 @@
 [ext_resource path="res://assets/sfx/sndheal.wav" type="AudioStream" id=26]
 [ext_resource path="res://assets/sfx/sndboost.wav" type="AudioStream" id=27]
 [ext_resource path="res://assets/fonts/minecraftia/Minecraftia-Regular.ttf" type="DynamicFontData" id=28]
+[ext_resource path="res://assets/sprites/character_art/player/player_death.png" type="Texture" id=29]
 
 [sub_resource type="Gradient" id=1]
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
@@ -47,6 +48,11 @@ animations = [ {
 "loop": true,
 "name": "run",
 "speed": 8.0
+}, {
+"frames": [ ExtResource( 29 ) ],
+"loop": true,
+"name": "dead",
+"speed": 5.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=4]
@@ -62,6 +68,33 @@ extents = Vector2( 3.47328, 5.72765 )
 radius = 24.0
 
 [sub_resource type="Animation" id=8]
+resource_name = "dead"
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "dead" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=9]
 length = 0.3
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:animation")
@@ -88,7 +121,7 @@ tracks/1/keys = {
 "values": [ 0, 1, 2, 3 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=10]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:animation")
@@ -115,7 +148,7 @@ tracks/1/keys = {
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=11]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:material:shader_param/active")
@@ -130,7 +163,7 @@ tracks/0/keys = {
 "values": [ true, false, true, false, true, false ]
 }
 
-[sub_resource type="DynamicFont" id=11]
+[sub_resource type="DynamicFont" id=12]
 size = 8
 outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
@@ -172,7 +205,8 @@ color_ramp = SubResource( 1 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 material = SubResource( 2 )
 frames = SubResource( 3 )
-animation = "run"
+animation = "idle"
+frame = 3
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -206,14 +240,15 @@ visible = false
 decay = 0.8
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/idle = SubResource( 8 )
-anims/run = SubResource( 9 )
+anims/dead = SubResource( 8 )
+anims/idle = SubResource( 9 )
+anims/run = SubResource( 10 )
 
 [node name="BlinkAnimationPlayer" type="AnimationPlayer" parent="."]
-anims/blink = SubResource( 10 )
+anims/blink = SubResource( 11 )
 
 [node name="HealthStats" parent="." instance=ExtResource( 15 )]
-max_health = 10
+max_health = 5
 
 [node name="Sounds" type="Node" parent="."]
 
@@ -283,7 +318,7 @@ margin_left = 8.0
 margin_top = -4.0
 margin_right = 48.0
 margin_bottom = 15.0
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 12 )
 text = "0"
 __meta__ = {
 "_edit_use_anchors_": false

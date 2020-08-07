@@ -15,7 +15,7 @@ func _ready() -> void:
 	quit.connect("pressed", self, "_on_quit_pressed")
 	optionsScreen.connect("backButton_pressed", self, "_on_optionsScreen_backButton_pressed")
 	BGMController.play_new_track("res://assets/bgm/musIntro.ogg")
-	TranslationServer.set_locale("es")
+	#TranslationServer.set_locale("es")
 
 
 func _on_newGame_pressed() -> void:

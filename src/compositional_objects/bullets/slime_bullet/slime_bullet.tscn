@@ -24,6 +24,7 @@ frames = SubResource( 1 )
 
 [node name="Hitbox" parent="." index="1"]
 damage = 2
+knockback_vector = Vector2( 100, 100 )
 
 [node name="CollisionShape2D" parent="Hitbox" index="0"]
 shape = SubResource( 2 )

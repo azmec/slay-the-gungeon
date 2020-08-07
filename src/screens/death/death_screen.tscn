@@ -1,0 +1,68 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/themes/default_theme/default_theme.tres" type="Theme" id=1]
+[ext_resource path="res://src/screens/death/death_screen.gd" type="Script" id=2]
+
+[node name="DeathScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.168627 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 24.0
+margin_bottom = -100.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="TextContainer"]
+margin_right = 320.0
+margin_bottom = 19.0
+text = "You did not escape the island."
+align = 1
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -100.0
+margin_top = -34.0
+margin_right = 100.0
+margin_bottom = 90.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RestartButton" type="Button" parent="ButtonsContainer"]
+margin_top = 29.0
+margin_right = 200.0
+margin_bottom = 48.0
+text = "PAUSE_RESTART"
+
+[node name="MenuButton" type="Button" parent="ButtonsContainer"]
+margin_top = 52.0
+margin_right = 200.0
+margin_bottom = 71.0
+text = "PAUSE_MAIN_MENU"
+
+[node name="QuitButton" type="Button" parent="ButtonsContainer"]
+margin_top = 75.0
+margin_right = 200.0
+margin_bottom = 94.0
+text = "MENU_QUIT"

@@ -7,13 +7,13 @@ const NORMAL_CHEST = preload("res://src/items/normal_chest/normal_chest.tscn")
 var enemy_pool = []
 var steps_to_take: int = 0 
 var wallTileMap: TileMap 
-var floorTileMap: TileMap 
+var floorTileMap: Sprite 
 var difficulty: int = 1
 var level_borders: Rect2
 var spawn_point: Vector2 = Vector2.ZERO 
 var floor_map: Array = []
 
-func _init(spawn: Vector2, steps: int, borders: Rect2, diff: int, enemies: Array, wallTiles: TileMap, floorTiles: TileMap):
+func _init(spawn: Vector2, steps: int, borders: Rect2, diff: int, enemies: Array, wallTiles: TileMap, floorTiles: Sprite):
 	self.spawn_point = spawn 
 	self.steps_to_take = steps 
 	self.level_borders = borders
@@ -43,6 +43,10 @@ func map_floor(walker_steps: Array, borders: Rect2) -> void:
 	for location in walker_steps:
 		wallTileMap.set_cellv(location, -1) 
 
+	var tile_rect = wallTileMap.get_used_rect()
+	var top_left = wallTileMap.map_to_world(tile_rect.position)
+	var size = wallTileMap.map_to_world(tile_rect.size)
+	floorTileMap.region_rect = Rect2(0, 0, size.x, size.y)
 	wallTileMap.update_bitmask_region()
 	
 func spawn_enemies(spawn_locations: Array, enemies: Array, diff: int, player: Player) -> void:

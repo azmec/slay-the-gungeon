@@ -14,6 +14,7 @@ onready var playerDetector = $PlayerDetector
 func _ready() -> void:
 	hurtbox.connect("damage_taken", self, "_on_damage_taken") 
 	playerDetector.connect("body_entered", self, "_on_playerDetector_body_entered")
+	add_to_group("props")
 
 func _physics_process(delta: float) -> void:
 	velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
