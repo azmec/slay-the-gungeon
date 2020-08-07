@@ -9,6 +9,7 @@ var _config_file = ConfigFile.new()
 
 var _settings = {
 	"graphics": {
+		"language": "en",
 		"horizontal_resolution": 1280,
 		"vertical_resolution": 720,
 		"is_fullscreen": false

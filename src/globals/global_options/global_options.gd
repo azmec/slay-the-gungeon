@@ -9,6 +9,7 @@ extends Control
 # GRAPHICS
 # ------------------------------------------------------------------
 
+var language = "es" setget _set_language
 var resolution = Vector2(1280, 720) setget _set_screen_resolution
 var is_fullscreen: bool = false setget _set_fullscreen
 # AUDIO 
@@ -42,6 +43,7 @@ func _ready() -> void:
 	load_controls_from_config()
 
 func load_settings_from_config() -> void:
+	self.language = Settings.get_setting("graphics", "language")
 	self.resolution = Vector2(Settings.get_setting("graphics", "horizontal_resolution"),Settings.get_setting("graphics", "vertical_resolution"))
 	self.is_fullscreen = Settings.get_setting("graphics", "is_fullscreen")
 	
@@ -57,6 +59,11 @@ func load_controls_from_config() -> void:
 		event.scancode = scancode
 		InputMap.action_add_event(action, event)
 		
+func _set_language(new_language: String) -> void:
+	language = new_language
+	TranslationServer.set_locale(language)
+	Settings.set_setting("graphics", "language", language) 
+
 func _set_screen_resolution(new_resolution: Vector2) -> void:
 	resolution = new_resolution
 	OS.set_window_size(new_resolution)

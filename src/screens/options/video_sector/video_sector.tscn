@@ -14,28 +14,53 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="."]
-margin_left = 24.0
-margin_top = 32.0
-margin_right = 166.0
-margin_bottom = 46.0
+[node name="Buttons" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="Buttons"]
+margin_right = 312.0
+margin_bottom = 14.0
+text = "OPTIONS_VIDEO_LANGUAGE"
+
+[node name="LanguageOptions" parent="Buttons" instance=ExtResource( 3 )]
+margin_top = 18.0
+margin_bottom = 36.0
+size_flags_horizontal = 2
+new_options = [ "en", "es" ]
+
+[node name="Label" type="Label" parent="Buttons"]
+margin_top = 40.0
+margin_right = 312.0
+margin_bottom = 54.0
 text = "OPTIONS_VIDEO_RESOLUTION"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ResolutionOption" parent="." instance=ExtResource( 3 )]
-margin_left = 24.0
-margin_top = 48.0
-margin_right = 53.0
-margin_bottom = 66.0
+[node name="ResolutionOption" parent="Buttons" instance=ExtResource( 3 )]
+margin_top = 58.0
+margin_bottom = 76.0
+size_flags_horizontal = 2
 new_options = [ Vector2( 1920, 1080 ), Vector2( 1280, 720 ), Vector2( 320, 180 ) ]
 
-[node name="FullscreenCheck" type="CheckBox" parent="."]
-margin_left = 16.0
-margin_top = 80.0
-margin_right = 95.0
-margin_bottom = 104.0
+[node name="Checks" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = 96.0
+margin_bottom = 16.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FullscreenCheck" type="CheckBox" parent="Checks"]
+margin_right = 312.0
+margin_bottom = 24.0
 text = "OPTIONS_VIDEO_FULLSCREEN"
 __meta__ = {
 "_edit_use_anchors_": false
