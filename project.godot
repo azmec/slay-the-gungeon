@@ -34,11 +34,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/character_objects/base_character/base_character_class.gd"
 }, {
-"base": "KinematicProp",
-"class": "Chest",
-"language": "GDScript",
-"path": "res://src/items/golden_chest/golden_chest.gd"
-}, {
 "base": "CharacterBody",
 "class": "EnemyBody",
 "language": "GDScript",
@@ -64,6 +59,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/items/prop_class/prop_class.gd"
 }, {
+"base": "Node",
+"class": "LevelGenerator",
+"language": "GDScript",
+"path": "res://src/compositional_objects/level_generator/level_generator.gd"
+}, {
 "base": "Node2D",
 "class": "PlayableCard",
 "language": "GDScript",
@@ -85,12 +85,12 @@ _global_script_class_icons={
 "CardDatabase": "",
 "CardDrop": "",
 "CharacterBody": "",
-"Chest": "",
 "EnemyBody": "",
 "GitAPI": "",
 "HandWidget": "",
 "HealthPickup": "",
 "KinematicProp": "",
+"LevelGenerator": "",
 "PlayableCard": "",
 "Player": "",
 "Walker": ""
@@ -237,5 +237,4 @@ translations=PoolStringArray( "res://assets/translations/text_keys.en.translatio
 
 [rendering]
 
-environment/default_clear_color=Color( 0.4, 0.517647, 0.372549, 1 )
 environment/default_environment="res://default_env.tres"

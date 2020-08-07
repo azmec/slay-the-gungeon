@@ -6,6 +6,8 @@ const MANA_DROP = preload("res://src/compositional_objects/mana_drop/mana_drop.t
 const GOLDEN_CHEST = preload("res://src/items/golden_chest/golden_chest.tscn")
 const NORMAL_CHEST = preload("res://src/items/normal_chest/normal_chest.tscn")
 
+var enemy_pool = [GREMLIN_ENEMY, SLIME_ENEMY]
+
 var borders = Rect2(1, 1, 160, 80)
 var level_points: Array
 onready var tileMap = $TileMap 
@@ -15,10 +17,17 @@ onready var enemies = $Enemies
 
 func _ready() -> void:
 	randomize()
-	generate_level()
+	var level_generator = LevelGenerator.new(Vector2(19, 11),
+			700, borders, 1, enemy_pool, tileMap, $GrassTileMap)
+	self.add_child(level_generator)
+	level_generator.generate_level(player)
+	#generate_level()
 	#spawn_enemies()
-	spawn_chests(3)
-	#BGMController.play_new_track("res://assets/bgm/musBoss1.ogg")
+	#spawn_chests(3)
+	#BGMController.play_new_track("res://assets/bgm/musBoss1.ogg") 
+
+	for character in get_tree().get_nodes_in_group("characters"):
+		character.connect("character_died", self, "_on_character_died", [character])
 
 func generate_level():
 	var walker = Walker.new(Vector2(19, 11), borders)
@@ -47,23 +56,41 @@ func spawn_enemies():
 		character.connect("character_died", self, "_on_character_died", [character])
 
 func spawn_chests(amount: int) -> void:
+	var possible_chest_locations = level_points
 	var chest_locations = []
-	for point in level_points:
-		if chest_locations.size() == amount:
-			continue
-		if point.distance_to(Vector2(19, 11)) < 10:
-			continue
-		if randf() < 0.002:
-			chest_locations.append(point)
-		
 
-	for point in chest_locations:
-		var new_chest = NORMAL_CHEST.instance()
-		if randf() < 0.2:
-			new_chest = GOLDEN_CHEST.instance() 
+	while chest_locations.size() < 1:
+		var furthest_point = Vector2.ZERO
+		var furthest_distance = 1
+		for point in possible_chest_locations:
+			if point.distance_to(Vector2(19, 11)) > furthest_distance:
+				furthest_distance = point.distance_to(Vector2(19, 11))
+				furthest_point = point 
 
-		add_child(new_chest)
-		new_chest.global_position = tileMap.map_to_world(point)
+		chest_locations.append(furthest_point)
+		possible_chest_locations.erase(furthest_point)
+			
+	var index = 0
+	while chest_locations.size() < amount:
+		var furthest_point = Vector2.ZERO
+		var furthest_distance = 1 
+		for point in possible_chest_locations:
+			if point.distance_to(chest_locations[index]) > furthest_distance:
+				furthest_distance = point.distance_to(chest_locations[index])
+				furthest_point = point  
+
+		chest_locations.append(furthest_point)
+		possible_chest_locations.erase(furthest_point)
+		index += 1
+				
+	for location in chest_locations:
+		var new_chest = GOLDEN_CHEST.instance()
+		self.add_child(new_chest)
+		new_chest.global_position = tileMap.map_to_world(location)
+					
+				
+
+
 
 func clear_enemies():
 	for enemy in enemies.get_children():
