@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://src/character_objects/base_enemy_character/base_enemy_character.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/sprites/character_art/enemies/small_slime/slime_idle4.png" type="Texture" id=2]
@@ -18,6 +18,7 @@
 [ext_resource path="res://assets/sfx/punch.wav" type="AudioStream" id=16]
 [ext_resource path="res://assets/sprites/character_art/player/shadow.png" type="Texture" id=17]
 [ext_resource path="res://assets/sfx/impacts/impact_1.wav" type="AudioStream" id=18]
+[ext_resource path="res://assets/sprites/character_art/enemies/small_slime/slime_dead.png" type="Texture" id=19]
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
@@ -40,6 +41,11 @@ animations = [ {
 "loop": false,
 "name": "jump",
 "speed": 10.0
+}, {
+"frames": [ ExtResource( 19 ) ],
+"loop": true,
+"name": "dead",
+"speed": 5.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=3]
@@ -58,7 +64,93 @@ radius = 10.6558
 radius = 202.814
 
 [sub_resource type="Animation" id=8]
-resource_name = "hurt"
+resource_name = "dead"
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "dead" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("AnimatedSprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, -3 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("AnimatedSprite:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("AnimatedSprite:material:shader_param/active")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Shadow:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 4 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Shadow:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1.5, 1 ) ]
+}
+
+[sub_resource type="Animation" id=9]
 length = 0.3
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:material:shader_param/active")
@@ -73,7 +165,7 @@ tracks/0/keys = {
 "values": [ true, false, true, false ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=10]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -101,7 +193,7 @@ tracks/1/keys = {
 "values": [ 0, 1, 2, 3 ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=11]
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:animation")
@@ -164,7 +256,7 @@ tracks/4/keys = {
 "values": [ Vector2( 1.5, 1.5 ), Vector2( 2, 0.5 ), Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=12]
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:animation")
@@ -230,19 +322,22 @@ tracks/4/keys = {
 [node name="Slime" instance=ExtResource( 1 )]
 script = ExtResource( 9 )
 MAX_SPEED = 125
+ACCELERATION = null
+FRICTION = null
+BURN_RESISTANCE = null
+POISON_RESISTANCE = null
 
 [node name="Shadow" type="Sprite" parent="." index="0"]
-self_modulate = Color( 1, 1, 1, 0.603922 )
+self_modulate = Color( 1, 1, 1, 0.392157 )
 position = Vector2( 0, 4 )
+scale = Vector2( 1.5, 1 )
 texture = ExtResource( 17 )
 
 [node name="AnimatedSprite" parent="." index="1"]
 material = SubResource( 1 )
 position = Vector2( 0, -3 )
-scale = Vector2( 0.5, 1.5 )
 frames = SubResource( 2 )
-animation = "jump"
-frame = 3
+animation = "dead"
 
 [node name="CollisionShape2D" parent="." index="2"]
 shape = SubResource( 3 )
@@ -272,10 +367,11 @@ visible = false
 shape = SubResource( 7 )
 
 [node name="AnimationPlayer" parent="." index="8"]
-anims/hurt = SubResource( 8 )
-anims/idle = SubResource( 9 )
-anims/jump = SubResource( 10 )
-anims/land = SubResource( 11 )
+anims/dead = SubResource( 8 )
+anims/hurt = SubResource( 9 )
+anims/idle = SubResource( 10 )
+anims/jump = SubResource( 11 )
+anims/land = SubResource( 12 )
 
 [node name="HealthStats" parent="." index="9"]
 max_health = 3
@@ -290,6 +386,13 @@ bus = "SFX"
 stream = ExtResource( 18 )
 volume_db = -12.0
 bus = "SFX"
+
+[node name="HealthBar" parent="." index="11"]
+margin_left = -20.0
+margin_top = -14.0
+margin_right = -20.0
+margin_bottom = -14.0
+rect_scale = Vector2( 0.5, 0.5 )
 
 [editable path="Hitbox"]
 

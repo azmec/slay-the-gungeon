@@ -204,8 +204,6 @@ func _on_playable_card_mouse_released(button, card: PlayableCard) -> void:
 			_owner.mana -= card.cost
 			card.pop_animation_state()
 			_discard_pile.add_card(card.get_card_data())
-			print(_deck.cards())
-			print(card.text_name)
 			_remove_playable_card(card.get_card_data())
 			_hand.remove_card(card.get_card_data().card_name)
 		else:

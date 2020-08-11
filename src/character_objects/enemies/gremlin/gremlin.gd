@@ -9,7 +9,7 @@ enum {
 	WANDER, 
 	CHASE, 
 	STAGGER,
-	SHOOT
+	DEAD
 } 
 
 const ARROW_SHOT = preload("res://src/compositional_objects/bullets/enemy_arrow_shot/enemy_arrow_shot.tscn")
@@ -34,6 +34,8 @@ func _physics_process(delta: float) -> void:
 			chase(delta) 
 		STAGGER: 
 			stagger(delta)  
+		DEAD:
+			dead(delta)
 	sprite.flip_h = sign(velocity.x) < 0
 	velocity = move_and_slide(velocity) 
 
@@ -70,6 +72,10 @@ func stagger(delta: float) -> void:
 	animationPlayer.play("hurt")  
 	velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta) 
 
+func dead(delta: float) -> void:
+	animationPlayer.play("dead") 
+	velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta) 
+
 func shoot(direction: Vector2):
 	if shotTimer.is_stopped():
 		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * get_physics_process_delta_time())
@@ -91,6 +97,16 @@ func _on_damage_taken(damage: int, knockback: Vector2, infliction: String) -> vo
 	state = STAGGER 
 	$Sounds/Hurt.play()
 	._on_damage_taken(damage, knockback, infliction)
+
+func _on_no_health() -> void:
+	state = DEAD
+	do_soft_collisions = false
+	healthBar.visible = false
+	hitbox.set_deferred("monitorable", false)
+	hurtbox.set_deferred("monitorable", false)
+	hurtbox.set_deferred("monitoring", false)
+	self.modulate = Color(0.5, 0.5, 0.5, 1)
+	._on_no_health() 
 
 func _on_animation_finished(anim_name: String) -> void:
 	if anim_name == "hurt":

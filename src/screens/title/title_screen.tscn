@@ -60,5 +60,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Label2" type="Label" parent="TitleScreen"]
+margin_left = 125.0
+margin_top = 144.0
+margin_right = 195.0
+margin_bottom = 163.0
+text = "ver 9ac4b97"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="OptionsScreen" parent="." instance=ExtResource( 3 )]
 visible = false

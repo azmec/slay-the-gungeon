@@ -8,6 +8,7 @@ var enemy_pool = [GREMLIN_ENEMY, SLIME_ENEMY]
 var borders = Rect2(1, 1, 320, 160)
 var level_points: Array
 var difficulty: int = 1
+var live_enemies = []
 
 onready var tileMap = $TileMap 
 onready var player = $Player
@@ -20,11 +21,6 @@ func _ready() -> void:
 	randomize()
 	generate_new_level()
 
-func _process(delta: float) -> void:
-	if get_tree().get_nodes_in_group("enemies").size() == 0:
-		wipe_current_level()
-		generate_new_level() 
-
 func generate_new_level():
 	var level_generator = LevelGenerator.new(Vector2(120, 80),
 			700, borders, difficulty, enemy_pool, tileMap, floorGround)
@@ -33,6 +29,10 @@ func generate_new_level():
 
 	for character in get_tree().get_nodes_in_group("characters"):
 		character.connect("character_died", self, "_on_character_died", [character]) 
+
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		live_enemies.append(enemy)
+
 
 # Wipes the current level without deleting player variables.
 # Additionally, it will up the difficulty and alter level "theme".
@@ -50,8 +50,15 @@ func wipe_current_level():
 
 	difficulty += 1
 	player.increase_player_level()
+	
+	live_enemies = []
 
 func _on_character_died(character_position: Vector2, character: CharacterBody) -> void:
-	if character is Player:
+	if character is EnemyBody:
+		live_enemies.erase(character)
+		if live_enemies.size() == 0:
+			wipe_current_level()
+			call_deferred("generate_new_level")
+	elif character is Player:
 		deathMenu.visible = true
 

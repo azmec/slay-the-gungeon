@@ -40,6 +40,7 @@ var can_die: bool = true
 func _ready() -> void:
 	hurtbox.connect("damage_taken", self, "_on_damage_taken")
 	animationPlayer.connect("animation_finished", self, "_on_animation_finished")
+	healthStats.connect("health_value_changed", self, "_on_health_value_changed")
 	healthStats.connect("no_health", self, "_on_no_health") 
 
 func _physics_process(delta: float) -> void: 
@@ -89,11 +90,13 @@ func _on_damage_taken(damage: int, knockback: Vector2, infliction: String) -> vo
 func _on_animation_finished(anim_name: String) -> void: 
 	pass 
 
+func _on_health_value_changed(new_value: int) -> void:
+	pass 
+
 func _on_no_health() -> void:
 	if not can_die: return
 	var death_fx = DEATH_EFFECT.instance() 
 	get_parent().add_child(death_fx) 
 	death_fx.global_position = self.global_position 
 	emit_signal("character_died", self.global_position) 
-	self.call_deferred("free")
 

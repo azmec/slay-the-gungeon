@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://src/character_objects/base_enemy_character/base_enemy_character.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/sprites/character_art/enemies/goblin_archer/archer_goblin_idle5.png" type="Texture" id=2]
@@ -19,6 +19,7 @@
 [ext_resource path="res://assets/sfx/sndbullet.wav" type="AudioStream" id=17]
 [ext_resource path="res://assets/sfx/punch.wav" type="AudioStream" id=18]
 [ext_resource path="res://assets/sprites/character_art/player/shadow.png" type="Texture" id=19]
+[ext_resource path="res://assets/sprites/character_art/enemies/goblin_archer/archer_goblin_dead.png" type="Texture" id=20]
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
@@ -36,6 +37,11 @@ animations = [ {
 "loop": true,
 "name": "run",
 "speed": 10.0
+}, {
+"frames": [ ExtResource( 20 ) ],
+"loop": true,
+"name": "dead",
+"speed": 5.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=3]
@@ -54,7 +60,33 @@ radius = 20.9275
 radius = 253.169
 
 [sub_resource type="Animation" id=8]
-resource_name = "hurt"
+resource_name = "dead"
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "dead" ]
+}
+
+[sub_resource type="Animation" id=9]
 length = 0.3
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:animation")
@@ -93,7 +125,7 @@ tracks/2/keys = {
 "values": [ true, false, true, false ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=10]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -133,7 +165,7 @@ tracks/2/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=11]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -175,6 +207,11 @@ tracks/2/keys = {
 
 [node name="Gremlin" instance=ExtResource( 1 )]
 script = ExtResource( 15 )
+MAX_SPEED = null
+ACCELERATION = null
+FRICTION = null
+BURN_RESISTANCE = null
+POISON_RESISTANCE = null
 
 [node name="Shadow" type="Sprite" parent="." index="0"]
 self_modulate = Color( 1, 1, 1, 0.501961 )
@@ -185,7 +222,7 @@ texture = ExtResource( 19 )
 material = SubResource( 1 )
 position = Vector2( 0, -3 )
 frames = SubResource( 2 )
-animation = "run"
+animation = "idle"
 
 [node name="CollisionShape2D" parent="." index="2"]
 shape = SubResource( 3 )
@@ -215,9 +252,10 @@ visible = false
 shape = SubResource( 7 )
 
 [node name="AnimationPlayer" parent="." index="8"]
-anims/hurt = SubResource( 8 )
-anims/idle = SubResource( 9 )
-anims/run = SubResource( 10 )
+anims/dead = SubResource( 8 )
+anims/hurt = SubResource( 9 )
+anims/idle = SubResource( 10 )
+anims/run = SubResource( 11 )
 
 [node name="Bow" type="Position2D" parent="." index="9"]
 position = Vector2( 4, 1 )
@@ -243,6 +281,13 @@ bus = "SFX"
 [node name="Hurt" type="AudioStreamPlayer" parent="Sounds" index="1"]
 stream = ExtResource( 18 )
 bus = "SFX"
+
+[node name="HealthBar" parent="." index="13"]
+margin_left = -20.0
+margin_top = -16.0
+margin_right = -20.0
+margin_bottom = -16.0
+rect_scale = Vector2( 0.5, 0.5 )
 
 [editable path="Hitbox"]
 

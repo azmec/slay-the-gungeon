@@ -2,6 +2,7 @@ extends Node
 
 # A composition piece that contains and tracks health.
 
+signal health_value_changed(new_value)
 signal no_health() 
 
 export var max_health: int = 100
@@ -12,6 +13,10 @@ func set_health(value: int) -> void:
 		health = max_health 
 		return 
 	health = value
+	emit_signal("health_value_changed", value)
+
 	if health <= 0:
-		emit_signal("no_health")
+		emit_signal("no_health") 
+
+
 	

@@ -10,7 +10,8 @@ enum {
 	JUMP,
 	LAND,
 	CHASE,
-	STAGGER
+	STAGGER,
+	DEAD
 }
 
 const BULLET = preload("res://src/compositional_objects/bullets/slime_bullet/slime_bullet.tscn")
@@ -34,6 +35,8 @@ func _physics_process(delta: float) -> void:
 			chase(delta)
 		STAGGER:
 			stagger(delta)
+		DEAD:
+			dead(delta)
 	velocity = move_and_slide(velocity)
 
 func idle(delta: float) -> void:
@@ -66,6 +69,10 @@ func stagger(delta:float) -> void:
 	animationPlayer.play("hurt")
 	velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 
+func dead(delta: float) -> void:
+	animationPlayer.play("dead")
+	velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta) 
+
 func _update_wander() -> void:
 	state = _pick_random_state([IDLE, JUMP]) 
 	wanderController.start_wander_timer(rand_range(1, 3))  
@@ -73,6 +80,17 @@ func _update_wander() -> void:
 func _pick_random_state(state_list: Array) -> int:
 	state_list.shuffle() 
 	return state_list.pop_front()  
+
+func _on_no_health() -> void:
+	state = DEAD
+	self.scale = Vector2(1, 1) 
+	do_soft_collisions = false
+	healthBar.visible = false
+	hitbox.set_deferred("monitorable", false)
+	hurtbox.set_deferred("monitorable", false)
+	hurtbox.set_deferred("monitoring", false)
+	self.modulate = Color(0.5, 0.5, 0.5, 1)
+	._on_no_health() 
 
 func _on_damage_taken(damage: int, knockback: Vector2, infliction: String) -> void:
 	state = STAGGER
