@@ -63,7 +63,8 @@ func spawn_enemies(spawn_locations: Array, enemies: Array, diff: int, player: Pl
 		if location.distance_to(spawn_point) < 15 or spawned_enemies >= enemies_to_spawn:
 			continue
 		if randf() < 0.006:
-			var new_enemy = enemies[randi() % enemies.size()].instance()
+			var new_enemy_index = enemies[randi() % enemies.size()]
+			var new_enemy = load(new_enemy_index).instance()
 			get_parent().add_child(new_enemy) 
 			new_enemy.global_position = wallTileMap.map_to_world(location) 
 			spawned_enemies += 1 

@@ -24,6 +24,11 @@ func _ready() -> void:
 	generate_new_level()
 
 func generate_new_level():
+	var new_level = LevelLibrary.get_random_level() 
+	tileMap.tile_set = load(new_level["world_art"]["wall_tileset"])
+	enemy_pool = new_level["enemies"].values()
+	floorGround.texture = load(new_level["world_art"]["ground_tile_rect"])
+
 	var level_generator = LevelGenerator.new(Vector2(120, 80),
 			700, borders, difficulty, enemy_pool, tileMap, floorGround)
 	self.add_child(level_generator)

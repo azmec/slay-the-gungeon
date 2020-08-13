@@ -108,6 +108,7 @@ CardLibrary="*res://src/card_architecture/card_library.gd"
 Options="*res://src/globals/global_options/global_options.tscn"
 BGMController="*res://src/globals/bgm_controller/bgm_controller.tscn"
 Settings="*res://src/globals/settings/settings.tscn"
+LevelLibrary="*res://src/globals/level_library/level_library.tscn"
 
 [debug]
 
