@@ -13,6 +13,7 @@ margin_left = -38.0
 margin_top = -8.0
 margin_right = -278.0
 margin_bottom = -172.0
+mouse_filter = 2
 theme = ExtResource( 6 )
 script = ExtResource( 3 )
 __meta__ = {
@@ -22,6 +23,7 @@ __meta__ = {
 [node name="ProgressBar" type="TextureProgress" parent="."]
 margin_right = 80.0
 margin_bottom = 16.0
+mouse_filter = 2
 value = 100.0
 texture_under = ExtResource( 4 )
 texture_over = ExtResource( 1 )
@@ -33,6 +35,7 @@ __meta__ = {
 [node name="HealthBar" type="TextureProgress" parent="."]
 margin_right = 80.0
 margin_bottom = 16.0
+mouse_filter = 2
 value = 100.0
 texture_under = ExtResource( 4 )
 texture_over = ExtResource( 1 )

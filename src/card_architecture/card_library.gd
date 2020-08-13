@@ -22,7 +22,8 @@ const STARTER_DECK = {
 			"sprite_path": "res://assets/sprites/cards/hearthstone_cards/mage/arcane_breath.png"
 		},
 		"components": [
-			{"action": "damage", "args": {"targets": 1, "amount": 3, "status_infliction": "none"}}
+			{"action": "damage", "args": {"targets": 1, "amount": 3, "status_infliction": "none"}},
+			{"visual": "projectile_sprite", "path": "res://assets/sprites/bullet_art/blue_bullet.png"}
 		]
 	},
 }
@@ -62,7 +63,33 @@ const DATA = {
 		},
 		"components": [
 			{"action": "damage", "args": {"targets": 1, "amount": 1, "status_infliction": "none"}},
-			{"action": "draw", "args": {"amount": 1, "deck": CardDatabase, "hand": CardDatabase}}
+			{"action": "draw", "args": {"amount": 1, "deck": CardDatabase, "hand": CardDatabase}},
+			{"visual": "projectile_sprite", "path": "res://assets/sprites/bullet_art/yellow_bullet.png"}
+		]
+	},
+	"Alpha_005": {
+		"attributes": {
+			"name": "Lance",
+			"type": "Attack",
+			"cost": 4,
+			"desc": "Deal 6 damage." ,
+			"sprite_path": "res://assets/sprites/cards/hearthstone_cards/mage/arcane_explosion.png"
+		},
+		"components": [
+			{"action": "damage", "args": {"targets": 1, "amount": 6, "status_infliction": "none"}}
+		]
+	},
+	"Alpha_006": {
+		"attributes": {
+			"name": "Assert Dominance",
+			"type": "Attack",
+			"cost": 3,
+			"desc": "Deal 2 damage. Draw 2 cards.",
+			"sprite_path": "res://assets/sprites/cards/hearthstone_cards/mage/arcane_explosion.png"
+		},
+		"components": [
+			{"action": "radial_damage", "args": {"amount": 2, "radius": 6, "status_infliction": "none"}},
+			{"action": "draw", "args": {"amount": 2, "deck": CardDatabase, "hand": CardDatabase}},
 		]
 	}
 }

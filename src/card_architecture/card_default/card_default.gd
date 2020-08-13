@@ -163,20 +163,21 @@ func _animate(from_state, to_state) -> void:
 
 func _read_card_data() -> void:
 	for component in components:
-		if component["action"] == "damage":
-			var damage_component = load("res://src/card_architecture/action_components/damage/damage_component.tscn").instance()
-			componentContainer.add_child(damage_component)
-			damage_component.load_arguments(component["args"], _holder) 
-		if component["action"] == "draw":
-			component["args"]["deck"] = _holder.deck
-			component["args"]["hand"] = _holder.hand
-			var draw_component = load("res://src/card_architecture/action_components/draw/draw_component.tscn").instance() 
-			componentContainer.add_child(draw_component)
-			draw_component.load_arguments(component["args"]) 
-		if component["action"] == "radial_damage":
-			var radial_damage_component = load("res://src/card_architecture/action_components/radial_damage/radial_damage_component.tscn").instance()
-			componentContainer.add_child(radial_damage_component)
-			radial_damage_component.load_arguments(component["args"], _holder)
+		if component.has("action"):
+			if component["action"] == "damage":
+				var damage_component = load("res://src/card_architecture/action_components/damage/damage_component.tscn").instance()
+				componentContainer.add_child(damage_component)
+				damage_component.load_arguments(component["args"], _holder) 
+			if component["action"] == "draw":
+				component["args"]["deck"] = _holder.deck
+				component["args"]["hand"] = _holder.hand
+				var draw_component = load("res://src/card_architecture/action_components/draw/draw_component.tscn").instance() 
+				componentContainer.add_child(draw_component)
+				draw_component.load_arguments(component["args"]) 
+			if component["action"] == "radial_damage":
+				var radial_damage_component = load("res://src/card_architecture/action_components/radial_damage/radial_damage_component.tscn").instance()
+				componentContainer.add_child(radial_damage_component)
+				radial_damage_component.load_arguments(component["args"], _holder) 
 
 func _play_card() -> void:
 	for component in components:

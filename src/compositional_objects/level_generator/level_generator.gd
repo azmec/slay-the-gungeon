@@ -4,6 +4,7 @@ extends Node
 const GOLDEN_CHEST = preload("res://src/items/golden_chest/golden_chest.tscn")
 const NORMAL_CHEST = preload("res://src/items/normal_chest/normal_chest.tscn")
 
+var _level_data = {}
 var enemy_pool = []
 var steps_to_take: int = 0 
 var wallTileMap: TileMap 
@@ -30,9 +31,13 @@ func generate_level(player: Player) -> void:
 	fill_borders(level_borders)
 	map_floor(floor_map, level_borders)
 	player.global_position = wallTileMap.map_to_world(spawn_point)
-	spawn_enemies(floor_map, enemy_pool, difficulty, player)
+	_level_data["enemies"] = spawn_enemies(floor_map, enemy_pool, difficulty, player)
 	spawn_prop(floor_map, GOLDEN_CHEST)
-	spawn_prop(floor_map, NORMAL_CHEST)
+	spawn_prop(floor_map, NORMAL_CHEST)  
+
+
+func get_data() -> Dictionary:
+	return _level_data
 
 func fill_borders(borders: Rect2) -> void:
 	for x in borders.end.x:
@@ -49,7 +54,8 @@ func map_floor(walker_steps: Array, borders: Rect2) -> void:
 	floorTileMap.region_rect = Rect2(0, 0, size.x, size.y)
 	wallTileMap.update_bitmask_region()
 	
-func spawn_enemies(spawn_locations: Array, enemies: Array, diff: int, player: Player) -> void:
+func spawn_enemies(spawn_locations: Array, enemies: Array, diff: int, player: Player) -> Array:
+	var enemy_array = []
 	var enemies_to_spawn = diff * 10 + randi() % (diff * 2)
 	var spawned_enemies = 0
 	
@@ -58,9 +64,12 @@ func spawn_enemies(spawn_locations: Array, enemies: Array, diff: int, player: Pl
 			continue
 		if randf() < 0.006:
 			var new_enemy = enemies[randi() % enemies.size()].instance()
-			add_child(new_enemy) 
+			get_parent().add_child(new_enemy) 
 			new_enemy.global_position = wallTileMap.map_to_world(location) 
 			spawned_enemies += 1 
+			enemy_array.append(new_enemy) 
+
+	return enemy_array
 
 func spawn_prop(spawn_locations: Array, prop) -> void:
 	var furthest_distance = 1
@@ -77,6 +86,6 @@ func spawn_prop(spawn_locations: Array, prop) -> void:
 			furthest_point = location 
 
 	var new_prop = prop.instance() 
-	add_child(new_prop)
+	get_parent().add_child(new_prop)
 	new_prop.global_position = wallTileMap.map_to_world(furthest_point)
 	

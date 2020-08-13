@@ -206,7 +206,7 @@ color_ramp = SubResource( 1 )
 material = SubResource( 2 )
 frames = SubResource( 3 )
 animation = "idle"
-frame = 3
+frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -273,6 +273,7 @@ one_shot = true
 margin_top = 0.0
 margin_bottom = 40.0
 rect_scale = Vector2( 0.7, 0.7 )
+mouse_filter = 2
 maximum_x_offset = 50
 maximum_y_offset = 50
 maximum_rotation = 25
@@ -281,6 +282,7 @@ maximum_rotation = 25
 margin_top = 16.0
 margin_bottom = 56.0
 rect_scale = Vector2( 0.7, 0.7 )
+mouse_filter = 2
 maximum_x_offset = 20
 maximum_y_offset = 20
 maximum_rotation = 10
