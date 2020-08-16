@@ -94,6 +94,19 @@ const DATA = {
 	}
 }
 
+func get_catalogue() -> Array:
+	var catalogue = []
+	for card in DATA:
+		catalogue.append([card, DATA[card]["attributes"]["name"]]) 
+
+	return catalogue
+
+func key_exists(key: String) -> bool:
+	return DATA.has(key) 
+
+func generate_new_card_data(key: String) -> CardData:
+	return CardData.new(DATA[key])
+
 func draft_player_deck() -> CardDatabase:
 	var player_deck = CardDatabase.new("player_deck") 
 	for i in 5:

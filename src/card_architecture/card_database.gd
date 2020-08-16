@@ -73,6 +73,13 @@ func draw_card() -> CardData:
 	remove_card(new_draw.card_name)
 	return new_draw 
 
+func card_list() -> Array:
+	var cards = []
+	for card in _cards:
+		cards.append([_cards[card].text_name, _cards[card]])
+
+	return cards
+
 func clear() -> void:
 	for card in _cards.keys():
 		var given_card = _cards[card]
