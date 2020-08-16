@@ -1,0 +1,46 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://src/character_objects/bosses/boss_class/boss_class.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/sprites/character_art/bosses/slime_king/slime_king1.png" type="Texture" id=2]
+[ext_resource path="res://assets/sprites/character_art/bosses/slime_king/slime_king4.png" type="Texture" id=3]
+[ext_resource path="res://assets/sprites/character_art/bosses/slime_king/slime_king3.png" type="Texture" id=4]
+[ext_resource path="res://assets/sprites/character_art/bosses/slime_king/slime_king2.png" type="Texture" id=5]
+[ext_resource path="res://src/shaders/white_shader/white_flash.shader" type="Shader" id=6]
+[ext_resource path="res://src/character_objects/bosses/slime_king/slime_king.gd" type="Script" id=7]
+
+[sub_resource type="ShaderMaterial" id=1]
+resource_local_to_scene = true
+shader = ExtResource( 6 )
+shader_param/active = false
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "default",
+"speed": 8.0
+} ]
+
+[node name="SlimeKing" instance=ExtResource( 1 )]
+script = ExtResource( 7 )
+
+[node name="Shadow" parent="." index="0"]
+self_modulate = Color( 1, 1, 1, 0.784314 )
+position = Vector2( -8, 24 )
+scale = Vector2( 11.6364, 5.33333 )
+
+[node name="AnimatedSprite" parent="." index="1"]
+material = SubResource( 1 )
+position = Vector2( -8, -8 )
+frames = SubResource( 2 )
+frame = 1
+playing = true
+
+[node name="HealthStats" parent="." index="7"]
+max_health = 50
+
+[editable path="Hitbox"]
+
+[editable path="Hurtbox"]
+
+[editable path="PlayerDetector"]

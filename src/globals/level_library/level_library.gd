@@ -13,6 +13,9 @@ const LEVELS = {
 			"enemy_1": "res://src/character_objects/enemies/gremlin/gremlin.tscn",
 			"enemy_2": "res://src/character_objects/enemies/slime/slime.tscn"
 		},
+		"bosses": {
+			"boss_1": "res://src/character_objects/bosses/slime_king/slime_king.tscn"
+		}
 	}
 } 
 

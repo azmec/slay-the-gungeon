@@ -44,15 +44,15 @@ animations = [ {
 "name": "idle",
 "speed": 8.0
 }, {
-"frames": [ ExtResource( 9 ), ExtResource( 1 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 5 ) ],
-"loop": true,
-"name": "run",
-"speed": 8.0
-}, {
 "frames": [ ExtResource( 29 ) ],
 "loop": true,
 "name": "dead",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 9 ), ExtResource( 1 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 5 ) ],
+"loop": true,
+"name": "run",
+"speed": 8.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=4]
@@ -171,6 +171,7 @@ font_data = ExtResource( 28 )
 
 [node name="Player" type="KinematicBody2D" groups=[
 "characters",
+"player",
 ]]
 z_index = 1
 collision_mask = 4
@@ -206,7 +207,7 @@ color_ramp = SubResource( 1 )
 material = SubResource( 2 )
 frames = SubResource( 3 )
 animation = "idle"
-frame = 1
+frame = 2
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
