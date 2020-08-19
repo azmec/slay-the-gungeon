@@ -24,7 +24,7 @@
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
 shader = ExtResource( 16 )
-shader_param/active = false
+shader_param/active = true
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
@@ -33,15 +33,15 @@ animations = [ {
 "name": "idle",
 "speed": 10.0
 }, {
-"frames": [ ExtResource( 4 ), ExtResource( 13 ), ExtResource( 5 ), ExtResource( 7 ), ExtResource( 9 ), ExtResource( 6 ) ],
-"loop": true,
-"name": "run",
-"speed": 10.0
-}, {
 "frames": [ ExtResource( 20 ) ],
 "loop": true,
 "name": "dead",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 13 ), ExtResource( 5 ), ExtResource( 7 ), ExtResource( 9 ), ExtResource( 6 ) ],
+"loop": true,
+"name": "run",
+"speed": 10.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=3]
@@ -207,11 +207,6 @@ tracks/2/keys = {
 
 [node name="Gremlin" instance=ExtResource( 1 )]
 script = ExtResource( 15 )
-MAX_SPEED = null
-ACCELERATION = null
-FRICTION = null
-BURN_RESISTANCE = null
-POISON_RESISTANCE = null
 
 [node name="Shadow" type="Sprite" parent="." index="0"]
 self_modulate = Color( 1, 1, 1, 0.501961 )
@@ -223,6 +218,7 @@ material = SubResource( 1 )
 position = Vector2( 0, -3 )
 frames = SubResource( 2 )
 animation = "idle"
+frame = 4
 
 [node name="CollisionShape2D" parent="." index="2"]
 shape = SubResource( 3 )

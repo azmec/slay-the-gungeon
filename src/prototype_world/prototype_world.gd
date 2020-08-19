@@ -17,6 +17,7 @@ onready var player = $Player
 onready var enemies = $Enemies
 onready var deathMenu = $CanvasLayer/DeathMenu
 onready var floorGround = $Floor
+onready var bossHealthBar = $CanvasLayer/BossHealthBar
 
 
 func _ready() -> void:
@@ -24,6 +25,7 @@ func _ready() -> void:
 	generate_new_level()
 
 func generate_new_level():
+	bossHealthBar.visible = false
 	var new_level = LevelLibrary.get_random_level() 
 	tileMap.tile_set = load(new_level["world_art"]["wall_tileset"])
 	enemy_pool = new_level["enemies"].values()
@@ -39,6 +41,15 @@ func generate_new_level():
 		character.connect("character_died", self, "_on_character_died", [character]) 
 
 	level_generator.queue_free()
+
+	if difficulty % 3 == 0:
+		var random_position = level_data["map"][randi() % level_data["map"].size()]
+		var mapped_random_position = tileMap.map_to_world(random_position) 
+		var new_boss = load(new_level["bosses"]["boss_1"]) 
+		var new_instance = new_boss.instance() 
+		add_child(new_instance) 
+		new_instance.global_position = mapped_random_position
+
 
 # Wipes the current level without deleting player variables.
 # Additionally, it will up the difficulty and alter level "theme".
@@ -78,3 +89,11 @@ func _on_character_died(character_position: Vector2, character: CharacterBody) -
 	elif character is Player:
 		deathMenu.visible = true
 
+# these functions are never connected by World, but rather 
+# by the boss itself in its _ready() method.
+func _on_BossBody_player_entered_boss_radius(boss: BossBody) -> void:
+	bossHealthBar.visible = true
+	bossHealthBar.set_boss(boss.boss_name, boss.healthStats) 
+
+func _on_BossBody_player_left_boss_radius() -> void:
+	bossHealthBar.visible = false

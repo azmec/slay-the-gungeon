@@ -1,0 +1,64 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/themes/default_theme/default_theme.tres" type="Theme" id=1]
+[ext_resource path="res://src/compositional_objects/health_bar/health_bar.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/compositional_objects/boss_health_bar/boss_health_bar.gd" type="Script" id=3]
+
+[node name="BossHealthBar" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 72.0
+margin_right = -72.0
+margin_bottom = -164.0
+mouse_filter = 1
+theme = ExtResource( 1 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 8.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+margin_left = 57.0
+margin_right = 119.0
+margin_bottom = 33.0
+custom_constants/separation = 14
+
+[node name="HealthBar" parent="HBoxContainer/VBoxContainer" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 62.0
+margin_bottom = 0.0
+mouse_filter = 1
+
+[node name="ProgressBar" parent="HBoxContainer/VBoxContainer/HealthBar" index="0"]
+margin_left = -48.0
+margin_right = 32.0
+rect_scale = Vector2( 2, 1 )
+
+[node name="HealthBar" parent="HBoxContainer/VBoxContainer/HealthBar" index="1"]
+margin_left = -48.0
+margin_right = 32.0
+rect_scale = Vector2( 2, 1 )
+
+[node name="HealthText" parent="HBoxContainer/VBoxContainer/HealthBar" index="3"]
+margin_left = -9.0
+margin_right = 71.0
+
+[node name="BossName" type="Label" parent="HBoxContainer/VBoxContainer"]
+margin_top = 14.0
+margin_right = 62.0
+margin_bottom = 33.0
+text = "boss_name"
+
+[editable path="HBoxContainer/VBoxContainer/HealthBar"]

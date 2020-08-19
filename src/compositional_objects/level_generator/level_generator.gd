@@ -28,6 +28,7 @@ func generate_level(player: Player) -> void:
 	floor_map = walker.walk(steps_to_take) 
 	walker.queue_free() 
 
+	_level_data["map"] = floor_map
 	fill_borders(level_borders)
 	map_floor(floor_map, level_borders)
 	player.global_position = wallTileMap.map_to_world(spawn_point)
